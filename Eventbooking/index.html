@@ -16,134 +16,163 @@
 
 <body>
 
-    <main class="hero">
+<main class="hero" id="hero">
 
-        <!-- Navigation -->
-        <nav class="navbar">
+    <!-- Navigation -->
+    <nav class="navbar">
 
-            <div class="logo">
-                EVENT<span>ORA</span>
+        <div class="logo">
+            EVENT<span>ORA</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#events">Events</a>
+            <a href="#tickets">My Tickets</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact</a>
+        </div>
+
+        <button class="sign-btn">SIGN IN</button>
+
+    </nav>
+
+
+    <!-- Background -->
+    <div class="background-glow"></div>
+    <div class="particles"></div>
+
+
+    <!-- 3D Performer Carousel -->
+    <section class="event-carousel" id="events">
+
+        <!-- Previous Performer -->
+        <div class="side-event left-event" id="leftPerformer">
+
+            <div class="performer-image">
+                <img id="leftImage" src="" alt="Previous performer">
             </div>
 
-            <div class="nav-links">
-                <a href="#">Home</a>
-                <a href="#">Events</a>
-                <a href="#">My Tickets</a>
-                <a href="#">About Us</a>
-                <a href="#">Contact</a>
-            </div>
-
-            <button class="sign-btn">SIGN IN</button>
-
-        </nav>
+        </div>
 
 
-        <!-- Background -->
-        <div class="background-glow"></div>
-        <div class="particles"></div>
+        <!-- CENTER PERFORMER -->
+        <div class="center-event">
 
+            <div class="performer">
 
-        <!-- Event Carousel -->
-        <section class="event-carousel">
+                <img
+                    id="centerImage"
+                    src=""
+                    alt="Featured performer"
+                >
 
-            <!-- LEFT EVENT -->
-            <div class="side-event left-event">
-                <div class="person-placeholder">
-                    🎸
-                </div>
-
-                <h3>MOON TUNES</h3>
             </div>
 
 
-            <!-- CENTER EVENT -->
-            <div class="center-event">
+            <!-- Event Information appears for center performer -->
+            <div class="event-info" id="eventInfo">
 
                 <div class="event-label">
                     FEATURED EVENT
                 </div>
 
-                <div class="performer">
-                    🎧
-                </div>
+                <h1 id="eventName">
+                    NEON<br>
+                    <span>NIGHTS</span>
+                </h1>
 
-                <div class="event-info">
+                <p class="event-type" id="eventType">
+                    EDM LIVE EXPERIENCE
+                </p>
 
-                    <h1>NEON<br><span>NIGHTS</span></h1>
 
-                    <p class="event-type">
-                        EDM LIVE EXPERIENCE
-                    </p>
+                <div class="event-details">
 
-                    <div class="event-details">
-
-                        <div>
-                            <small>DATE</small>
-                            <strong>18 SEP 2026</strong>
-                        </div>
-
-                        <div>
-                            <small>TIME</small>
-                            <strong>7:00 PM</strong>
-                        </div>
-
-                        <div>
-                            <small>VENUE</small>
-                            <strong>HYDERABAD</strong>
-                        </div>
-
+                    <div>
+                        <small>DATE</small>
+                        <strong id="eventDate">18 SEP 2026</strong>
                     </div>
 
-                    <button class="explore-btn">
-                        EXPLORE EVENT →
-                    </button>
+                    <div>
+                        <small>TIME</small>
+                        <strong id="eventTime">7:00 PM</strong>
+                    </div>
+
+                    <div>
+                        <small>VENUE</small>
+                        <strong id="eventVenue">HYDERABAD</strong>
+                    </div>
+
+                    <div>
+                        <small>PRICE</small>
+                        <strong id="eventPrice">₹799</strong>
+                    </div>
 
                 </div>
 
-            </div>
 
+                <button class="explore-btn" onclick="exploreEvent()">
+                    EXPLORE EVENT →
+                </button>
 
-            <!-- RIGHT EVENT -->
-            <div class="side-event right-event">
-
-                <div class="person-placeholder">
-                    🎤
-                </div>
-
-                <h3>HAPPY BEATS</h3>
-
-            </div>
-
-        </section>
-
-
-        <!-- Carousel Buttons -->
-        <button class="arrow left-arrow" onclick="previousEvent()">←</button>
-
-        <button class="arrow right-arrow" onclick="nextEvent()">→</button>
-
-
-        <!-- Bottom -->
-        <div class="bottom-ui">
-
-            <div class="slide-indicator">
-                <span class="active"></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
-            <div class="scroll-text">
-                SCROLL TO EXPLORE ↓
             </div>
 
         </div>
 
-    </main>
 
-    <script src="script.js"></script>
+        <!-- Next Performer -->
+        <div class="side-event right-event" id="rightPerformer">
+
+            <div class="performer-image">
+                <img id="rightImage" src="" alt="Next performer">
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Carousel Buttons -->
+    <button
+        class="arrow left-arrow"
+        onclick="previousEvent()"
+        aria-label="Previous event">
+        ←
+    </button>
+
+    <button
+        class="arrow right-arrow"
+        onclick="nextEvent()"
+        aria-label="Next event">
+        →
+    </button>
+
+
+    <!-- Bottom UI -->
+    <div class="bottom-ui">
+
+        <div class="slide-indicator" id="indicators">
+
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+        <div class="scroll-text">
+            SWIPE / SCROLL TO EXPLORE ↓
+        </div>
+
+    </div>
+
+</main>
+
+
+<script src="script.js"></script>
 
 </body>
-</html>
+    </html>
