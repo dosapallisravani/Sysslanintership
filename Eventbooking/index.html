@@ -1,1 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>EVENTORA — 3D Concert Experience</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <main class="hero">
+
+        <!-- Navigation -->
+        <nav class="navbar">
+
+            <div class="logo">
+                EVENT<span>ORA</span>
+            </div>
+
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Events</a>
+                <a href="#">My Tickets</a>
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+            </div>
+
+            <button class="sign-btn">SIGN IN</button>
+
+        </nav>
+
+
+        <!-- Background -->
+        <div class="background-glow"></div>
+        <div class="particles"></div>
+
+
+        <!-- Event Carousel -->
+        <section class="event-carousel">
+
+            <!-- LEFT EVENT -->
+            <div class="side-event left-event">
+                <div class="person-placeholder">
+                    🎸
+                </div>
+
+                <h3>MOON TUNES</h3>
+            </div>
+
+
+            <!-- CENTER EVENT -->
+            <div class="center-event">
+
+                <div class="event-label">
+                    FEATURED EVENT
+                </div>
+
+                <div class="performer">
+                    🎧
+                </div>
+
+                <div class="event-info">
+
+                    <h1>NEON<br><span>NIGHTS</span></h1>
+
+                    <p class="event-type">
+                        EDM LIVE EXPERIENCE
+                    </p>
+
+                    <div class="event-details">
+
+                        <div>
+                            <small>DATE</small>
+                            <strong>18 SEP 2026</strong>
+                        </div>
+
+                        <div>
+                            <small>TIME</small>
+                            <strong>7:00 PM</strong>
+                        </div>
+
+                        <div>
+                            <small>VENUE</small>
+                            <strong>HYDERABAD</strong>
+                        </div>
+
+                    </div>
+
+                    <button class="explore-btn">
+                        EXPLORE EVENT →
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT EVENT -->
+            <div class="side-event right-event">
+
+                <div class="person-placeholder">
+                    🎤
+                </div>
+
+                <h3>HAPPY BEATS</h3>
+
+            </div>
+
+        </section>
+
+
+        <!-- Carousel Buttons -->
+        <button class="arrow left-arrow" onclick="previousEvent()">←</button>
+
+        <button class="arrow right-arrow" onclick="nextEvent()">→</button>
+
+
+        <!-- Bottom -->
+        <div class="bottom-ui">
+
+            <div class="slide-indicator">
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="scroll-text">
+                SCROLL TO EXPLORE ↓
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
