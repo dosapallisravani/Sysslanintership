@@ -280,3 +280,73 @@ function handleSwipe() {
    ================================= */
 
 updateEvent();
+/* =========================
+   BOOKING FORM
+========================= */
+
+const bookingForm = document.getElementById("bookingForm");
+
+bookingForm.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const name = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const selectedEvent = document.getElementById("selectedEvent").value;
+    const tickets = document.getElementById("ticketCount").value;
+    const payment = document.getElementById("payment").value;
+
+    const message = document.getElementById("bookingMessage");
+
+    document.querySelectorAll(".form-group small")
+        .forEach(error => error.textContent = "");
+
+    let valid = true;
+
+    if (name === "") {
+        document.getElementById("nameError").textContent =
+            "Please enter your name.";
+        valid = false;
+    }
+
+    if (!email.includes("@")) {
+        document.getElementById("emailError").textContent =
+            "Please enter a valid email.";
+        valid = false;
+    }
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+        document.getElementById("phoneError").textContent =
+            "Enter a valid 10-digit phone number.";
+        valid = false;
+    }
+
+    if (selectedEvent === "") {
+        document.getElementById("eventError").textContent =
+            "Please select an event.";
+        valid = false;
+    }
+
+    if (tickets === "") {
+        document.getElementById("ticketError").textContent =
+            "Please select number of tickets.";
+        valid = false;
+    }
+
+    if (payment === "") {
+        document.getElementById("paymentError").textContent =
+            "Please select payment method.";
+        valid = false;
+    }
+
+    if (!valid) {
+        message.textContent = "";
+        return;
+    }
+
+    message.textContent =
+        "🎉 Booking successful! Your tickets are reserved.";
+
+    bookingForm.reset();
+});
