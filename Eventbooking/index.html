@@ -4,81 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>EVENTORA — 3D Concert Experience</title>
-
-    <link rel="stylesheet" href="style.css">
+    <title>EVENTORA | Event Ticket Booking</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<main class="hero" id="hero">
+<!-- =========================
+     HERO / HOME
+========================= -->
 
-    <!-- Navigation -->
+<header class="hero" id="home">
+
+    <div class="background-glow"></div>
+    <div class="particles"></div>
+
+    <!-- NAVBAR -->
+
     <nav class="navbar">
 
-        <div class="logo">
+        <a href="#home" class="logo">
             EVENT<span>ORA</span>
-        </div>
+        </a>
 
         <div class="nav-links">
-            <a href="#">Home</a>
+            <a href="#home">Home</a>
             <a href="#events">Events</a>
-            <a href="#tickets">Booking</a>
-            <a href="#about">About Us</a>
+            <a href="#booking">Booking</a>
+            <a href="#about">About</a>
             <a href="#contact">Contact</a>
         </div>
 
-        <button class="sign-btn">SIGN IN</button>
+        <a href="#booking" class="sign-btn">
+            SIGN IN
+        </a>
 
     </nav>
 
 
-    <!-- Background -->
-    <div class="background-glow"></div>
-    <div class="particles"></div>
+    <!-- EVENT CAROUSEL -->
 
-
-    <!-- 3D Performer Carousel -->
     <section class="event-carousel" id="events">
 
-        <!-- Previous Performer -->
-        <div class="side-event left-event" id="leftPerformer">
+        <!-- LEFT EVENT -->
 
-            <div class="performer-image">
-                <img id="leftImage" src="" alt="Previous performer">
+        <div class="side-event left-event">
+
+            <div class="side-card">
+
+                <div class="side-image">
+                    <img id="leftImage" alt="">
+                    <div class="image-placeholder"></div>
+                </div>
+
             </div>
 
         </div>
 
 
-        <!-- CENTER PERFORMER -->
+        <!-- CENTER EVENT -->
+
         <div class="center-event">
 
             <div class="performer">
 
-                <img
-                    id="centerImage"
-                    src=""
-                    alt="Featured performer"
-                >
+                <div class="center-image-wrapper">
+
+                    <img id="centerImage"
+                         alt="Featured performer">
+
+                    <div class="image-placeholder center-placeholder">
+                        <span>EVENTORA</span>
+                    </div>
+
+                </div>
 
             </div>
 
 
-            <!-- Event Information appears for center performer -->
-            <div class="event-info" id="eventInfo">
+            <!-- EVENT INFORMATION -->
+
+            <div class="event-info">
 
                 <div class="event-label">
                     FEATURED EVENT
                 </div>
 
                 <h1 id="eventName">
-                    NEON<br>
+                    NEON
+                    <br>
                     <span>NIGHTS</span>
                 </h1>
 
@@ -91,40 +112,62 @@
 
                     <div>
                         <small>DATE</small>
-                        <strong id="eventDate">18 SEP 2026</strong>
+                        <strong id="eventDate">
+                            18 SEP 2026
+                        </strong>
                     </div>
 
                     <div>
                         <small>TIME</small>
-                        <strong id="eventTime">7:00 PM</strong>
+                        <strong id="eventTime">
+                            7:00 PM
+                        </strong>
                     </div>
 
                     <div>
                         <small>VENUE</small>
-                        <strong id="eventVenue">HYDERABAD</strong>
+                        <strong id="eventVenue">
+                            HYDERABAD
+                        </strong>
                     </div>
 
                     <div>
                         <small>PRICE</small>
-                        <strong id="eventPrice">₹799</strong>
+                        <strong id="eventPrice">
+                            ₹799
+                        </strong>
                     </div>
 
                 </div>
 
-<button class="explore-btn" onclick="goToBooking()">
-    BOOK TICKETS →
-</button>
+
+                <a href="#booking"
+                   class="explore-btn"
+                   id="bookCurrentEvent">
+
+                    BOOK TICKETS
+                    <span>→</span>
+
+                </a>
 
             </div>
 
         </div>
 
 
-        <!-- Next Performer -->
-        <div class="side-event right-event" id="rightPerformer">
+        <!-- RIGHT EVENT -->
 
-            <div class="performer-image">
-                <img id="rightImage" src="" alt="Next performer">
+        <div class="side-event right-event">
+
+            <div class="side-card">
+
+                <div class="side-image">
+
+                    <img id="rightImage" alt="">
+                    <div class="image-placeholder"></div>
+
+                </div>
+
             </div>
 
         </div>
@@ -132,137 +175,253 @@
     </section>
 
 
-    <!-- Carousel Buttons -->
-    <button
-        class="arrow left-arrow"
-        onclick="previousEvent()"
-        aria-label="Previous event">
+    <!-- ARROWS -->
+
+    <button class="arrow left-arrow"
+            id="previousBtn"
+            aria-label="Previous event">
+
         ←
+
     </button>
 
-    <button
-        class="arrow right-arrow"
-        onclick="nextEvent()"
-        aria-label="Next event">
+    <button class="arrow right-arrow"
+            id="nextBtn"
+            aria-label="Next event">
+
         →
+
     </button>
 
 
-    <!-- Bottom UI -->
+    <!-- BOTTOM UI -->
+
     <div class="bottom-ui">
 
-        <div class="slide-indicator" id="indicators">
-
-            <span class="active"></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-
-        </div>
+        <div class="slide-indicator" id="indicators"></div>
 
         <div class="scroll-text">
-            SWIPE / SCROLL TO EXPLORE ↓
+            SWIPE / USE ARROWS TO EXPLORE ↓
         </div>
 
     </div>
+
+</header>
+
+
+
 <!-- =========================
      BOOKING SECTION
 ========================= -->
 
-<section class="booking-section" id="tickets">
+<section class="booking-section" id="booking">
 
     <div class="booking-container">
 
-        <div class="booking-heading">
+
+        <div class="section-heading">
+
             <span>EVENTORA TICKETS</span>
-            <h2>BOOK YOUR<br><strong>EXPERIENCE</strong></h2>
-            <p>Reserve your spot and experience the event live.</p>
+
+            <h2>
+                BOOK YOUR
+                <strong>EXPERIENCE</strong>
+            </h2>
+
+            <p>
+                Choose your event, select your tickets and reserve
+                your place for an unforgettable experience.
+            </p>
+
         </div>
 
-        <form class="booking-form" id="bookingForm">
+
+        <form class="booking-form"
+              id="bookingForm"
+              novalidate>
+
 
             <div class="form-row">
 
-                <div class="form-group">
-                    <label>FULL NAME</label>
-                    <input type="text" id="fullName"
-                           placeholder="Enter your name">
-                    <small id="nameError"></small>
-                </div>
 
                 <div class="form-group">
-                    <label>EMAIL</label>
-                    <input type="email" id="email"
-                           placeholder="Enter your email">
+
+                    <label for="fullName">
+                        FULL NAME
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        placeholder="Enter your full name"
+                    >
+
+                    <small id="nameError"></small>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="email">
+                        EMAIL ADDRESS
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                    >
+
                     <small id="emailError"></small>
+
                 </div>
 
             </div>
 
+
+
             <div class="form-row">
 
+
                 <div class="form-group">
-                    <label>PHONE NUMBER</label>
-                    <input type="tel" id="phone"
-                           placeholder="Enter phone number">
+
+                    <label for="phone">
+                        PHONE NUMBER
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        maxlength="10"
+                        placeholder="10-digit phone number"
+                    >
+
                     <small id="phoneError"></small>
+
                 </div>
 
+
                 <div class="form-group">
-                    <label>SELECT EVENT</label>
+
+                    <label for="selectedEvent">
+                        SELECT EVENT
+                    </label>
 
                     <select id="selectedEvent">
-                        <option value="">Choose an event</option>
-                        <option value="Neon Nights">Neon Nights</option>
-                        <option value="Moon Tunes">Moon Tunes</option>
-                        <option value="Happy Beats">Happy Beats</option>
-                        <option value="Beat World">Beat World</option>
-                        <option value="City Beats">City Beats</option>
-                        <option value="Sound Fest">Sound Fest</option>
+
+                        <option value="">
+                            Choose an event
+                        </option>
+
                     </select>
 
                     <small id="eventError"></small>
+
                 </div>
 
             </div>
+
+
 
             <div class="form-row">
 
+
                 <div class="form-group">
-                    <label>NUMBER OF TICKETS</label>
+
+                    <label for="ticketCount">
+                        NUMBER OF TICKETS
+                    </label>
 
                     <select id="ticketCount">
-                        <option value="">Select tickets</option>
-                        <option value="1">1 Ticket</option>
-                        <option value="2">2 Tickets</option>
-                        <option value="3">3 Tickets</option>
-                        <option value="4">4 Tickets</option>
-                        <option value="5">5 Tickets</option>
+
+                        <option value="">
+                            Select tickets
+                        </option>
+
+                        <option value="1">
+                            1 Ticket
+                        </option>
+
+                        <option value="2">
+                            2 Tickets
+                        </option>
+
+                        <option value="3">
+                            3 Tickets
+                        </option>
+
+                        <option value="4">
+                            4 Tickets
+                        </option>
+
+                        <option value="5">
+                            5 Tickets
+                        </option>
+
                     </select>
 
                     <small id="ticketError"></small>
+
                 </div>
 
+
                 <div class="form-group">
-                    <label>PAYMENT METHOD</label>
+
+                    <label for="payment">
+                        PAYMENT METHOD
+                    </label>
 
                     <select id="payment">
-                        <option value="">Choose payment</option>
-                        <option value="UPI">UPI</option>
-                        <option value="Card">Credit / Debit Card</option>
-                        <option value="Net Banking">Net Banking</option>
+
+                        <option value="">
+                            Choose payment method
+                        </option>
+
+                        <option value="UPI">
+                            UPI
+                        </option>
+
+                        <option value="Card">
+                            Credit / Debit Card
+                        </option>
+
+                        <option value="Net Banking">
+                            Net Banking
+                        </option>
+
                     </select>
 
                     <small id="paymentError"></small>
+
                 </div>
 
             </div>
 
-            <button type="submit" class="book-now-btn">
-                BOOK NOW →
+
+            <!-- PRICE PREVIEW -->
+
+            <div class="price-preview">
+
+                <span>
+                    TOTAL AMOUNT
+                </span>
+
+                <strong id="totalPrice">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <button type="submit"
+                    class="book-now-btn">
+
+                CONFIRM BOOKING
+                <span>→</span>
+
             </button>
+
 
             <div id="bookingMessage"></div>
 
@@ -270,11 +429,119 @@
 
     </div>
 
-    </section>
-</main>
+</section>
+
+
+
+<!-- =========================
+     ABOUT SECTION
+========================= -->
+
+<section class="about-section" id="about">
+
+    <div class="about-content">
+
+        <div class="about-label">
+            ABOUT EVENTORA
+        </div>
+
+        <h2>
+            YOUR EVENT.
+            <br>
+            <span>YOUR EXPERIENCE.</span>
+        </h2>
+
+        <p>
+            EVENTORA is a modern event ticket booking experience
+            designed to make discovering and booking live events
+            simple, interactive and exciting.
+        </p>
+
+        <p>
+            From music nights and concerts to festivals and live
+            performances, discover events and reserve your tickets
+            in just a few clicks.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     CONTACT SECTION
+========================= -->
+
+<section class="contact-section" id="contact">
+
+    <div class="contact-container">
+
+        <div>
+
+            <span class="contact-label">
+                GET IN TOUCH
+            </span>
+
+            <h2>
+                LET'S MAKE
+                <br>
+                <strong>MEMORIES.</strong>
+            </h2>
+
+        </div>
+
+
+        <div class="contact-info">
+
+            <p>
+                📧 eventora@example.com
+            </p>
+
+            <p>
+                📞 +91 90000 00000
+            </p>
+
+            <p>
+                📍 Hyderabad, India
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    <div class="footer-logo">
+        EVENT<span>ORA</span>
+    </div>
+
+    <p>
+        © 2026 EVENTORA. All rights reserved.
+    </p>
+
+    <div class="footer-links">
+
+        <a href="#home">Home</a>
+        <a href="#events">Events</a>
+        <a href="#booking">Booking</a>
+        <a href="#contact">Contact</a>
+
+    </div>
+
+</footer>
+
 
 
 <script src="script.js"></script>
 
 </body>
-    </html>
+                        </html>
