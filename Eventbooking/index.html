@@ -168,7 +168,110 @@
         </div>
 
     </div>
+<!-- =========================
+     BOOKING SECTION
+========================= -->
 
+<section class="booking-section" id="tickets">
+
+    <div class="booking-container">
+
+        <div class="booking-heading">
+            <span>EVENTORA TICKETS</span>
+            <h2>BOOK YOUR<br><strong>EXPERIENCE</strong></h2>
+            <p>Reserve your spot and experience the event live.</p>
+        </div>
+
+        <form class="booking-form" id="bookingForm">
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label>FULL NAME</label>
+                    <input type="text" id="fullName"
+                           placeholder="Enter your name">
+                    <small id="nameError"></small>
+                </div>
+
+                <div class="form-group">
+                    <label>EMAIL</label>
+                    <input type="email" id="email"
+                           placeholder="Enter your email">
+                    <small id="emailError"></small>
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label>PHONE NUMBER</label>
+                    <input type="tel" id="phone"
+                           placeholder="Enter phone number">
+                    <small id="phoneError"></small>
+                </div>
+
+                <div class="form-group">
+                    <label>SELECT EVENT</label>
+
+                    <select id="selectedEvent">
+                        <option value="">Choose an event</option>
+                        <option value="Neon Nights">Neon Nights</option>
+                        <option value="Moon Tunes">Moon Tunes</option>
+                        <option value="Happy Beats">Happy Beats</option>
+                        <option value="Beat World">Beat World</option>
+                        <option value="City Beats">City Beats</option>
+                        <option value="Sound Fest">Sound Fest</option>
+                    </select>
+
+                    <small id="eventError"></small>
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label>NUMBER OF TICKETS</label>
+
+                    <select id="ticketCount">
+                        <option value="">Select tickets</option>
+                        <option value="1">1 Ticket</option>
+                        <option value="2">2 Tickets</option>
+                        <option value="3">3 Tickets</option>
+                        <option value="4">4 Tickets</option>
+                        <option value="5">5 Tickets</option>
+                    </select>
+
+                    <small id="ticketError"></small>
+                </div>
+
+                <div class="form-group">
+                    <label>PAYMENT METHOD</label>
+
+                    <select id="payment">
+                        <option value="">Choose payment</option>
+                        <option value="UPI">UPI</option>
+                        <option value="Card">Credit / Debit Card</option>
+                        <option value="Net Banking">Net Banking</option>
+                    </select>
+
+                    <small id="paymentError"></small>
+                </div>
+
+            </div>
+
+            <button type="submit" class="book-now-btn">
+                BOOK NOW →
+            </button>
+
+            <div id="bookingMessage"></div>
+
+        </form>
+
+    </div>
+
+    </section>
 </main>
 
 
