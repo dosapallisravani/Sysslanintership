@@ -1,352 +1,1268 @@
-/* =================================
-   EVENTORA — EVENT DATA
-   ================================= */
-
-const events = [
-    {
-        name: "NEON",
-        subtitle: "NIGHTS",
-        type: "EDM LIVE EXPERIENCE",
-        date: "18 SEP 2026",
-        time: "7:00 PM",
-        venue: "HYDERABAD",
-        price: "₹799",
-        image: "images/neon-dj.png"
-    },
-
-    {
-        name: "MOON",
-        subtitle: "TUNES",
-        type: "ACOUSTIC MUSIC NIGHT",
-        date: "25 SEP 2026",
-        time: "6:30 PM",
-        venue: "VISAKHAPATNAM",
-        price: "₹599",
-        image: "images/moon-guitarist.png"
-    },
-
-    {
-        name: "HAPPY",
-        subtitle: "BEATS",
-        type: "LIVE POP CONCERT",
-        date: "02 OCT 2026",
-        time: "7:30 PM",
-        venue: "VIJAYAWADA",
-        price: "₹699",
-        image: "images/happy-singer.png"
-    },
-
-    {
-        name: "BEAT",
-        subtitle: "WORLD",
-        type: "HIP-HOP LIVE SHOW",
-        date: "10 OCT 2026",
-        time: "8:00 PM",
-        venue: "HYDERABAD",
-        price: "₹899",
-        image: "images/beat-rapper.png"
-    },
-
-    {
-        name: "CITY",
-        subtitle: "BEATS",
-        type: "URBAN MUSIC FEST",
-        date: "18 OCT 2026",
-        time: "7:00 PM",
-        venue: "BENGALURU",
-        price: "₹749",
-        image: "images/city-dj.png"
-    },
-
-    {
-        name: "SOUND",
-        subtitle: "FEST",
-        type: "ULTIMATE MUSIC FESTIVAL",
-        date: "31 OCT 2026",
-        time: "6:00 PM",
-        venue: "HYDERABAD",
-        price: "₹999",
-        image: "images/sound-fest.png"
-    }
-];
-
-
-/* =================================
-   CURRENT SLIDE
-   ================================= */
-
-let currentIndex = 0;
-let isAnimating = false;
-
-
-/* =================================
-   ELEMENTS
-   ================================= */
-
-const hero = document.getElementById("hero");
-
-const centerImage = document.getElementById("centerImage");
-const leftImage = document.getElementById("leftImage");
-const rightImage = document.getElementById("rightImage");
-
-const eventName = document.getElementById("eventName");
-const eventType = document.getElementById("eventType");
-const eventDate = document.getElementById("eventDate");
-const eventTime = document.getElementById("eventTime");
-const eventVenue = document.getElementById("eventVenue");
-const eventPrice = document.getElementById("eventPrice");
-
-const indicators = document.querySelectorAll(
-    ".slide-indicator span"
-);
-
-
-/* =================================
-   UPDATE EVENT
-   ================================= */
-
-function updateEvent() {
-
-    const current = events[currentIndex];
-
-    const previousIndex =
-        (currentIndex - 1 + events.length) % events.length;
-
-    const nextIndex =
-        (currentIndex + 1) % events.length;
-
-
-    /* Center performer */
-
-    centerImage.src = current.image;
-
-
-    /* Side performers */
-
-    leftImage.src = events[previousIndex].image;
-    rightImage.src = events[nextIndex].image;
-
-
-    /* Event information */
-
-    eventName.innerHTML =
-        `${current.name}<br><span>${current.subtitle}</span>`;
-
-    eventType.textContent = current.type;
-    eventDate.textContent = current.date;
-    eventTime.textContent = current.time;
-    eventVenue.textContent = current.venue;
-    eventPrice.textContent = current.price;
-
-
-    /* Indicator */
-
-    indicators.forEach((dot, index) => {
-
-        dot.classList.toggle(
-            "active",
-            index === currentIndex
-        );
-
-    });
-}
-
-
-/* =================================
-   NEXT EVENT
-   ================================= */
-
-function nextEvent() {
-
-    if (isAnimating) return;
-
-    isAnimating = true;
-
-    currentIndex =
-        (currentIndex + 1) % events.length;
-
-    updateEvent();
-
-
-    setTimeout(() => {
-        isAnimating = false;
-    }, 700);
-}
-
-
-/* =================================
-   PREVIOUS EVENT
-   ================================= */
-
-function previousEvent() {
-
-    if (isAnimating) return;
-
-    isAnimating = true;
-
-    currentIndex =
-        (currentIndex - 1 + events.length) %
-        events.length;
-
-    updateEvent();
-
-
-    setTimeout(() => {
-        isAnimating = false;
-    }, 700);
-}
-
-
-/* =================================
-   EXPLORE EVENT
-   ================================= */
-
-function exploreEvent() {
-
-    const current = events[currentIndex];
-
-    alert(
-        `Welcome to ${current.name} ${current.subtitle}!\n\n` +
-        `Date: ${current.date}\n` +
-        `Time: ${current.time}\n` +
-        `Venue: ${current.venue}\n` +
-        `Ticket: ${current.price}`
-    );
-}
-
-
-/* =================================
-   KEYBOARD CONTROLS
-   ================================= */
-
-document.addEventListener("keydown", (event) => {
-
-    if (event.key === "ArrowRight") {
-        nextEvent();
-    }
-
-    if (event.key === "ArrowLeft") {
-        previousEvent();
-    }
-
-});
-
-
-/* =================================
-   TOUCH / SWIPE
-   ================================= */
-
-let touchStartX = 0;
-let touchEndX = 0;
-
-document.addEventListener("touchstart", (event) => {
-
-    touchStartX =
-        event.changedTouches[0].screenX;
-
-});
-
-
-document.addEventListener("touchend", (event) => {
-
-    touchEndX =
-        event.changedTouches[0].screenX;
-
-    handleSwipe();
-
-});
-
-
-function handleSwipe() {
-
-    const swipeDistance =
-        touchEndX - touchStartX;
-
-    if (Math.abs(swipeDistance) < 50) {
-        return;
-    }
-
-    if (swipeDistance < 0) {
-        nextEvent();
-    } else {
-        previousEvent();
-    }
-
-}
-
-
-/* =================================
-   INITIAL LOAD
-   ================================= */
-
-updateEvent();
 /* =========================
-   BOOKING FORM
+   EVENTORA
+   COMPLETE STYLES
 ========================= */
 
-const bookingForm = document.getElementById("bookingForm");
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-bookingForm.addEventListener("submit", function(event) {
+html {
+    scroll-behavior: smooth;
+}
 
-    event.preventDefault();
+body {
+    font-family: "Inter", sans-serif;
+    background: #050505;
+    color: #ffffff;
+    overflow-x: hidden;
+}
 
-    const name = document.getElementById("fullName").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const selectedEvent = document.getElementById("selectedEvent").value;
-    const tickets = document.getElementById("ticketCount").value;
-    const payment = document.getElementById("payment").value;
 
-    const message = document.getElementById("bookingMessage");
+/* =========================
+   HERO
+========================= */
 
-    document.querySelectorAll(".form-group small")
-        .forEach(error => error.textContent = "");
+.hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
 
-    let valid = true;
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            #32115f 0%,
+            #120a24 38%,
+            #050505 78%
+        );
+}
 
-    if (name === "") {
-        document.getElementById("nameError").textContent =
-            "Please enter your name.";
-        valid = false;
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.background-glow {
+    position: absolute;
+    width: 650px;
+    height: 650px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(195, 92, 255, 0.30),
+            rgba(85, 40, 160, 0.12),
+            transparent 70%
+        );
+
+    filter: blur(20px);
+    pointer-events: none;
+}
+
+.particles {
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+    opacity: 0.35;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.8) 1px,
+            transparent 1px
+        );
+
+    background-size: 90px 90px;
+
+    animation: moveParticles 18s linear infinite;
+}
+
+@keyframes moveParticles {
+
+    from {
+        transform: translateY(0);
     }
 
-    if (!email.includes("@")) {
-        document.getElementById("emailError").textContent =
-            "Please enter a valid email.";
-        valid = false;
+    to {
+        transform: translateY(-90px);
+    }
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    position: relative;
+
+    z-index: 100;
+
+    width: 100%;
+    height: 85px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 6%;
+}
+
+.logo {
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 25px;
+    font-weight: 900;
+
+    letter-spacing: 3px;
+}
+
+.logo span,
+.footer-logo span {
+    color: #c35cff;
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+}
+
+.nav-links a {
+    color: rgba(255,255,255,0.7);
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 15px #c35cff;
+}
+
+.sign-btn {
+    color: white;
+
+    text-decoration: none;
+
+    padding: 10px 20px;
+
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 30px;
+
+    background: rgba(255,255,255,0.05);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    transition: 0.3s;
+}
+
+.sign-btn:hover {
+    background: white;
+    color: #080808;
+}
+
+
+/* =========================
+   CAROUSEL
+========================= */
+
+.event-carousel {
+    position: relative;
+
+    z-index: 5;
+
+    width: 100%;
+    height: calc(100vh - 85px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    perspective: 1400px;
+}
+
+
+/* =========================
+   CENTER EVENT
+========================= */
+
+.center-event {
+    position: relative;
+
+    width: 430px;
+    height: 650px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 20;
+}
+
+
+/* =========================
+   PERFORMER
+========================= */
+
+.performer {
+    position: absolute;
+
+    top: 0;
+
+    width: 420px;
+    height: 580px;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    z-index: 1;
+}
+
+.center-image-wrapper {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-image-wrapper img {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    z-index: 3;
+
+    filter:
+        drop-shadow(0 20px 35px rgba(0,0,0,0.8))
+        drop-shadow(0 0 25px rgba(195,92,255,0.45));
+
+    animation: performerFloat 4s ease-in-out infinite;
+}
+
+@keyframes performerFloat {
+
+    0%,100% {
+        transform: translateY(0);
     }
 
-    if (!/^[0-9]{10}$/.test(phone)) {
-        document.getElementById("phoneError").textContent =
-            "Enter a valid 10-digit phone number.";
-        valid = false;
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+
+/* =========================
+   IMAGE PLACEHOLDER
+========================= */
+
+.image-placeholder {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 30px;
+
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(195,92,255,0.25),
+            transparent 45%
+        );
+
+    z-index: 1;
+}
+
+.image-placeholder::after {
+    content: "PERFORMER";
+
+    position: absolute;
+
+    bottom: 30%;
+
+    color: rgba(255,255,255,0.15);
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+}
+
+.center-placeholder span {
+    position: absolute;
+
+    bottom: 24%;
+
+    color: rgba(255,255,255,0.2);
+
+    font-size: 50px;
+
+    font-weight: 900;
+
+    letter-spacing: 5px;
+}
+
+
+/* =========================
+   EVENT INFO
+========================= */
+
+.event-info {
+    position: absolute;
+
+    left: -410px;
+    bottom: 45px;
+
+    width: 380px;
+
+    z-index: 30;
+}
+
+.event-label {
+    color: #c35cff;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 15px;
+}
+
+.event-info h1 {
+    font-size: 64px;
+
+    line-height: 0.85;
+
+    letter-spacing: -4px;
+
+    font-weight: 900;
+}
+
+.event-info h1 span {
+    color: #c35cff;
+}
+
+.event-type {
+    margin-top: 18px;
+
+    color: rgba(255,255,255,0.6);
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   EVENT DETAILS
+========================= */
+
+.event-details {
+    display: flex;
+
+    gap: 25px;
+
+    margin-top: 25px;
+}
+
+.event-details div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.event-details small {
+    color: rgba(255,255,255,0.4);
+
+    font-size: 7px;
+
+    letter-spacing: 2px;
+}
+
+.event-details strong {
+    font-size: 10px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   BOOK BUTTON
+========================= */
+
+.explore-btn {
+    display: inline-flex;
+
+    align-items: center;
+    gap: 12px;
+
+    margin-top: 28px;
+
+    padding: 13px 22px;
+
+    border-radius: 30px;
+
+    background: #c35cff;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    transition: 0.3s;
+}
+
+.explore-btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 30px rgba(195,92,255,0.35);
+}
+
+
+/* =========================
+   SIDE EVENTS
+========================= */
+
+.side-event {
+    position: absolute;
+
+    top: 50%;
+
+    width: 300px;
+    height: 450px;
+
+    z-index: 4;
+
+    transition: 0.7s ease;
+}
+
+.left-event {
+    left: 4%;
+
+    transform:
+        translateY(-50%)
+        rotateY(35deg)
+        scale(0.65);
+
+    opacity: 0.5;
+}
+
+.right-event {
+    right: 4%;
+
+    transform:
+        translateY(-50%)
+        rotateY(-35deg)
+        scale(0.65);
+
+    opacity: 0.5;
+}
+
+.side-card {
+    width: 100%;
+    height: 100%;
+}
+
+.side-image {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.side-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(0 20px 30px rgba(0,0,0,0.7));
+}
+
+.side-image .image-placeholder {
+    opacity: 0.4;
+}
+
+
+/* =========================
+   ARROWS
+========================= */
+
+.arrow {
+    position: absolute;
+
+    top: 50%;
+
+    z-index: 80;
+
+    transform: translateY(-50%);
+
+    width: 50px;
+    height: 50px;
+
+    border: 1px solid rgba(255,255,255,0.25);
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.06);
+
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(10px);
+
+    transition: 0.3s;
+}
+
+.arrow:hover {
+    background: #c35cff;
+
+    border-color: #c35cff;
+
+    transform:
+        translateY(-50%)
+        scale(1.1);
+}
+
+.left-arrow {
+    left: 3%;
+}
+
+.right-arrow {
+    right: 3%;
+}
+
+
+/* =========================
+   BOTTOM UI
+========================= */
+
+.bottom-ui {
+    position: absolute;
+
+    z-index: 50;
+
+    bottom: 25px;
+
+    left: 6%;
+    right: 6%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+.slide-indicator {
+    display: flex;
+
+    gap: 8px;
+}
+
+.slide-indicator span {
+    width: 25px;
+    height: 2px;
+
+    background: rgba(255,255,255,0.25);
+
+    transition: 0.3s;
+}
+
+.slide-indicator span.active {
+    width: 45px;
+
+    background: #c35cff;
+}
+
+.scroll-text {
+    color: rgba(255,255,255,0.35);
+
+    font-size: 8px;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   BOOKING
+========================= */
+
+.booking-section {
+    position: relative;
+
+    min-height: 100vh;
+
+    padding: 110px 8%;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            #32115f,
+            transparent 40%
+        ),
+        #050505;
+}
+
+.booking-container {
+    max-width: 900px;
+
+    margin: auto;
+}
+
+.section-heading {
+    text-align: center;
+
+    margin-bottom: 50px;
+}
+
+.section-heading span {
+    color: #c35cff;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 4px;
+}
+
+.section-heading h2 {
+    margin-top: 15px;
+
+    font-size: 50px;
+
+    line-height: 0.95;
+
+    letter-spacing: -3px;
+}
+
+.section-heading h2 strong {
+    color: #c35cff;
+}
+
+.section-heading p {
+    max-width: 600px;
+
+    margin: 20px auto 0;
+
+    color: rgba(255,255,255,0.55);
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.booking-form {
+    padding: 35px;
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    border-radius: 25px;
+
+    background: rgba(255,255,255,0.05);
+
+    backdrop-filter: blur(20px);
+}
+
+.form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 25px;
+
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: rgba(255,255,255,0.6);
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+
+    padding: 14px 15px;
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    border-radius: 10px;
+
+    outline: none;
+
+    background: rgba(0,0,0,0.35);
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    transition: 0.3s;
+}
+
+.form-group input::placeholder {
+    color: rgba(255,255,255,0.3);
+}
+
+.form-group select option {
+    background: #17101f;
+
+    color: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #c35cff;
+
+    box-shadow:
+        0 0 15px rgba(195,92,255,0.15);
+}
+
+.form-group small {
+    display: block;
+
+    min-height: 14px;
+
+    margin-top: 5px;
+
+    color: #ff6b9d;
+
+    font-size: 9px;
+}
+
+
+/* =========================
+   PRICE
+========================= */
+
+.price-preview {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 10px;
+
+    padding: 18px;
+
+    border-radius: 12px;
+
+    background: rgba(195,92,255,0.08);
+
+    border: 1px solid rgba(195,92,255,0.15);
+}
+
+.price-preview span {
+    color: rgba(255,255,255,0.5);
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+}
+
+.price-preview strong {
+    color: #c35cff;
+
+    font-size: 22px;
+}
+
+
+/* =========================
+   CONFIRM BUTTON
+========================= */
+
+.book-now-btn {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 30px;
+
+    background: #c35cff;
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.book-now-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 30px rgba(195,92,255,0.35);
+}
+
+#bookingMessage {
+    text-align: center;
+
+    margin-top: 18px;
+
+    font-size: 12px;
+}
+
+.success-message {
+    color: #8dffb0;
+}
+
+
+/* =========================
+   ABOUT
+========================= */
+
+.about-section {
+    min-height: 70vh;
+
+    display: flex;
+    align-items: center;
+
+    padding: 100px 10%;
+
+    background: #09070d;
+}
+
+.about-content {
+    max-width: 850px;
+}
+
+.about-label,
+.contact-label {
+    color: #c35cff;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 4px;
+}
+
+.about-content h2,
+.contact-container h2 {
+    margin-top: 18px;
+
+    font-size: 55px;
+
+    line-height: 0.95;
+
+    letter-spacing: -3px;
+}
+
+.about-content h2 span,
+.contact-container h2 strong {
+    color: #c35cff;
+}
+
+.about-content p {
+    max-width: 700px;
+
+    margin-top: 25px;
+
+    color: rgba(255,255,255,0.55);
+
+    font-size: 14px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact-section {
+    padding: 100px 10%;
+
+    background:
+        radial-gradient(
+            circle at 80% 50%,
+            rgba(195,92,255,0.15),
+            transparent 45%
+        ),
+        #050505;
+}
+
+.contact-container {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 50px;
+}
+
+.contact-info {
+    color: rgba(255,255,255,0.6);
+
+    font-size: 13px;
+
+    line-height: 2.5;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    padding: 30px 6%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    background: #030303;
+
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.footer-logo {
+    font-size: 20px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+}
+
+.footer p {
+    color: rgba(255,255,255,0.35);
+
+    font-size: 10px;
+}
+
+.footer-links {
+    display: flex;
+
+    gap: 20px;
+}
+
+.footer-links a {
+    color: rgba(255,255,255,0.45);
+
+    text-decoration: none;
+
+    font-size: 10px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width: 900px) {
+
+    .hero {
+        height: 100svh;
+        min-height: 650px;
     }
 
-    if (selectedEvent === "") {
-        document.getElementById("eventError").textContent =
-            "Please select an event.";
-        valid = false;
+    .navbar {
+        height: 70px;
+
+        padding: 0 18px;
     }
 
-    if (tickets === "") {
-        document.getElementById("ticketError").textContent =
-            "Please select number of tickets.";
-        valid = false;
+    .logo {
+        font-size: 19px;
+
+        letter-spacing: 2px;
     }
 
-    if (payment === "") {
-        document.getElementById("paymentError").textContent =
-            "Please select payment method.";
-        valid = false;
+    .nav-links {
+        display: none;
     }
 
-    if (!valid) {
-        message.textContent = "";
-        return;
+    .sign-btn {
+        padding: 8px 13px;
+
+        font-size: 8px;
     }
 
-    message.textContent =
-        "🎉 Booking successful! Your tickets are reserved.";
+    .event-carousel {
+        height: calc(100svh - 70px);
 
-    bookingForm.reset();
-});
+        min-height: 580px;
+    }
+
+    .center-event {
+        width: 100%;
+
+        height: 100%;
+    }
+
+    .performer {
+        top: 5px;
+
+        width: 280px;
+
+        height: 360px;
+    }
+
+    .center-placeholder span {
+        font-size: 30px;
+    }
+
+    .event-info {
+        left: 50%;
+
+        bottom: 65px;
+
+        width: 92%;
+
+        transform: translateX(-50%);
+
+        text-align: center;
+    }
+
+    .event-label {
+        font-size: 8px;
+
+        margin-bottom: 10px;
+    }
+
+    .event-info h1 {
+        font-size: 48px;
+
+        letter-spacing: -3px;
+    }
+
+    .event-type {
+        margin-top: 12px;
+
+        font-size: 8px;
+
+        letter-spacing: 2px;
+    }
+
+    .event-details {
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        gap: 12px 18px;
+
+        margin-top: 18px;
+    }
+
+    .event-details strong {
+        font-size: 8px;
+    }
+
+    .event-details small {
+        font-size: 6px;
+    }
+
+    .explore-btn {
+        margin-top: 17px;
+
+        padding: 12px 20px;
+    }
+
+    .side-event {
+        width: 200px;
+
+        height: 300px;
+    }
+
+    .left-event {
+        left: -115px;
+
+        opacity: 0.15;
+
+        transform:
+            translateY(-50%)
+            scale(0.4);
+    }
+
+    .right-event {
+        right: -115px;
+
+        opacity: 0.15;
+
+        transform:
+            translateY(-50%)
+            scale(0.4);
+    }
+
+    .arrow {
+        width: 42px;
+        height: 42px;
+
+        font-size: 17px;
+    }
+
+    .left-arrow {
+        left: 10px;
+    }
+
+    .right-arrow {
+        right: 10px;
+    }
+
+    .bottom-ui {
+        left: 18px;
+        right: 18px;
+
+        bottom: 15px;
+    }
+
+    .scroll-text {
+        display: none;
+    }
+
+
+    /* BOOKING MOBILE */
+
+    .booking-section {
+        padding: 80px 18px;
+    }
+
+    .section-heading h2 {
+        font-size: 38px;
+
+        letter-spacing: -2px;
+    }
+
+    .section-heading p {
+        font-size: 12px;
+    }
+
+    .booking-form {
+        padding: 22px;
+
+        border-radius: 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+
+        margin-bottom: 15px;
+    }
+
+
+    /* ABOUT MOBILE */
+
+    .about-section {
+        padding: 80px 25px;
+    }
+
+    .about-content h2,
+    .contact-container h2 {
+        font-size: 40px;
+    }
+
+
+    /* CONTACT MOBILE */
+
+    .contact-section {
+        padding: 80px 25px;
+    }
+
+    .contact-container {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    /* FOOTER MOBILE */
+
+    .footer {
+        flex-direction: column;
+
+        text-align: center;
+
+        padding: 30px 20px;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+       }
