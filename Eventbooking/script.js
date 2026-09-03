@@ -1,1268 +1,655 @@
 /* =========================
    EVENTORA
-   COMPLETE STYLES
+   EVENT DATA
 ========================= */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+const events = [
 
-html {
-    scroll-behavior: smooth;
-}
+    {
+        name: "NEON",
+        subtitle: "NIGHTS",
+        type: "EDM LIVE EXPERIENCE",
+        date: "18 SEP 2026",
+        time: "7:00 PM",
+        venue: "HYDERABAD",
+        price: 799,
+        image: "images/neon-dj.png"
+    },
 
-body {
-    font-family: "Inter", sans-serif;
-    background: #050505;
-    color: #ffffff;
-    overflow-x: hidden;
-}
+    {
+        name: "MOON",
+        subtitle: "TUNES",
+        type: "ACOUSTIC MUSIC NIGHT",
+        date: "25 SEP 2026",
+        time: "6:30 PM",
+        venue: "VISAKHAPATNAM",
+        price: 599,
+        image: "images/moon-guitarist.png"
+    },
 
+    {
+        name: "HAPPY",
+        subtitle: "BEATS",
+        type: "LIVE POP CONCERT",
+        date: "02 OCT 2026",
+        time: "7:30 PM",
+        venue: "VIJAYAWADA",
+        price: 699,
+        image: "images/happy-singer.png"
+    },
 
-/* =========================
-   HERO
-========================= */
+    {
+        name: "BEAT",
+        subtitle: "WORLD",
+        type: "HIP-HOP LIVE SHOW",
+        date: "10 OCT 2026",
+        time: "8:00 PM",
+        venue: "HYDERABAD",
+        price: 899,
+        image: "images/beat-rapper.png"
+    },
 
-.hero {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    height: 100vh;
-    overflow: hidden;
+    {
+        name: "CITY",
+        subtitle: "BEATS",
+        type: "URBAN MUSIC FEST",
+        date: "18 OCT 2026",
+        time: "7:00 PM",
+        venue: "BENGALURU",
+        price: 749,
+        image: "images/city-dj.png"
+    },
 
-    background:
-        radial-gradient(
-            circle at 50% 45%,
-            #32115f 0%,
-            #120a24 38%,
-            #050505 78%
-        );
-}
-
-
-/* =========================
-   BACKGROUND
-========================= */
-
-.background-glow {
-    position: absolute;
-    width: 650px;
-    height: 650px;
-
-    left: 50%;
-    top: 50%;
-
-    transform: translate(-50%, -50%);
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(195, 92, 255, 0.30),
-            rgba(85, 40, 160, 0.12),
-            transparent 70%
-        );
-
-    filter: blur(20px);
-    pointer-events: none;
-}
-
-.particles {
-    position: absolute;
-    inset: 0;
-
-    pointer-events: none;
-    opacity: 0.35;
-
-    background-image:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,0.8) 1px,
-            transparent 1px
-        );
-
-    background-size: 90px 90px;
-
-    animation: moveParticles 18s linear infinite;
-}
-
-@keyframes moveParticles {
-
-    from {
-        transform: translateY(0);
+    {
+        name: "SOUND",
+        subtitle: "FEST",
+        type: "ULTIMATE MUSIC FESTIVAL",
+        date: "31 OCT 2026",
+        time: "6:00 PM",
+        venue: "HYDERABAD",
+        price: 999,
+        image: "images/sound-fest.png"
     }
 
-    to {
-        transform: translateY(-90px);
-    }
+];
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+let currentIndex = 0;
+let isAnimating = false;
+
+const centerImage =
+    document.getElementById("centerImage");
+
+const leftImage =
+    document.getElementById("leftImage");
+
+const rightImage =
+    document.getElementById("rightImage");
+
+const eventName =
+    document.getElementById("eventName");
+
+const eventType =
+    document.getElementById("eventType");
+
+const eventDate =
+    document.getElementById("eventDate");
+
+const eventTime =
+    document.getElementById("eventTime");
+
+const eventVenue =
+    document.getElementById("eventVenue");
+
+const eventPrice =
+    document.getElementById("eventPrice");
+
+const indicators =
+    document.getElementById("indicators");
+
+const selectedEvent =
+    document.getElementById("selectedEvent");
+
+const ticketCount =
+    document.getElementById("ticketCount");
+
+const totalPrice =
+    document.getElementById("totalPrice");
+
+const bookingForm =
+    document.getElementById("bookingForm");
+
+
+/* =========================
+   CREATE INDICATORS
+========================= */
+
+function createIndicators() {
+
+    indicators.innerHTML = "";
+
+    events.forEach((event, index) => {
+
+        const dot = document.createElement("span");
+
+        if (index === currentIndex) {
+            dot.classList.add("active");
+        }
+
+        indicators.appendChild(dot);
+
+    });
+
 }
 
 
 /* =========================
-   NAVBAR
+   LOAD EVENT OPTIONS
 ========================= */
 
-.navbar {
-    position: relative;
+function loadEventOptions() {
 
-    z-index: 100;
+    events.forEach((event, index) => {
 
-    width: 100%;
-    height: 85px;
+        const option =
+            document.createElement("option");
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+        option.value = index;
 
-    padding: 0 6%;
-}
+        option.textContent =
+            `${event.name} ${event.subtitle}`;
 
-.logo {
-    color: #ffffff;
+        selectedEvent.appendChild(option);
 
-    text-decoration: none;
+    });
 
-    font-size: 25px;
-    font-weight: 900;
-
-    letter-spacing: 3px;
-}
-
-.logo span,
-.footer-logo span {
-    color: #c35cff;
-}
-
-.nav-links {
-    display: flex;
-    gap: 32px;
-}
-
-.nav-links a {
-    color: rgba(255,255,255,0.7);
-
-    text-decoration: none;
-
-    font-size: 12px;
-    font-weight: 500;
-
-    transition: 0.3s;
-}
-
-.nav-links a:hover {
-    color: #ffffff;
-    text-shadow: 0 0 15px #c35cff;
-}
-
-.sign-btn {
-    color: white;
-
-    text-decoration: none;
-
-    padding: 10px 20px;
-
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 30px;
-
-    background: rgba(255,255,255,0.05);
-
-    font-size: 10px;
-    font-weight: 700;
-
-    letter-spacing: 1px;
-
-    transition: 0.3s;
-}
-
-.sign-btn:hover {
-    background: white;
-    color: #080808;
 }
 
 
 /* =========================
-   CAROUSEL
+   UPDATE EVENT
 ========================= */
 
-.event-carousel {
-    position: relative;
+function updateEvent() {
 
-    z-index: 5;
+    const current =
+        events[currentIndex];
 
-    width: 100%;
-    height: calc(100vh - 85px);
+    const previousIndex =
+        (currentIndex - 1 + events.length)
+        % events.length;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    perspective: 1400px;
-}
+    const nextIndex =
+        (currentIndex + 1)
+        % events.length;
 
 
-/* =========================
-   CENTER EVENT
-========================= */
+    /* CENTER */
 
-.center-event {
-    position: relative;
+    centerImage.src = current.image;
 
-    width: 430px;
-    height: 650px;
+    centerImage.onerror = function () {
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        centerImage.style.display = "none";
 
-    z-index: 20;
-}
+    };
 
 
-/* =========================
-   PERFORMER
-========================= */
+    /* LEFT */
 
-.performer {
-    position: absolute;
+    leftImage.src =
+        events[previousIndex].image;
 
-    top: 0;
+    leftImage.onerror = function () {
 
-    width: 420px;
-    height: 580px;
+        leftImage.style.display = "none";
 
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-
-    z-index: 1;
-}
-
-.center-image-wrapper {
-    position: relative;
-
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.center-image-wrapper img {
-    position: relative;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: contain;
-
-    z-index: 3;
-
-    filter:
-        drop-shadow(0 20px 35px rgba(0,0,0,0.8))
-        drop-shadow(0 0 25px rgba(195,92,255,0.45));
-
-    animation: performerFloat 4s ease-in-out infinite;
-}
-
-@keyframes performerFloat {
-
-    0%,100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-12px);
-    }
-}
+    };
 
 
-/* =========================
-   IMAGE PLACEHOLDER
-========================= */
+    /* RIGHT */
 
-.image-placeholder {
-    position: absolute;
+    rightImage.src =
+        events[nextIndex].image;
 
-    inset: 0;
+    rightImage.onerror = function () {
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        rightImage.style.display = "none";
 
-    border-radius: 30px;
+    };
 
-    background:
-        radial-gradient(
-            circle at 50% 35%,
-            rgba(195,92,255,0.25),
-            transparent 45%
+
+    /* TEXT */
+
+    eventName.innerHTML =
+        `${current.name}<br>
+        <span>${current.subtitle}</span>`;
+
+    eventType.textContent =
+        current.type;
+
+    eventDate.textContent =
+        current.date;
+
+    eventTime.textContent =
+        current.time;
+
+    eventVenue.textContent =
+        current.venue;
+
+    eventPrice.textContent =
+        `₹${current.price}`;
+
+
+    /* INDICATORS */
+
+    const dots =
+        indicators.querySelectorAll("span");
+
+    dots.forEach((dot, index) => {
+
+        dot.classList.toggle(
+            "active",
+            index === currentIndex
         );
 
-    z-index: 1;
-}
+    });
 
-.image-placeholder::after {
-    content: "PERFORMER";
 
-    position: absolute;
+    /* BOOKING EVENT */
 
-    bottom: 30%;
+    selectedEvent.value =
+        currentIndex;
 
-    color: rgba(255,255,255,0.15);
-
-    font-size: 10px;
-
-    letter-spacing: 4px;
-}
-
-.center-placeholder span {
-    position: absolute;
-
-    bottom: 24%;
-
-    color: rgba(255,255,255,0.2);
-
-    font-size: 50px;
-
-    font-weight: 900;
-
-    letter-spacing: 5px;
 }
 
 
 /* =========================
-   EVENT INFO
+   NEXT EVENT
 ========================= */
 
-.event-info {
-    position: absolute;
+function nextEvent() {
 
-    left: -410px;
-    bottom: 45px;
+    if (isAnimating) return;
 
-    width: 380px;
+    isAnimating = true;
 
-    z-index: 30;
-}
+    currentIndex =
+        (currentIndex + 1)
+        % events.length;
 
-.event-label {
-    color: #c35cff;
+    updateEvent();
 
-    font-size: 9px;
-    font-weight: 700;
+    setTimeout(() => {
 
-    letter-spacing: 3px;
+        isAnimating = false;
 
-    margin-bottom: 15px;
-}
+    }, 700);
 
-.event-info h1 {
-    font-size: 64px;
-
-    line-height: 0.85;
-
-    letter-spacing: -4px;
-
-    font-weight: 900;
-}
-
-.event-info h1 span {
-    color: #c35cff;
-}
-
-.event-type {
-    margin-top: 18px;
-
-    color: rgba(255,255,255,0.6);
-
-    font-size: 10px;
-
-    letter-spacing: 3px;
 }
 
 
 /* =========================
-   EVENT DETAILS
+   PREVIOUS EVENT
 ========================= */
 
-.event-details {
-    display: flex;
+function previousEvent() {
 
-    gap: 25px;
+    if (isAnimating) return;
 
-    margin-top: 25px;
-}
+    isAnimating = true;
 
-.event-details div {
-    display: flex;
-    flex-direction: column;
+    currentIndex =
+        (currentIndex - 1 + events.length)
+        % events.length;
 
-    gap: 5px;
-}
+    updateEvent();
 
-.event-details small {
-    color: rgba(255,255,255,0.4);
+    setTimeout(() => {
 
-    font-size: 7px;
+        isAnimating = false;
 
-    letter-spacing: 2px;
-}
+    }, 700);
 
-.event-details strong {
-    font-size: 10px;
-
-    white-space: nowrap;
 }
 
 
 /* =========================
-   BOOK BUTTON
+   ARROW BUTTONS
 ========================= */
 
-.explore-btn {
-    display: inline-flex;
+document
+    .getElementById("nextBtn")
+    .addEventListener(
+        "click",
+        nextEvent
+    );
 
-    align-items: center;
-    gap: 12px;
+document
+    .getElementById("previousBtn")
+    .addEventListener(
+        "click",
+        previousEvent
+    );
 
-    margin-top: 28px;
 
-    padding: 13px 22px;
+/* =========================
+   KEYBOARD
+========================= */
 
-    border-radius: 30px;
+document.addEventListener(
+    "keydown",
+    function(event) {
 
-    background: #c35cff;
+        if (event.key === "ArrowRight") {
+            nextEvent();
+        }
 
-    color: white;
+        if (event.key === "ArrowLeft") {
+            previousEvent();
+        }
 
-    text-decoration: none;
+    }
+);
 
-    font-size: 10px;
 
-    font-weight: 800;
+/* =========================
+   SWIPE
+========================= */
 
-    letter-spacing: 1px;
+let touchStartX = 0;
+let touchEndX = 0;
 
-    transition: 0.3s;
-}
+document.addEventListener(
+    "touchstart",
+    function(event) {
 
-.explore-btn:hover {
-    transform: translateY(-3px);
+        touchStartX =
+            event.changedTouches[0].screenX;
 
-    box-shadow:
-        0 12px 30px rgba(195,92,255,0.35);
+    }
+);
+
+document.addEventListener(
+    "touchend",
+    function(event) {
+
+        touchEndX =
+            event.changedTouches[0].screenX;
+
+        const distance =
+            touchEndX - touchStartX;
+
+        if (Math.abs(distance) < 50) {
+            return;
+        }
+
+        if (distance < 0) {
+            nextEvent();
+        } else {
+            previousEvent();
+        }
+
+    }
+);
+
+
+/* =========================
+   TICKET PRICE
+========================= */
+
+function calculateTotal() {
+
+    const eventIndex =
+        selectedEvent.value;
+
+    const count =
+        Number(ticketCount.value);
+
+    if (
+        eventIndex === "" ||
+        !count
+    ) {
+
+        totalPrice.textContent =
+            "₹0";
+
+        return;
+
+    }
+
+    const price =
+        events[eventIndex].price;
+
+    const total =
+        price * count;
+
+    totalPrice.textContent =
+        `₹${total}`;
+
 }
 
 
 /* =========================
-   SIDE EVENTS
+   EVENT / TICKET CHANGE
 ========================= */
 
-.side-event {
-    position: absolute;
+selectedEvent.addEventListener(
+    "change",
+    calculateTotal
+);
 
-    top: 50%;
-
-    width: 300px;
-    height: 450px;
-
-    z-index: 4;
-
-    transition: 0.7s ease;
-}
-
-.left-event {
-    left: 4%;
-
-    transform:
-        translateY(-50%)
-        rotateY(35deg)
-        scale(0.65);
-
-    opacity: 0.5;
-}
-
-.right-event {
-    right: 4%;
-
-    transform:
-        translateY(-50%)
-        rotateY(-35deg)
-        scale(0.65);
-
-    opacity: 0.5;
-}
-
-.side-card {
-    width: 100%;
-    height: 100%;
-}
-
-.side-image {
-    position: relative;
-
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.side-image img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: contain;
-
-    filter:
-        drop-shadow(0 20px 30px rgba(0,0,0,0.7));
-}
-
-.side-image .image-placeholder {
-    opacity: 0.4;
-}
+ticketCount.addEventListener(
+    "change",
+    calculateTotal
+);
 
 
 /* =========================
-   ARROWS
+   FORM VALIDATION
 ========================= */
 
-.arrow {
-    position: absolute;
+bookingForm.addEventListener(
+    "submit",
+    function(event) {
 
-    top: 50%;
+        event.preventDefault();
 
-    z-index: 80;
 
-    transform: translateY(-50%);
+        const name =
+            document
+                .getElementById("fullName")
+                .value
+                .trim();
 
-    width: 50px;
-    height: 50px;
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim();
 
-    border: 1px solid rgba(255,255,255,0.25);
+        const phone =
+            document
+                .getElementById("phone")
+                .value
+                .trim();
 
-    border-radius: 50%;
+        const eventValue =
+            selectedEvent.value;
 
-    background: rgba(255,255,255,0.06);
+        const tickets =
+            ticketCount.value;
 
-    color: white;
+        const payment =
+            document
+                .getElementById("payment")
+                .value;
 
-    font-size: 20px;
 
-    cursor: pointer;
+        /* ERROR ELEMENTS */
 
-    backdrop-filter: blur(10px);
+        const nameError =
+            document.getElementById("nameError");
 
-    transition: 0.3s;
-}
+        const emailError =
+            document.getElementById("emailError");
 
-.arrow:hover {
-    background: #c35cff;
+        const phoneError =
+            document.getElementById("phoneError");
 
-    border-color: #c35cff;
+        const eventError =
+            document.getElementById("eventError");
 
-    transform:
-        translateY(-50%)
-        scale(1.1);
-}
+        const ticketError =
+            document.getElementById("ticketError");
 
-.left-arrow {
-    left: 3%;
-}
+        const paymentError =
+            document.getElementById("paymentError");
 
-.right-arrow {
-    right: 3%;
-}
+        const message =
+            document.getElementById(
+                "bookingMessage"
+            );
+
+
+        /* CLEAR */
+
+        nameError.textContent = "";
+        emailError.textContent = "";
+        phoneError.textContent = "";
+        eventError.textContent = "";
+        ticketError.textContent = "";
+        paymentError.textContent = "";
+
+        message.textContent = "";
+
+        let valid = true;
+
+
+        /* NAME */
+
+        if (name.length < 3) {
+
+            nameError.textContent =
+                "Please enter your full name.";
+
+            valid = false;
+
+        }
+
+
+        /* EMAIL */
+
+        const emailPattern =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+
+            emailError.textContent =
+                "Enter a valid email address.";
+
+            valid = false;
+
+        }
+
+
+        /* PHONE */
+
+        if (!/^[0-9]{10}$/.test(phone)) {
+
+            phoneError.textContent =
+                "Enter a valid 10-digit number.";
+
+            valid = false;
+
+        }
+
+
+        /* EVENT */
+
+        if (eventValue === "") {
+
+            eventError.textContent =
+                "Please select an event.";
+
+            valid = false;
+
+        }
+
+
+        /* TICKETS */
+
+        if (tickets === "") {
+
+            ticketError.textContent =
+                "Please select ticket quantity.";
+
+            valid = false;
+
+        }
+
+
+        /* PAYMENT */
+
+        if (payment === "") {
+
+            paymentError.textContent =
+                "Please select payment method.";
+
+            valid = false;
+
+        }
+
+
+        /* SUCCESS */
+
+        if (valid) {
+
+            const selected =
+                events[eventValue];
+
+            const ticketNumber =
+                Number(tickets);
+
+            const total =
+                selected.price *
+                ticketNumber;
+
+
+            message.className =
+                "success-message";
+
+            message.innerHTML =
+                `🎉 Booking confirmed!<br>
+                ${selected.name} ${selected.subtitle}
+                • ${ticketNumber} ticket(s)
+                • ₹${total}`;
+
+
+            bookingForm.reset();
+
+            totalPrice.textContent =
+                "₹0";
+
+            selectedEvent.value =
+                currentIndex;
+
+        }
+
+    }
+);
 
 
 /* =========================
-   BOTTOM UI
+   INITIAL LOAD
 ========================= */
 
-.bottom-ui {
-    position: absolute;
+loadEventOptions();
 
-    z-index: 50;
+createIndicators();
 
-    bottom: 25px;
-
-    left: 6%;
-    right: 6%;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-}
-
-.slide-indicator {
-    display: flex;
-
-    gap: 8px;
-}
-
-.slide-indicator span {
-    width: 25px;
-    height: 2px;
-
-    background: rgba(255,255,255,0.25);
-
-    transition: 0.3s;
-}
-
-.slide-indicator span.active {
-    width: 45px;
-
-    background: #c35cff;
-}
-
-.scroll-text {
-    color: rgba(255,255,255,0.35);
-
-    font-size: 8px;
-
-    letter-spacing: 3px;
-}
-
-
-/* =========================
-   BOOKING
-========================= */
-
-.booking-section {
-    position: relative;
-
-    min-height: 100vh;
-
-    padding: 110px 8%;
-
-    background:
-        radial-gradient(
-            circle at 20% 20%,
-            #32115f,
-            transparent 40%
-        ),
-        #050505;
-}
-
-.booking-container {
-    max-width: 900px;
-
-    margin: auto;
-}
-
-.section-heading {
-    text-align: center;
-
-    margin-bottom: 50px;
-}
-
-.section-heading span {
-    color: #c35cff;
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    letter-spacing: 4px;
-}
-
-.section-heading h2 {
-    margin-top: 15px;
-
-    font-size: 50px;
-
-    line-height: 0.95;
-
-    letter-spacing: -3px;
-}
-
-.section-heading h2 strong {
-    color: #c35cff;
-}
-
-.section-heading p {
-    max-width: 600px;
-
-    margin: 20px auto 0;
-
-    color: rgba(255,255,255,0.55);
-
-    font-size: 13px;
-
-    line-height: 1.7;
-}
-
-
-/* =========================
-   FORM
-========================= */
-
-.booking-form {
-    padding: 35px;
-
-    border: 1px solid rgba(255,255,255,0.12);
-
-    border-radius: 25px;
-
-    background: rgba(255,255,255,0.05);
-
-    backdrop-filter: blur(20px);
-}
-
-.form-row {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 25px;
-
-    margin-bottom: 22px;
-}
-
-.form-group label {
-    display: block;
-
-    margin-bottom: 8px;
-
-    color: rgba(255,255,255,0.6);
-
-    font-size: 8px;
-
-    font-weight: 700;
-
-    letter-spacing: 2px;
-}
-
-.form-group input,
-.form-group select {
-    width: 100%;
-
-    padding: 14px 15px;
-
-    border: 1px solid rgba(255,255,255,0.15);
-
-    border-radius: 10px;
-
-    outline: none;
-
-    background: rgba(0,0,0,0.35);
-
-    color: white;
-
-    font-family: inherit;
-
-    font-size: 12px;
-
-    transition: 0.3s;
-}
-
-.form-group input::placeholder {
-    color: rgba(255,255,255,0.3);
-}
-
-.form-group select option {
-    background: #17101f;
-
-    color: white;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-    border-color: #c35cff;
-
-    box-shadow:
-        0 0 15px rgba(195,92,255,0.15);
-}
-
-.form-group small {
-    display: block;
-
-    min-height: 14px;
-
-    margin-top: 5px;
-
-    color: #ff6b9d;
-
-    font-size: 9px;
-}
-
-
-/* =========================
-   PRICE
-========================= */
-
-.price-preview {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    margin-top: 10px;
-
-    padding: 18px;
-
-    border-radius: 12px;
-
-    background: rgba(195,92,255,0.08);
-
-    border: 1px solid rgba(195,92,255,0.15);
-}
-
-.price-preview span {
-    color: rgba(255,255,255,0.5);
-
-    font-size: 9px;
-
-    letter-spacing: 2px;
-}
-
-.price-preview strong {
-    color: #c35cff;
-
-    font-size: 22px;
-}
-
-
-/* =========================
-   CONFIRM BUTTON
-========================= */
-
-.book-now-btn {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 12px;
-
-    width: 100%;
-
-    margin-top: 20px;
-
-    padding: 15px;
-
-    border: none;
-
-    border-radius: 30px;
-
-    background: #c35cff;
-
-    color: white;
-
-    font-family: inherit;
-
-    font-size: 10px;
-
-    font-weight: 800;
-
-    letter-spacing: 2px;
-
-    cursor: pointer;
-
-    transition: 0.3s;
-}
-
-.book-now-btn:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 12px 30px rgba(195,92,255,0.35);
-}
-
-#bookingMessage {
-    text-align: center;
-
-    margin-top: 18px;
-
-    font-size: 12px;
-}
-
-.success-message {
-    color: #8dffb0;
-}
-
-
-/* =========================
-   ABOUT
-========================= */
-
-.about-section {
-    min-height: 70vh;
-
-    display: flex;
-    align-items: center;
-
-    padding: 100px 10%;
-
-    background: #09070d;
-}
-
-.about-content {
-    max-width: 850px;
-}
-
-.about-label,
-.contact-label {
-    color: #c35cff;
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    letter-spacing: 4px;
-}
-
-.about-content h2,
-.contact-container h2 {
-    margin-top: 18px;
-
-    font-size: 55px;
-
-    line-height: 0.95;
-
-    letter-spacing: -3px;
-}
-
-.about-content h2 span,
-.contact-container h2 strong {
-    color: #c35cff;
-}
-
-.about-content p {
-    max-width: 700px;
-
-    margin-top: 25px;
-
-    color: rgba(255,255,255,0.55);
-
-    font-size: 14px;
-
-    line-height: 1.8;
-}
-
-
-/* =========================
-   CONTACT
-========================= */
-
-.contact-section {
-    padding: 100px 10%;
-
-    background:
-        radial-gradient(
-            circle at 80% 50%,
-            rgba(195,92,255,0.15),
-            transparent 45%
-        ),
-        #050505;
-}
-
-.contact-container {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 50px;
-}
-
-.contact-info {
-    color: rgba(255,255,255,0.6);
-
-    font-size: 13px;
-
-    line-height: 2.5;
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer {
-    padding: 30px 6%;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 20px;
-
-    background: #030303;
-
-    border-top: 1px solid rgba(255,255,255,0.08);
-}
-
-.footer-logo {
-    font-size: 20px;
-
-    font-weight: 900;
-
-    letter-spacing: 2px;
-}
-
-.footer p {
-    color: rgba(255,255,255,0.35);
-
-    font-size: 10px;
-}
-
-.footer-links {
-    display: flex;
-
-    gap: 20px;
-}
-
-.footer-links a {
-    color: rgba(255,255,255,0.45);
-
-    text-decoration: none;
-
-    font-size: 10px;
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media screen and (max-width: 900px) {
-
-    .hero {
-        height: 100svh;
-        min-height: 650px;
-    }
-
-    .navbar {
-        height: 70px;
-
-        padding: 0 18px;
-    }
-
-    .logo {
-        font-size: 19px;
-
-        letter-spacing: 2px;
-    }
-
-    .nav-links {
-        display: none;
-    }
-
-    .sign-btn {
-        padding: 8px 13px;
-
-        font-size: 8px;
-    }
-
-    .event-carousel {
-        height: calc(100svh - 70px);
-
-        min-height: 580px;
-    }
-
-    .center-event {
-        width: 100%;
-
-        height: 100%;
-    }
-
-    .performer {
-        top: 5px;
-
-        width: 280px;
-
-        height: 360px;
-    }
-
-    .center-placeholder span {
-        font-size: 30px;
-    }
-
-    .event-info {
-        left: 50%;
-
-        bottom: 65px;
-
-        width: 92%;
-
-        transform: translateX(-50%);
-
-        text-align: center;
-    }
-
-    .event-label {
-        font-size: 8px;
-
-        margin-bottom: 10px;
-    }
-
-    .event-info h1 {
-        font-size: 48px;
-
-        letter-spacing: -3px;
-    }
-
-    .event-type {
-        margin-top: 12px;
-
-        font-size: 8px;
-
-        letter-spacing: 2px;
-    }
-
-    .event-details {
-        justify-content: center;
-
-        flex-wrap: wrap;
-
-        gap: 12px 18px;
-
-        margin-top: 18px;
-    }
-
-    .event-details strong {
-        font-size: 8px;
-    }
-
-    .event-details small {
-        font-size: 6px;
-    }
-
-    .explore-btn {
-        margin-top: 17px;
-
-        padding: 12px 20px;
-    }
-
-    .side-event {
-        width: 200px;
-
-        height: 300px;
-    }
-
-    .left-event {
-        left: -115px;
-
-        opacity: 0.15;
-
-        transform:
-            translateY(-50%)
-            scale(0.4);
-    }
-
-    .right-event {
-        right: -115px;
-
-        opacity: 0.15;
-
-        transform:
-            translateY(-50%)
-            scale(0.4);
-    }
-
-    .arrow {
-        width: 42px;
-        height: 42px;
-
-        font-size: 17px;
-    }
-
-    .left-arrow {
-        left: 10px;
-    }
-
-    .right-arrow {
-        right: 10px;
-    }
-
-    .bottom-ui {
-        left: 18px;
-        right: 18px;
-
-        bottom: 15px;
-    }
-
-    .scroll-text {
-        display: none;
-    }
-
-
-    /* BOOKING MOBILE */
-
-    .booking-section {
-        padding: 80px 18px;
-    }
-
-    .section-heading h2 {
-        font-size: 38px;
-
-        letter-spacing: -2px;
-    }
-
-    .section-heading p {
-        font-size: 12px;
-    }
-
-    .booking-form {
-        padding: 22px;
-
-        border-radius: 20px;
-    }
-
-    .form-row {
-        grid-template-columns: 1fr;
-
-        gap: 15px;
-
-        margin-bottom: 15px;
-    }
-
-
-    /* ABOUT MOBILE */
-
-    .about-section {
-        padding: 80px 25px;
-    }
-
-    .about-content h2,
-    .contact-container h2 {
-        font-size: 40px;
-    }
-
-
-    /* CONTACT MOBILE */
-
-    .contact-section {
-        padding: 80px 25px;
-    }
-
-    .contact-container {
-        flex-direction: column;
-
-        align-items: flex-start;
-    }
-
-
-    /* FOOTER MOBILE */
-
-    .footer {
-        flex-direction: column;
-
-        text-align: center;
-
-        padding: 30px 20px;
-    }
-
-    .footer-links {
-        flex-wrap: wrap;
-
-        justify-content: center;
-    }
-
-       }
+updateEvent();
