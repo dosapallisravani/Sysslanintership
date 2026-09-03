@@ -376,36 +376,157 @@ body {
         transform: translateY(-50%) scale(0.4);
     }
 
-    .right-event {
-        right: -100px;
-        opacity: 0.15;
-        transform: translateY(-50%) scale(0.4);
+/* =================================
+    MOBILE VERSION
+================================= */
+
+@media screen and (max-width: 1100px) {
+
+    body {
+        overflow-x: hidden !important;
     }
 
-    /* Arrows */
+    .hero {
+        min-height: 100vh;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    /* NAVBAR */
+    .navbar {
+        height: 70px !important;
+        padding: 0 18px !important;
+    }
+
+    .logo {
+        font-size: 20px !important;
+        letter-spacing: 2px !important;
+    }
+
+    .nav-links {
+        display: none !important;
+    }
+
+    .sign-btn {
+        display: block !important;
+        padding: 8px 14px !important;
+        font-size: 9px !important;
+    }
+
+    /* CAROUSEL */
+    .event-carousel {
+        height: calc(100vh - 70px) !important;
+        min-height: 0 !important;
+        width: 100% !important;
+    }
+
+    .center-event {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    /* CENTER PERFORMER */
+    .performer {
+        top: 15px !important;
+        width: 300px !important;
+        height: 380px !important;
+    }
+
+    .performer img,
+    .performer-image img {
+        visibility: hidden !important;
+    }
+
+    /* EVENT DETAILS */
+    .event-info {
+        position: absolute !important;
+        left: 50% !important;
+        bottom: 70px !important;
+        width: 92% !important;
+        transform: translateX(-50%) !important;
+        text-align: center !important;
+        z-index: 30 !important;
+    }
+
+    .event-info h1 {
+        font-size: 48px !important;
+        line-height: 0.9 !important;
+        letter-spacing: -2px !important;
+    }
+
+    .event-label {
+        margin-bottom: 8px !important;
+    }
+
+    .event-type {
+        margin-top: 12px !important;
+        font-size: 9px !important;
+        letter-spacing: 2px !important;
+    }
+
+    .event-details {
+        display: flex !important;
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        gap: 10px 16px !important;
+        margin-top: 16px !important;
+    }
+
+    .event-details div {
+        min-width: 55px !important;
+    }
+
+    .event-details small {
+        font-size: 7px !important;
+    }
+
+    .event-details strong {
+        font-size: 9px !important;
+    }
+
+    .explore-btn {
+        margin-top: 16px !important;
+        padding: 11px 18px !important;
+    }
+
+    /* SIDE PERFORMERS */
+    .left-event {
+        left: -120px !important;
+        opacity: 0.12 !important;
+        transform: translateY(-50%) scale(0.35) !important;
+    }
+
+    .right-event {
+        right: -120px !important;
+        opacity: 0.12 !important;
+        transform: translateY(-50%) scale(0.35) !important;
+    }
+
+    /* ARROWS */
     .arrow {
-        width: 42px;
-        height: 42px;
-        font-size: 18px;
+        width: 42px !important;
+        height: 42px !important;
+        font-size: 18px !important;
+        z-index: 50 !important;
     }
 
     .left-arrow {
-        left: 12px;
+        left: 10px !important;
     }
 
     .right-arrow {
-        right: 12px;
+        right: 10px !important;
     }
 
-    /* Bottom */
+    /* BOTTOM UI */
     .bottom-ui {
-        left: 20px;
-        right: 20px;
-        bottom: 15px;
+        left: 20px !important;
+        right: 20px !important;
+        bottom: 12px !important;
+        z-index: 50 !important;
     }
 
     .scroll-text {
-        display: none;
+        display: none !important;
     }
-       }
-   
+                              }
