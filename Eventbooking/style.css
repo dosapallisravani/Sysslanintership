@@ -1449,3 +1449,487 @@ footer p{
     }
 
         }
+/* =========================================
+   FINAL MOBILE RESPONSIVE FIX
+========================================= */
+
+@media screen and (max-width: 900px) {
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        font-size: 14px;
+    }
+
+    /* NAVBAR */
+
+    .navbar {
+        width: 100%;
+        height: 65px;
+        padding: 0 16px;
+    }
+
+    .logo {
+        font-size: 18px;
+        letter-spacing: 2px;
+    }
+
+    .nav-links {
+        display: none !important;
+    }
+
+    .signin-btn {
+        display: block;
+        padding: 9px 13px;
+        font-size: 9px;
+    }
+
+
+    /* HERO */
+
+    .hero {
+        width: 100%;
+        min-height: 100vh;
+        padding-top: 65px;
+    }
+
+    .carousel {
+        width: 100%;
+        height: calc(100vh - 65px);
+        min-height: 650px;
+    }
+
+    .center-stage {
+        width: 100%;
+        height: 100%;
+    }
+
+
+    /* CENTER PERFORMER */
+
+    .performer-3d {
+        width: 300px;
+        height: 430px;
+
+        top: 15px;
+        left: 50%;
+
+        transform: translateX(-50%);
+    }
+
+    .performer-3d img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+
+    /* SIDE PERFORMERS */
+
+    .side-card {
+        width: 150px;
+        height: 250px;
+
+        opacity: .12;
+    }
+
+    .side-left {
+        left: -80px;
+        transform:
+            translateY(-50%)
+            scale(.45)
+            rotateY(35deg);
+    }
+
+    .side-right {
+        right: -80px;
+        transform:
+            translateY(-50%)
+            scale(.45)
+            rotateY(-35deg);
+    }
+
+
+    /* EVENT INFO */
+
+    .event-content {
+        position: absolute;
+
+        left: 0;
+        bottom: 65px;
+
+        width: 100%;
+
+        padding: 0 20px;
+
+        text-align: center;
+    }
+
+    .eyebrow {
+        font-size: 8px;
+        letter-spacing: 3px;
+    }
+
+    .event-content h1 {
+        font-size: 48px;
+        line-height: .9;
+        letter-spacing: -2px;
+    }
+
+    .event-type {
+        font-size: 8px;
+        letter-spacing: 2px;
+        margin-top: 12px;
+    }
+
+    .details {
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        flex-wrap: wrap;
+
+        gap: 10px 16px;
+
+        margin-top: 16px;
+    }
+
+    .details div {
+        min-width: 60px;
+    }
+
+    .details small {
+        font-size: 7px;
+    }
+
+    .details strong {
+        font-size: 9px;
+    }
+
+
+    /* ARROWS */
+
+    .arrow {
+        width: 40px;
+        height: 40px;
+
+        font-size: 17px;
+
+        top: 45%;
+    }
+
+    .arrow-left {
+        left: 8px;
+    }
+
+    .arrow-right {
+        right: 8px;
+    }
+
+
+    /* DOTS */
+
+    .slider-bottom {
+        left: 0;
+        right: 0;
+        bottom: 15px;
+
+        justify-content: center;
+    }
+
+    .slider-bottom > span {
+        display: none;
+    }
+
+
+    /* =====================================
+       ALL SECTIONS
+    ===================================== */
+
+    .site-section {
+        width: 100%;
+
+        min-height: auto;
+
+        padding: 75px 18px 60px;
+
+        overflow: hidden;
+    }
+
+
+    .section-heading {
+        width: 100%;
+
+        margin-bottom: 30px;
+    }
+
+    .section-heading h2 {
+        font-size: 45px;
+
+        line-height: .9;
+
+        letter-spacing: -2px;
+    }
+
+    .section-heading p {
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+
+    /* =====================================
+       EVENTS
+    ===================================== */
+
+    .event-grid {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns: 1fr !important;
+
+        gap: 20px;
+    }
+
+    .event-card {
+        width: 100% !important;
+
+        min-width: 0;
+
+        height: 320px;
+        min-height: 320px;
+
+        overflow: hidden;
+    }
+
+    .event-card img {
+        width: 100% !important;
+        height: 320px !important;
+
+        object-fit: cover;
+    }
+
+    .event-card div {
+        width: 100%;
+
+        padding: 20px;
+    }
+
+    .event-card b {
+        font-size: 21px;
+    }
+
+    .event-card p {
+        font-size: 11px;
+    }
+
+
+    /* =====================================
+       BOOKING
+    ===================================== */
+
+    .booking-section {
+        width: 100%;
+    }
+
+    .form-card {
+        width: 100% !important;
+
+        padding: 22px 18px;
+
+        overflow: hidden;
+    }
+
+    .form-card label {
+        width: 100%;
+
+        display: block;
+
+        margin-bottom: 18px;
+    }
+
+    .form-card input,
+    .form-card select,
+    .form-card textarea {
+        width: 100% !important;
+
+        max-width: 100%;
+
+        min-height: 42px;
+
+        font-size: 13px;
+    }
+
+    .form-card .primary-btn {
+        width: 100%;
+
+        margin-top: 8px;
+    }
+
+
+    /* =====================================
+       ABOUT
+    ===================================== */
+
+    .about-section {
+        width: 100%;
+    }
+
+    .about-points {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns: 1fr !important;
+
+        gap: 15px;
+    }
+
+    .about-points > div {
+        width: 100%;
+
+        min-height: auto;
+
+        padding: 22px;
+    }
+
+    .about-points h3 {
+        font-size: 23px;
+
+        margin-top: 20px;
+    }
+
+    .about-points p {
+        font-size: 12px;
+
+        line-height: 1.7;
+    }
+
+
+    /* =====================================
+       CONTACT
+    ===================================== */
+
+    .contact-layout {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns: 1fr !important;
+
+        gap: 30px;
+    }
+
+    .contact-info {
+        width: 100%;
+    }
+
+    .contact-info p {
+        font-size: 13px;
+    }
+
+
+    /* CONTACT FORM */
+
+    #contactForm {
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+    }
+
+    #contactForm input,
+    #contactForm textarea {
+        width: 100% !important;
+
+        max-width: 100%;
+    }
+
+    #contactForm .primary-btn {
+        width: 100%;
+    }
+
+
+    /* =====================================
+       SIGN IN
+    ===================================== */
+
+    .signin-section {
+        width: 100%;
+
+        min-height: 80vh;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+    }
+
+    .signin-card {
+        width: 100% !important;
+
+        max-width: 450px;
+    }
+
+    #loginForm {
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+    }
+
+    #loginForm input {
+        width: 100% !important;
+
+        max-width: 100%;
+    }
+
+    #loginForm .primary-btn {
+        width: 100%;
+    }
+
+
+    /* =====================================
+       FOOTER
+    ===================================== */
+
+    footer {
+        width: 100%;
+
+        min-height: 120px;
+
+        padding: 30px 18px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: center;
+
+        gap: 12px;
+
+        text-align: center;
+    }
+        }
+
+/* Hide Events section initially */
+#events {
+    display: none;
+}
+
+/* Show Events section when active */
+#events.show-events {
+    display: block;
+}
