@@ -439,36 +439,35 @@
 </section>
 
 
-
-<!-- =========================================
+<!-- =========================
      BOOKING SECTION
-========================================= -->
+========================= -->
 
-<section
-    class="site-section booking-section"
-    id="booking"
->
+<section id="booking" class="site-section booking-section">
 
     <div class="section-heading">
 
-        <p class="eyebrow">
-            RESERVE YOUR SPOT
-        </p>
+        <p class="eyebrow">RESERVE YOUR EXPERIENCE</p>
 
         <h2>
-            BOOK <span>TICKETS</span>
+            BOOK <span>YOUR TICKET</span>
         </h2>
+
+        <p>
+            Choose your event, select the number of tickets,
+            and get your booking total instantly.
+        </p>
 
     </div>
 
 
-    <div class="form-card">
+    <div class="booking-wrapper">
 
-        <form id="bookingForm">
+        <form id="bookingForm" class="form-card">
 
+            <!-- NAME -->
 
             <label>
-
                 FULL NAME
 
                 <input
@@ -481,9 +480,10 @@
             </label>
 
 
-            <label>
+            <!-- EMAIL -->
 
-                EMAIL
+            <label>
+                EMAIL ADDRESS
 
                 <input
                     type="email"
@@ -495,36 +495,38 @@
             </label>
 
 
-            <label>
+            <!-- EVENT -->
 
+            <label>
                 SELECT EVENT
 
-                <select
-                    id="bookingEvent"
-                    required
-                >
+                <select id="bookingEvent" required>
 
-                    <option value="0">
+                    <option value="">
+                        Choose an event
+                    </option>
+
+                    <option value="Neon Nights" data-price="799">
                         Neon Nights — ₹799
                     </option>
 
-                    <option value="1">
+                    <option value="Moon Tunes" data-price="599">
                         Moon Tunes — ₹599
                     </option>
 
-                    <option value="2">
+                    <option value="Happy Beats" data-price="699">
                         Happy Beats — ₹699
                     </option>
 
-                    <option value="3">
+                    <option value="Beat World" data-price="899">
                         Beat World — ₹899
                     </option>
 
-                    <option value="4">
+                    <option value="City Beats" data-price="749">
                         City Beats — ₹749
                     </option>
 
-                    <option value="5">
+                    <option value="Sound Fest" data-price="999">
                         Sound Fest — ₹999
                     </option>
 
@@ -533,13 +535,14 @@
             </label>
 
 
-            <label>
+            <!-- TICKETS -->
 
+            <label>
                 NUMBER OF TICKETS
 
                 <input
                     type="number"
-                    id="ticketCount"
+                    id="bookingTickets"
                     min="1"
                     max="10"
                     value="1"
@@ -548,6 +551,21 @@
 
             </label>
 
+
+            <!-- TOTAL -->
+
+            <div class="booking-total">
+
+                <span>TOTAL AMOUNT</span>
+
+                <strong id="totalAmount">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <!-- BOOK BUTTON -->
 
             <button
                 type="submit"
@@ -560,12 +578,45 @@
 
             </button>
 
-
         </form>
+
+
+        <!-- BOOKING PREVIEW -->
+
+        <div class="booking-preview">
+
+            <p class="eyebrow">
+                YOUR EXPERIENCE
+            </p>
+
+            <h3 id="previewEvent">
+                SELECT AN EVENT
+            </h3>
+
+            <p id="previewMessage">
+                Your selected event details
+                will appear here.
+            </p>
+
+            <div class="preview-price">
+
+                <small>
+                    TICKET PRICE
+                </small>
+
+                <strong id="previewPrice">
+                    ₹0
+                </strong>
+
+            </div>
+
+        </div>
 
     </div>
 
-</section>
+            </section>
+
+
 
 
 
