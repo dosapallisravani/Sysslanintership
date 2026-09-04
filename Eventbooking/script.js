@@ -821,3 +821,145 @@ window.addEventListener(
 ========================================= */
 
 updateCarousel("next");
+/* =========================================
+   LEVEL 3 - MY TICKETS
+========================================= */
+
+const ticketsContainer =
+    document.getElementById("ticketsContainer");
+
+
+// Get saved tickets
+function getSavedTickets() {
+    return JSON.parse(
+        localStorage.getItem("eventoraTickets") || "[]"
+    );
+}
+
+
+// Save tickets
+function saveTickets(tickets) {
+    localStorage.setItem(
+        "eventoraTickets",
+        JSON.stringify(tickets)
+    );
+}
+
+
+// Display tickets
+function displayTickets() {
+
+    if (!ticketsContainer) return;
+
+    const tickets = getSavedTickets();
+
+    if (tickets.length === 0) {
+
+        ticketsContainer.innerHTML = `
+            <div class="no-tickets">
+
+                <div class="ticket-icon">🎟️</div>
+
+                <h3>NO TICKETS YET</h3>
+
+                <p>
+                    Your confirmed bookings will appear here.
+                </p>
+
+                <a href="#booking" class="primary-btn">
+                    BOOK AN EVENT
+                    <span>→</span>
+                </a>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    ticketsContainer.innerHTML = tickets.map((ticket, index) => `
+
+        <div class="ticket-card">
+
+            <div>
+
+                <p class="eyebrow">
+                    EVENTORA • E-TICKET
+                </p>
+
+                <h3>
+                    ${ticket.event.toUpperCase()}
+                </h3>
+
+                <p>
+                    Booking ID: ${ticket.id}
+                </p>
+
+                <div class="ticket-details">
+
+                    <div>
+                        <small>NAME</small>
+                        <strong>${ticket.name}</strong>
+                    </div>
+
+                    <div>
+                        <small>EMAIL</small>
+                        <strong>${ticket.email}</strong>
+                    </div>
+
+                    <div>
+                        <small>TICKETS</small>
+                        <strong>${ticket.tickets}</strong>
+                    </div>
+
+                    <div>
+                        <small>TOTAL</small>
+                        <strong>₹${ticket.total.toLocaleString("en-IN")}</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="ticket-status">
+                CONFIRMED
+            </div>
+
+        </div>
+
+    `).join("");
+}
+
+
+// Save a new booking
+function addTicket(name, email, event, tickets, total) {
+
+    const savedTickets = getSavedTickets();
+
+    const newTicket = {
+
+        id: "EVT" + Date.now(),
+
+        name: name,
+
+        email: email,
+
+        event: event,
+
+        tickets: tickets,
+
+        total: total
+
+    };
+
+    savedTickets.unshift(newTicket);
+
+    saveTickets(savedTickets);
+
+    displayTickets();
+}
+
+
+// Display tickets when page loads
+displayTickets();
