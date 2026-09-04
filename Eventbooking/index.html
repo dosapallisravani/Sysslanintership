@@ -1,64 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>EVENTORA | Live Events</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
 
 <header class="navbar">
 
-    <a href="index.html" class="logo">
+    <a href="#home" class="logo">
         EVENT<span>ORA</span>
     </a>
 
+
     <nav class="nav-links">
 
-        <a href="index.html" class="active">
+        <a href="#home" class="active">
             Home
         </a>
 
-        <a href="events.html">
+        <a href="#events">
             Events
         </a>
 
-        <a href="#" id="bookingNav">
+        <a href="#booking">
             Booking
         </a>
 
-        <a href="about.html">
+        <a href="#about">
             About
         </a>
 
-        <a href="contact.html">
+        <a href="#contact">
             Contact
         </a>
 
     </nav>
 
-    <a href="#" class="signin-btn" id="signinNav">
+
+    <a href="#signin" class="signin-btn">
         SIGN IN
     </a>
 
 </header>
 
 
-<main class="hero" id="hero">
 
-    <!-- Dynamic Background -->
+<!-- =========================================
+     HOME / 3D CAROUSEL
+========================================= -->
+
+<main
+    class="hero"
+    id="home"
+>
+
+
     <div class="hero-bg"></div>
 
     <div class="hero-overlay"></div>
 
 
-    <!-- Decorative lights -->
     <div class="ambient ambient-one"></div>
+
     <div class="ambient ambient-two"></div>
+
 
 
     <section class="carousel">
@@ -78,7 +100,7 @@
 
 
 
-        <!-- CENTER PERFORMER -->
+        <!-- CENTER -->
 
         <div class="center-stage">
 
@@ -100,7 +122,7 @@
 
 
 
-            <!-- EVENT INFORMATION -->
+            <!-- EVENT DETAILS -->
 
             <div class="event-content">
 
@@ -110,19 +132,18 @@
 
 
                 <h1 id="eventName">
-                    NEON
-                    <br>
+                    NEON<br>
                     <span>NIGHTS</span>
                 </h1>
 
 
-                <p id="eventType" class="event-type">
+                <p
+                    id="eventType"
+                    class="event-type"
+                >
                     EDM LIVE EXPERIENCE
                 </p>
 
-
-
-                <!-- EVENT DETAILS -->
 
                 <div class="details">
 
@@ -160,18 +181,13 @@
                 </div>
 
 
-
-                <!-- BOOK BUTTON -->
-
                 <a
-                    href="booking.html"
-                    id="bookButton"
+                    href="#booking"
                     class="primary-btn"
+                    id="bookButton"
                 >
                     BOOK TICKETS
-
                     <span>→</span>
-
                 </a>
 
             </div>
@@ -196,31 +212,26 @@
 
 
 
-    <!-- PREVIOUS BUTTON -->
+    <!-- ARROWS -->
 
     <button
         class="arrow arrow-left"
         id="prevBtn"
-        aria-label="Previous event"
     >
         ←
     </button>
 
 
-
-    <!-- NEXT BUTTON -->
-
     <button
         class="arrow arrow-right"
         id="nextBtn"
-        aria-label="Next event"
     >
         →
     </button>
 
 
 
-    <!-- SLIDER -->
+    <!-- DOTS -->
 
     <div class="slider-bottom">
 
@@ -239,7 +250,609 @@
 </main>
 
 
+
+<!-- =========================================
+     EVENTS SECTION
+========================================= -->
+
+<section
+    class="site-section"
+    id="events"
+>
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            DISCOVER
+        </p>
+
+        <h2>
+            ALL <span>EVENTS</span>
+        </h2>
+
+        <p>
+            Explore upcoming live experiences.
+        </p>
+
+    </div>
+
+
+    <div class="event-grid">
+
+
+        <article class="event-card">
+
+            <img
+                src="images/backgrounds/neon-nights.jpg"
+                alt="Neon Nights"
+            >
+
+            <div>
+
+                <b>NEON NIGHTS</b>
+
+                <p>
+                    EDM Live Experience<br>
+                    Hyderabad · 18 Sep 2026
+                </p>
+
+                <a href="#booking">
+                    ₹799 · BOOK →
+                </a>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="event-card">
+
+            <img
+                src="images/backgrounds/moon-tunes.jpg"
+                alt="Moon Tunes"
+            >
+
+            <div>
+
+                <b>MOON TUNES</b>
+
+                <p>
+                    Acoustic Music Night<br>
+                    Visakhapatnam · 25 Sep 2026
+                </p>
+
+                <a href="#booking">
+                    ₹599 · BOOK →
+                </a>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="event-card">
+
+            <img
+                src="images/backgrounds/happy-beats.jpg"
+                alt="Happy Beats"
+            >
+
+            <div>
+
+                <b>HAPPY BEATS</b>
+
+                <p>
+                    Live Pop Concert<br>
+                    Vijayawada · 02 Oct 2026
+                </p>
+
+                <a href="#booking">
+                    ₹699 · BOOK →
+                </a>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="event-card">
+
+            <img
+                src="images/backgrounds/beat-world.jpg"
+                alt="Beat World"
+            >
+
+            <div>
+
+                <b>BEAT WORLD</b>
+
+                <p>
+                    Hip-Hop Live Show<br>
+                    Hyderabad · 10 Oct 2026
+                </p>
+
+                <a href="#booking">
+                    ₹899 · BOOK →
+                </a>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="event-card">
+
+            <img
+                src="images/backgrounds/city-beats.jpg"
+                alt="City Beats"
+            >
+
+            <div>
+
+                <b>CITY BEATS</b>
+
+                <p>
+                    Urban Music Fest<br>
+                    Bengaluru · 18 Oct 2026
+                </p>
+
+                <a href="#booking">
+                    ₹749 · BOOK →
+                </a>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="event-card">
+
+            <img
+                src="images/backgrounds/sound-fest.jpg"
+                alt="Sound Fest"
+            >
+
+            <div>
+
+                <b>SOUND FEST</b>
+
+                <p>
+                    Ultimate Music Festival<br>
+                    Goa · 31 Oct 2026
+                </p>
+
+                <a href="#booking">
+                    ₹999 · BOOK →
+                </a>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     BOOKING SECTION
+========================================= -->
+
+<section
+    class="site-section booking-section"
+    id="booking"
+>
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            RESERVE YOUR SPOT
+        </p>
+
+        <h2>
+            BOOK <span>TICKETS</span>
+        </h2>
+
+    </div>
+
+
+    <div class="form-card">
+
+        <form id="bookingForm">
+
+
+            <label>
+
+                FULL NAME
+
+                <input
+                    type="text"
+                    id="bookingName"
+                    placeholder="Enter your name"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+
+                EMAIL
+
+                <input
+                    type="email"
+                    id="bookingEmail"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+
+                SELECT EVENT
+
+                <select
+                    id="bookingEvent"
+                    required
+                >
+
+                    <option value="0">
+                        Neon Nights — ₹799
+                    </option>
+
+                    <option value="1">
+                        Moon Tunes — ₹599
+                    </option>
+
+                    <option value="2">
+                        Happy Beats — ₹699
+                    </option>
+
+                    <option value="3">
+                        Beat World — ₹899
+                    </option>
+
+                    <option value="4">
+                        City Beats — ₹749
+                    </option>
+
+                    <option value="5">
+                        Sound Fest — ₹999
+                    </option>
+
+                </select>
+
+            </label>
+
+
+            <label>
+
+                NUMBER OF TICKETS
+
+                <input
+                    type="number"
+                    id="ticketCount"
+                    min="1"
+                    max="10"
+                    value="1"
+                    required
+                >
+
+            </label>
+
+
+            <button
+                type="submit"
+                class="primary-btn"
+            >
+
+                CONFIRM BOOKING
+
+                <span>→</span>
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     ABOUT SECTION
+========================================= -->
+
+<section
+    class="site-section about-section"
+    id="about"
+>
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            ABOUT EVENTORA
+        </p>
+
+        <h2>
+            EXPERIENCE<br>
+            <span>THE MOMENT</span>
+        </h2>
+
+        <p class="lead">
+            EVENTORA is a modern event discovery and
+            ticket booking platform designed to connect
+            people with unforgettable live experiences.
+        </p>
+
+    </div>
+
+
+    <div class="about-points">
+
+
+        <div>
+
+            <b>01</b>
+
+            <h3>
+                DISCOVER
+            </h3>
+
+            <p>
+                Explore concerts, festivals and live
+                performances in one place.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <b>02</b>
+
+            <h3>
+                BOOK
+            </h3>
+
+            <p>
+                Choose your favourite event and reserve
+                your tickets easily.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <b>03</b>
+
+            <h3>
+                EXPERIENCE
+            </h3>
+
+            <p>
+                Turn your plans into unforgettable
+                memories with EVENTORA.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     CONTACT SECTION
+========================================= -->
+
+<section
+    class="site-section contact-section"
+    id="contact"
+>
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            GET IN TOUCH
+        </p>
+
+        <h2>
+            LET'S<br>
+            <span>TALK</span>
+        </h2>
+
+    </div>
+
+
+    <div class="contact-layout">
+
+
+        <div class="contact-info">
+
+            <p>
+                📧 hello@eventora.com
+            </p>
+
+            <p>
+                📞 +91 90000 00000
+            </p>
+
+            <p>
+                📍 India
+            </p>
+
+        </div>
+
+
+        <div class="form-card">
+
+            <form id="contactForm">
+
+                <label>
+
+                    YOUR NAME
+
+                    <input
+                        type="text"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+
+                    EMAIL
+
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+
+                    MESSAGE
+
+                    <textarea
+                        rows="5"
+                        placeholder="Write your message..."
+                        required
+                    ></textarea>
+
+                </label>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+
+                    SEND MESSAGE
+
+                    <span>→</span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     SIGN IN SECTION
+========================================= -->
+
+<section
+    class="site-section signin-section"
+    id="signin"
+>
+
+    <div class="form-card signin-card">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">
+                WELCOME BACK
+            </p>
+
+            <h2>
+                SIGN <span>IN</span>
+            </h2>
+
+        </div>
+
+
+        <form id="loginForm">
+
+            <label>
+
+                EMAIL
+
+                <input
+                    type="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+
+                PASSWORD
+
+                <input
+                    type="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+            </label>
+
+
+            <button
+                type="submit"
+                class="primary-btn"
+            >
+
+                SIGN IN
+
+                <span>→</span>
+
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+    <div class="logo">
+        EVENT<span>ORA</span>
+    </div>
+
+    <p>
+        © 2026 EVENTORA. All rights reserved.
+    </p>
+
+</footer>
+
+
+
 <script src="script.js"></script>
 
 </body>
-</html>
+
+    </html>
