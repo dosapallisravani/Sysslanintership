@@ -1,5 +1,5 @@
 /* =========================================
-   EVENTORA - EVENT DATA
+   EVENTORA EVENTS
 ========================================= */
 
 const events = [
@@ -14,7 +14,7 @@ const events = [
         price: 799,
 
         person: "images/neon-dj.png",
-        bg: "images/neon-bg.jpg"
+        bg: "images/backgrounds/neon-nights.jpg"
     },
 
     {
@@ -27,7 +27,7 @@ const events = [
         price: 599,
 
         person: "images/moon-guitarist.png",
-        bg: "images/moon-bg.jpg"
+        bg: "images/backgrounds/moon-tunes.jpg"
     },
 
     {
@@ -40,7 +40,7 @@ const events = [
         price: 699,
 
         person: "images/happy-singer.png",
-        bg: "images/happy-bg.jpg"
+        bg: "images/backgrounds/happy-beats.jpg"
     },
 
     {
@@ -53,7 +53,7 @@ const events = [
         price: 899,
 
         person: "images/beat-rapper.png",
-        bg: "images/beat-bg.jpg"
+        bg: "images/backgrounds/beat-world.jpg"
     },
 
     {
@@ -66,7 +66,7 @@ const events = [
         price: 749,
 
         person: "images/city-dj.png",
-        bg: "images/city-bg.jpg"
+        bg: "images/backgrounds/city-beats.jpg"
     },
 
     {
@@ -79,11 +79,10 @@ const events = [
         price: 999,
 
         person: "images/sound-fest.png",
-        bg: "images/sound-bg.jpg"
+        bg: "images/backgrounds/sound-fest.jpg"
     }
 
 ];
-
 
 
 /* =========================================
@@ -91,20 +90,18 @@ const events = [
 ========================================= */
 
 let currentIndex = 0;
+let changing = false;
 
-let isChanging = false;
-
-let touchStartX = 0;
-
-let touchEndX = 0;
-
+let startX = 0;
+let endX = 0;
 
 
 /* =========================================
    ELEMENTS
 ========================================= */
 
-const hero = document.getElementById("hero");
+const hero =
+    document.getElementById("hero");
 
 const centerImage =
     document.getElementById("centerImage");
@@ -133,7 +130,7 @@ const eventVenue =
 const eventPrice =
     document.getElementById("eventPrice");
 
-const dotsContainer =
+const dots =
     document.getElementById("dots");
 
 const centerStage =
@@ -145,7 +142,7 @@ const centerStage =
    BACKGROUND
 ========================================= */
 
-function changeBackground(image) {
+function updateBackground(image) {
 
     hero.style.setProperty(
         "--bg",
@@ -157,38 +154,10 @@ function changeBackground(image) {
 
 
 /* =========================================
-   UPDATE EVENT INFORMATION
+   UPDATE EVENT
 ========================================= */
 
-function updateEventInfo(event) {
-
-    eventName.innerHTML =
-        `${event.name}<br><span>${event.sub}</span>`;
-
-    eventType.textContent =
-        event.type;
-
-    eventDate.textContent =
-        event.date;
-
-    eventTime.textContent =
-        event.time;
-
-    eventVenue.textContent =
-        event.venue;
-
-    eventPrice.textContent =
-        `₹${event.price}`;
-
-}
-
-
-
-/* =========================================
-   UPDATE PERFORMERS
-========================================= */
-
-function updatePerformers() {
+function updateEvent() {
 
     const current =
         events[currentIndex];
@@ -206,58 +175,74 @@ function updatePerformers() {
         ];
 
 
+    /* Background */
+
+    updateBackground(
+        current.bg
+    );
+
+
+    /* Center performer */
+
     centerImage.src =
         current.person;
 
+
+    /* Left performer */
+
     leftImage.src =
         previous.person;
+
+
+    /* Right performer */
 
     rightImage.src =
         next.person;
 
 
-    centerImage.alt =
-        `${current.name} performer`;
+    /* Event information */
 
-    leftImage.alt =
-        `${previous.name} performer`;
+    eventName.innerHTML =
+        `${current.name}<br><span>${current.sub}</span>`;
 
-    rightImage.alt =
-        `${next.name} performer`;
+    eventType.textContent =
+        current.type;
+
+    eventDate.textContent =
+        current.date;
+
+    eventTime.textContent =
+        current.time;
+
+    eventVenue.textContent =
+        current.venue;
+
+    eventPrice.textContent =
+        `₹${current.price}`;
+
+
+    /* Dots */
+
+    document
+        .querySelectorAll(".dots button")
+        .forEach((button, index) => {
+
+            button.classList.toggle(
+                "active",
+                index === currentIndex
+            );
+
+        });
 
 }
 
 
 
 /* =========================================
-   UPDATE DOTS
+   3D SLIDE ANIMATION
 ========================================= */
 
-function updateDots() {
-
-    const dots =
-        document.querySelectorAll(
-            ".dots button"
-        );
-
-    dots.forEach((dot, index) => {
-
-        dot.classList.toggle(
-            "active",
-            index === currentIndex
-        );
-
-    });
-
-}
-
-
-
-/* =========================================
-   ANIMATION
-========================================= */
-
-function playSlideAnimation(direction) {
+function animateSlide(direction) {
 
     if (!centerStage) return;
 
@@ -268,7 +253,7 @@ function playSlideAnimation(direction) {
     );
 
 
-    /* Restart CSS animation */
+    /* Restart animation */
 
     void centerStage.offsetWidth;
 
@@ -292,85 +277,33 @@ function playSlideAnimation(direction) {
 
 
 /* =========================================
-   RENDER EVENT
-========================================= */
-
-function renderEvent(direction = 1) {
-
-    const event =
-        events[currentIndex];
-
-
-    /* Background */
-
-    changeBackground(
-        event.bg
-    );
-
-
-    /* Performer */
-
-    updatePerformers();
-
-
-    /* Text */
-
-    updateEventInfo(
-        event
-    );
-
-
-    /* Dots */
-
-    updateDots();
-
-
-    /* 3D animation */
-
-    playSlideAnimation(
-        direction
-    );
-
-}
-
-
-
-/* =========================================
    CHANGE EVENT
 ========================================= */
 
 function changeEvent(direction) {
 
-    if (isChanging) return;
+    if (changing) return;
 
 
-    isChanging = true;
+    changing = true;
 
-
-    /* Change index */
 
     currentIndex =
         (
             currentIndex +
             direction +
             events.length
-        )
-        %
-        events.length;
+        ) % events.length;
 
 
-    /* Render */
+    updateEvent();
 
-    renderEvent(
-        direction
-    );
+    animateSlide(direction);
 
-
-    /* Unlock */
 
     setTimeout(() => {
 
-        isChanging = false;
+        changing = false;
 
     }, 700);
 
@@ -379,23 +312,16 @@ function changeEvent(direction) {
 
 
 /* =========================================
-   NEXT / PREVIOUS BUTTONS
+   NEXT BUTTON
 ========================================= */
 
-const nextButton =
-    document.getElementById(
-        "nextBtn"
-    );
-
-const previousButton =
-    document.getElementById(
-        "prevBtn"
-    );
+const nextBtn =
+    document.getElementById("nextBtn");
 
 
-if (nextButton) {
+if (nextBtn) {
 
-    nextButton.addEventListener(
+    nextBtn.addEventListener(
         "click",
         () => {
 
@@ -407,9 +333,18 @@ if (nextButton) {
 }
 
 
-if (previousButton) {
 
-    previousButton.addEventListener(
+/* =========================================
+   PREVIOUS BUTTON
+========================================= */
+
+const prevBtn =
+    document.getElementById("prevBtn");
+
+
+if (prevBtn) {
+
+    prevBtn.addEventListener(
         "click",
         () => {
 
@@ -428,24 +363,22 @@ if (previousButton) {
 
 function createDots() {
 
-    if (!dotsContainer) return;
+    if (!dots) return;
 
 
-    dotsContainer.innerHTML = "";
+    dots.innerHTML = "";
 
 
     events.forEach(
         (event, index) => {
 
             const button =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
 
             button.setAttribute(
                 "aria-label",
-                `Show ${event.name} ${event.sub}`
+                `Open ${event.name} ${event.sub}`
             );
 
 
@@ -453,19 +386,14 @@ function createDots() {
                 "click",
                 () => {
 
-                    if (isChanging) return;
+                    if (changing) return;
+
+                    if (index === currentIndex)
+                        return;
 
 
                     const oldIndex =
                         currentIndex;
-
-
-                    if (index === oldIndex)
-                        return;
-
-
-                    currentIndex =
-                        index;
 
 
                     const direction =
@@ -474,17 +402,23 @@ function createDots() {
                         : -1;
 
 
-                    renderEvent(
+                    currentIndex =
+                        index;
+
+
+                    updateEvent();
+
+                    animateSlide(
                         direction
                     );
 
 
-                    isChanging = true;
+                    changing = true;
 
 
                     setTimeout(() => {
 
-                        isChanging = false;
+                        changing = false;
 
                     }, 700);
 
@@ -492,7 +426,7 @@ function createDots() {
             );
 
 
-            dotsContainer.appendChild(
+            dots.appendChild(
                 button
             );
 
@@ -504,7 +438,7 @@ function createDots() {
 
 
 /* =========================================
-   KEYBOARD CONTROLS
+   KEYBOARD
 ========================================= */
 
 document.addEventListener(
@@ -528,13 +462,22 @@ document.addEventListener(
 
         }
 
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeModal();
+
+        }
+
     }
 );
 
 
 
 /* =========================================
-   TOUCH / SWIPE
+   SWIPE
 ========================================= */
 
 if (hero) {
@@ -543,12 +486,12 @@ if (hero) {
         "touchstart",
         (event) => {
 
-            touchStartX =
+            startX =
                 event.touches[0].clientX;
 
         },
         {
-            passive: true
+            passive:true
         }
     );
 
@@ -557,25 +500,19 @@ if (hero) {
         "touchend",
         (event) => {
 
-            touchEndX =
+            endX =
                 event.changedTouches[0].clientX;
 
 
             const distance =
-                touchEndX -
-                touchStartX;
+                endX - startX;
 
-
-            /* Swipe left */
 
             if (distance < -50) {
 
                 changeEvent(1);
 
             }
-
-
-            /* Swipe right */
 
             else if (distance > 50) {
 
@@ -585,7 +522,7 @@ if (hero) {
 
         },
         {
-            passive: true
+            passive:true
         }
     );
 
@@ -594,89 +531,449 @@ if (hero) {
 
 
 /* =========================================
-   MOUSE WHEEL
+   MODAL
 ========================================= */
 
-let wheelLocked = false;
+function createModal() {
+
+    if (
+        document.getElementById(
+            "eventoraModal"
+        )
+    ) return;
 
 
-if (hero) {
-
-    hero.addEventListener(
-        "wheel",
-        (event) => {
-
-            if (wheelLocked) return;
+    const modal =
+        document.createElement("div");
 
 
-            if (
-                Math.abs(event.deltaY) < 20
-            ) return;
+    modal.id =
+        "eventoraModal";
 
 
-            wheelLocked = true;
+    modal.className =
+        "modal";
 
 
-            if (event.deltaY > 0) {
+    modal.innerHTML = `
 
-                changeEvent(1);
+        <div class="modal-box">
 
-            } else {
+            <button
+                class="close-modal"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
 
-                changeEvent(-1);
+            <h2 id="modalTitle">
+                BOOK <span>TICKETS</span>
+            </h2>
 
-            }
+            <form id="eventForm">
+
+                <label>
+                    FULL NAME
+
+                    <input
+                        type="text"
+                        id="userName"
+                        placeholder="Enter your name"
+                        required
+                    >
+                </label>
 
 
-            setTimeout(() => {
+                <label>
+                    EMAIL
 
-                wheelLocked = false;
+                    <input
+                        type="email"
+                        id="userEmail"
+                        placeholder="Enter your email"
+                        required
+                    >
+                </label>
 
-            }, 800);
 
-        },
-        {
-            passive: true
-        }
+                <label>
+                    EVENT
+
+                    <select
+                        id="selectedEvent"
+                    >
+                    </select>
+                </label>
+
+
+                <label>
+                    TICKETS
+
+                    <input
+                        type="number"
+                        id="ticketCount"
+                        min="1"
+                        max="10"
+                        value="1"
+                        required
+                    >
+                </label>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    CONFIRM BOOKING
+                    <span>→</span>
+                </button>
+
+            </form>
+
+        </div>
+
+    `;
+
+
+    document.body.appendChild(
+        modal
     );
 
-}
+
+    /* Fill events */
+
+    const select =
+        document.getElementById(
+            "selectedEvent"
+        );
 
 
+    events.forEach(
+        (event, index) => {
 
-/* =========================================
-   IMAGE ERROR CHECK
-========================================= */
+            const option =
+                document.createElement(
+                    "option"
+                );
 
-function checkImage(imageElement) {
 
-    imageElement.addEventListener(
-        "error",
-        () => {
+            option.value =
+                index;
 
-            console.warn(
-                "Image not found:",
-                imageElement.src
+
+            option.textContent =
+                `${event.name} ${event.sub} — ₹${event.price}`;
+
+
+            select.appendChild(
+                option
             );
 
         }
     );
 
+
+    select.value =
+        currentIndex;
+
+
+    /* Booking submit */
+
+    document
+        .getElementById("eventForm")
+        .addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+
+                const name =
+                    document.getElementById(
+                        "userName"
+                    ).value;
+
+
+                const selected =
+                    events[
+                        Number(
+                            document.getElementById(
+                                "selectedEvent"
+                            ).value
+                        )
+                    ];
+
+
+                const count =
+                    Number(
+                        document.getElementById(
+                            "ticketCount"
+                        ).value
+                    );
+
+
+                const total =
+                    selected.price * count;
+
+
+                alert(
+                    `Booking successful! 🎉\n\n` +
+                    `Name: ${name}\n` +
+                    `Event: ${selected.name} ${selected.sub}\n` +
+                    `Tickets: ${count}\n` +
+                    `Total: ₹${total}`
+                );
+
+
+                closeModal();
+
+            }
+        );
+
+
+    /* Close by outside click */
+
+    modal.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === modal
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
 }
-
-
-checkImage(centerImage);
-
-checkImage(leftImage);
-
-checkImage(rightImage);
 
 
 
 /* =========================================
-   INITIALIZE
+   OPEN BOOKING
+========================================= */
+
+function openBooking() {
+
+    createModal();
+
+
+    const modal =
+        document.getElementById(
+            "eventoraModal"
+        );
+
+
+    const title =
+        document.getElementById(
+            "modalTitle"
+        );
+
+
+    title.innerHTML =
+        `BOOK <span>TICKETS</span>`;
+
+
+    document.getElementById(
+        "selectedEvent"
+    ).value =
+        currentIndex;
+
+
+    modal.classList.add(
+        "show"
+    );
+
+}
+
+
+
+/* =========================================
+   OPEN SIGN IN
+========================================= */
+
+function openSignIn() {
+
+    createModal();
+
+
+    const modal =
+        document.getElementById(
+            "eventoraModal"
+        );
+
+
+    const box =
+        modal.querySelector(
+            ".modal-box"
+        );
+
+
+    box.innerHTML = `
+
+        <button
+            class="close-modal"
+            onclick="closeModal()"
+        >
+            ×
+        </button>
+
+
+        <h2>
+            SIGN <span>IN</span>
+        </h2>
+
+
+        <form id="loginForm">
+
+            <label>
+                EMAIL
+
+                <input
+                    type="email"
+                    placeholder="Enter your email"
+                    required
+                >
+            </label>
+
+
+            <label>
+                PASSWORD
+
+                <input
+                    type="password"
+                    placeholder="Enter your password"
+                    required
+                >
+            </label>
+
+
+            <button
+                type="submit"
+                class="primary-btn"
+            >
+                SIGN IN
+                <span>→</span>
+            </button>
+
+        </form>
+
+    `;
+
+
+    modal.classList.add(
+        "show"
+    );
+
+
+    document
+        .getElementById("loginForm")
+        .addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+
+                alert(
+                    "Sign in demo successful! 🎉"
+                );
+
+
+                closeModal();
+
+            }
+        );
+
+}
+
+
+
+/* =========================================
+   CLOSE MODAL
+========================================= */
+
+function closeModal() {
+
+    const modal =
+        document.getElementById(
+            "eventoraModal"
+        );
+
+
+    if (modal) {
+
+        modal.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+
+/* =========================================
+   FIX SIGN IN 404
+========================================= */
+
+const signInButton =
+    document.querySelector(
+        ".signin-btn"
+    );
+
+
+if (signInButton) {
+
+    signInButton.addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+            openSignIn();
+
+        }
+    );
+
+}
+
+
+
+/* =========================================
+   FIX BOOK TICKETS 404
+========================================= */
+
+const bookButton =
+    document.querySelector(
+        ".primary-btn"
+    );
+
+
+if (bookButton) {
+
+    bookButton.addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+            openBooking();
+
+        }
+    );
+
+}
+
+
+
+/* =========================================
+   INITIAL LOAD
 ========================================= */
 
 createDots();
 
-renderEvent(1);
+updateEvent();
