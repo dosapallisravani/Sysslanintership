@@ -1,94 +1,89 @@
 /* =========================================
-   EVENT DATA
+   EVENTORA - EVENT DATA
 ========================================= */
 
 const events = [
 
     {
         name: "NEON",
-        subtitle: "NIGHTS",
+        sub: "NIGHTS",
         type: "EDM LIVE EXPERIENCE",
         date: "18 SEP 2026",
         time: "7:00 PM",
         venue: "HYDERABAD",
         price: 799,
-        image: "images/neon-dj.png",
-        bg1: "#21004d",
-        bg2: "#05000d",
-        glow: "#9b30ff"
+
+        person: "images/neon-dj.png",
+        bg: "images/neon-bg.jpg"
     },
 
     {
         name: "MOON",
-        subtitle: "TUNES",
+        sub: "TUNES",
         type: "ACOUSTIC MUSIC NIGHT",
         date: "25 SEP 2026",
         time: "6:30 PM",
         venue: "VISAKHAPATNAM",
         price: 599,
-        image: "images/moon-guitarist.png",
-        bg1: "#06264d",
-        bg2: "#020711",
-        glow: "#3188ff"
+
+        person: "images/moon-guitarist.png",
+        bg: "images/moon-bg.jpg"
     },
 
     {
         name: "HAPPY",
-        subtitle: "BEATS",
+        sub: "BEATS",
         type: "LIVE POP CONCERT",
         date: "02 OCT 2026",
         time: "7:30 PM",
         venue: "VIJAYAWADA",
         price: 699,
-        image: "images/happy-singer.png",
-        bg1: "#5a123f",
-        bg2: "#12030c",
-        glow: "#ff4fa3"
+
+        person: "images/happy-singer.png",
+        bg: "images/happy-bg.jpg"
     },
 
     {
         name: "BEAT",
-        subtitle: "WORLD",
+        sub: "WORLD",
         type: "HIP-HOP LIVE SHOW",
         date: "10 OCT 2026",
         time: "8:00 PM",
         venue: "HYDERABAD",
         price: 899,
-        image: "images/beat-rapper.png",
-        bg1: "#480909",
-        bg2: "#090202",
-        glow: "#ff3434"
+
+        person: "images/beat-rapper.png",
+        bg: "images/beat-bg.jpg"
     },
 
     {
         name: "CITY",
-        subtitle: "BEATS",
+        sub: "BEATS",
         type: "URBAN MUSIC FEST",
         date: "18 OCT 2026",
         time: "7:00 PM",
         venue: "BENGALURU",
         price: 749,
-        image: "images/city-dj.png",
-        bg1: "#4b2105",
-        bg2: "#0c0501",
-        glow: "#ff8a32"
+
+        person: "images/city-dj.png",
+        bg: "images/city-bg.jpg"
     },
 
     {
         name: "SOUND",
-        subtitle: "FEST",
+        sub: "FEST",
         type: "ULTIMATE MUSIC FESTIVAL",
         date: "31 OCT 2026",
         time: "6:00 PM",
-        venue: "HYDERABAD",
+        venue: "GOA",
         price: 999,
-        image: "images/sound-fest.png",
-        bg1: "#034a55",
-        bg2: "#011316",
-        glow: "#16d9ee"
+
+        person: "images/sound-fest.png",
+        bg: "images/sound-bg.jpg"
     }
 
 ];
+
 
 
 /* =========================================
@@ -97,17 +92,19 @@ const events = [
 
 let currentIndex = 0;
 
-let isAnimating = false;
+let isChanging = false;
 
 let touchStartX = 0;
+
+let touchEndX = 0;
+
 
 
 /* =========================================
    ELEMENTS
 ========================================= */
 
-const hero =
-    document.getElementById("hero");
+const hero = document.getElementById("hero");
 
 const centerImage =
     document.getElementById("centerImage");
@@ -136,391 +133,275 @@ const eventVenue =
 const eventPrice =
     document.getElementById("eventPrice");
 
-const indicators =
-    document.getElementById("indicators");
+const dotsContainer =
+    document.getElementById("dots");
 
-const glow =
-    document.querySelector(".background-glow");
+const centerStage =
+    document.querySelector(".center-stage");
 
-
-/* =========================================
-   CREATE INDICATORS
-========================================= */
-
-function createIndicators() {
-
-    if (!indicators) return;
-
-    indicators.innerHTML = "";
-
-    events.forEach((event, index) => {
-
-        const dot =
-            document.createElement("span");
-
-        if (index === currentIndex) {
-
-            dot.classList.add("active");
-
-        }
-
-        indicators.appendChild(dot);
-
-    });
-}
 
 
 /* =========================================
-   UPDATE BACKGROUND
+   BACKGROUND
 ========================================= */
 
-function updateBackground(event) {
+function changeBackground(image) {
 
-    hero.style.background = `
-        radial-gradient(
-            circle at 50% 42%,
-            ${event.bg1} 0%,
-            ${event.bg2} 55%,
-            #020202 100%
-        )
-    `;
-
-    if (glow) {
-
-        glow.style.background =
-            event.glow;
-
-    }
+    hero.style.setProperty(
+        "--bg",
+        `url("${image}")`
+    );
 
 }
 
 
+
 /* =========================================
-   UPDATE EVENT
+   UPDATE EVENT INFORMATION
 ========================================= */
 
-function updateEvent() {
+function updateEventInfo(event) {
+
+    eventName.innerHTML =
+        `${event.name}<br><span>${event.sub}</span>`;
+
+    eventType.textContent =
+        event.type;
+
+    eventDate.textContent =
+        event.date;
+
+    eventTime.textContent =
+        event.time;
+
+    eventVenue.textContent =
+        event.venue;
+
+    eventPrice.textContent =
+        `₹${event.price}`;
+
+}
+
+
+
+/* =========================================
+   UPDATE PERFORMERS
+========================================= */
+
+function updatePerformers() {
 
     const current =
         events[currentIndex];
 
-    const previousIndex =
-        (currentIndex - 1 + events.length)
-        % events.length;
+    const previous =
+        events[
+            (currentIndex - 1 + events.length)
+            % events.length
+        ];
 
-    const nextIndex =
-        (currentIndex + 1)
-        % events.length;
+    const next =
+        events[
+            (currentIndex + 1)
+            % events.length
+        ];
 
-
-    /* CENTER */
 
     centerImage.src =
-        current.image;
-
-
-    /* LEFT */
+        current.person;
 
     leftImage.src =
-        events[previousIndex].image;
-
-
-    /* RIGHT */
+        previous.person;
 
     rightImage.src =
-        events[nextIndex].image;
+        next.person;
 
 
-    /* DETAILS */
+    centerImage.alt =
+        `${current.name} performer`;
 
-    eventName.innerHTML =
-        `${current.name}<br>
-        <span>${current.subtitle}</span>`;
+    leftImage.alt =
+        `${previous.name} performer`;
 
-    eventType.textContent =
-        current.type;
+    rightImage.alt =
+        `${next.name} performer`;
 
-    eventDate.textContent =
-        current.date;
-
-    eventTime.textContent =
-        current.time;
-
-    eventVenue.textContent =
-        current.venue;
-
-    eventPrice.textContent =
-        `₹${current.price}`;
+}
 
 
-    /* BACKGROUND */
 
-    updateBackground(current);
+/* =========================================
+   UPDATE DOTS
+========================================= */
+
+function updateDots() {
+
+    const dots =
+        document.querySelectorAll(
+            ".dots button"
+        );
+
+    dots.forEach((dot, index) => {
+
+        dot.classList.toggle(
+            "active",
+            index === currentIndex
+        );
+
+    });
+
+}
 
 
-    /* INDICATOR */
 
-    if (indicators) {
+/* =========================================
+   ANIMATION
+========================================= */
 
-        const dots =
-            indicators.querySelectorAll("span");
+function playSlideAnimation(direction) {
 
-        dots.forEach((dot, index) => {
+    if (!centerStage) return;
 
-            dot.classList.toggle(
-                "active",
-                index === currentIndex
-            );
 
-        });
+    centerStage.classList.remove(
+        "slide-next",
+        "slide-prev"
+    );
+
+
+    /* Restart CSS animation */
+
+    void centerStage.offsetWidth;
+
+
+    if (direction > 0) {
+
+        centerStage.classList.add(
+            "slide-next"
+        );
+
+    } else {
+
+        centerStage.classList.add(
+            "slide-prev"
+        );
 
     }
 
 }
 
 
+
 /* =========================================
-   3D NEXT ANIMATION
+   RENDER EVENT
 ========================================= */
 
-function nextEvent() {
+function renderEvent(direction = 1) {
 
-    if (isAnimating) return;
-
-    isAnimating = true;
-
-    const performer =
-        document.querySelector(".performer");
-
-    const left =
-        document.querySelector(".left-event");
-
-    const right =
-        document.querySelector(".right-event");
+    const event =
+        events[currentIndex];
 
 
-    /* CENTER MOVES OUT */
+    /* Background */
 
-    performer.style.transform = `
-        translate(-50%, -50%)
-        translateZ(650px)
-        rotateY(-35deg)
-        scale(1.15)
-    `;
-
-    performer.style.opacity = "0";
+    changeBackground(
+        event.bg
+    );
 
 
-    /* SIDE MOVEMENT */
+    /* Performer */
 
-    right.style.transform = `
-        translate(60%, -50%)
-        translateZ(150px)
-        rotateY(0deg)
-        scale(.9)
-    `;
-
-    right.style.opacity = "1";
-
-    left.style.opacity = "0";
+    updatePerformers();
 
 
-    setTimeout(() => {
+    /* Text */
 
-        currentIndex =
-            (currentIndex + 1)
-            % events.length;
-
-        updateEvent();
+    updateEventInfo(
+        event
+    );
 
 
-        /* RESET */
+    /* Dots */
 
-        performer.style.transition = "none";
-
-        performer.style.transform = `
-            translate(-50%, -50%)
-            translateZ(-350px)
-            rotateY(35deg)
-            scale(.45)
-        `;
-
-        performer.style.opacity = "0";
+    updateDots();
 
 
-        right.style.transition = "none";
+    /* 3D animation */
 
-        right.style.transform = `
-            translate(135%, -50%)
-            translateZ(-180px)
-            rotateY(-48deg)
-            scale(.62)
-        `;
-
-
-        /* FORCE REFLOW */
-
-        void performer.offsetWidth;
-
-
-        performer.style.transition =
-            "transform .8s cubic-bezier(.22,.61,.36,1), opacity .45s ease";
-
-        right.style.transition =
-            "transform .8s cubic-bezier(.22,.61,.36,1), opacity .8s ease";
-
-
-        setTimeout(() => {
-
-            performer.style.transform = `
-                translate(-50%, -50%)
-                translateZ(260px)
-                rotateY(0deg)
-                scale(1)
-            `;
-
-            performer.style.opacity = "1";
-
-            left.style.opacity = ".55";
-
-            isAnimating = false;
-
-        }, 50);
-
-
-    }, 420);
+    playSlideAnimation(
+        direction
+    );
 
 }
 
 
+
 /* =========================================
-   3D PREVIOUS ANIMATION
+   CHANGE EVENT
 ========================================= */
 
-function previousEvent() {
+function changeEvent(direction) {
 
-    if (isAnimating) return;
-
-    isAnimating = true;
-
-    const performer =
-        document.querySelector(".performer");
-
-    const left =
-        document.querySelector(".left-event");
-
-    const right =
-        document.querySelector(".right-event");
+    if (isChanging) return;
 
 
-    /* CENTER MOVES OUT */
-
-    performer.style.transform = `
-        translate(-50%, -50%)
-        translateZ(650px)
-        rotateY(35deg)
-        scale(1.15)
-    `;
-
-    performer.style.opacity = "0";
+    isChanging = true;
 
 
-    /* LEFT MOVEMENT */
+    /* Change index */
 
-    left.style.transform = `
-        translate(-60%, -50%)
-        translateZ(150px)
-        rotateY(0deg)
-        scale(.9)
-    `;
+    currentIndex =
+        (
+            currentIndex +
+            direction +
+            events.length
+        )
+        %
+        events.length;
 
-    left.style.opacity = "1";
 
-    right.style.opacity = "0";
+    /* Render */
 
+    renderEvent(
+        direction
+    );
+
+
+    /* Unlock */
 
     setTimeout(() => {
 
-        currentIndex =
-            (currentIndex - 1 + events.length)
-            % events.length;
+        isChanging = false;
 
-        updateEvent();
-
-
-        /* RESET */
-
-        performer.style.transition = "none";
-
-        performer.style.transform = `
-            translate(-50%, -50%)
-            translateZ(-350px)
-            rotateY(-35deg)
-            scale(.45)
-        `;
-
-        performer.style.opacity = "0";
-
-
-        left.style.transition = "none";
-
-        left.style.transform = `
-            translate(-135%, -50%)
-            translateZ(-180px)
-            rotateY(48deg)
-            scale(.62)
-        `;
-
-
-        void performer.offsetWidth;
-
-
-        performer.style.transition =
-            "transform .8s cubic-bezier(.22,.61,.36,1), opacity .45s ease";
-
-        left.style.transition =
-            "transform .8s cubic-bezier(.22,.61,.36,1), opacity .8s ease";
-
-
-        setTimeout(() => {
-
-            performer.style.transform = `
-                translate(-50%, -50%)
-                translateZ(260px)
-                rotateY(0deg)
-                scale(1)
-            `;
-
-            performer.style.opacity = "1";
-
-            right.style.opacity = ".55";
-
-            isAnimating = false;
-
-        }, 50);
-
-
-    }, 420);
+    }, 700);
 
 }
 
 
+
 /* =========================================
-   ARROWS
+   NEXT / PREVIOUS BUTTONS
 ========================================= */
 
 const nextButton =
-    document.getElementById("nextBtn");
+    document.getElementById(
+        "nextBtn"
+    );
 
 const previousButton =
-    document.getElementById("previousBtn");
+    document.getElementById(
+        "prevBtn"
+    );
 
 
 if (nextButton) {
 
     nextButton.addEventListener(
         "click",
-        nextEvent
+        () => {
+
+            changeEvent(1);
+
+        }
     );
 
 }
@@ -530,29 +411,120 @@ if (previousButton) {
 
     previousButton.addEventListener(
         "click",
-        previousEvent
+        () => {
+
+            changeEvent(-1);
+
+        }
     );
 
 }
 
 
+
 /* =========================================
-   KEYBOARD
+   CREATE DOTS
+========================================= */
+
+function createDots() {
+
+    if (!dotsContainer) return;
+
+
+    dotsContainer.innerHTML = "";
+
+
+    events.forEach(
+        (event, index) => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.setAttribute(
+                "aria-label",
+                `Show ${event.name} ${event.sub}`
+            );
+
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    if (isChanging) return;
+
+
+                    const oldIndex =
+                        currentIndex;
+
+
+                    if (index === oldIndex)
+                        return;
+
+
+                    currentIndex =
+                        index;
+
+
+                    const direction =
+                        index > oldIndex
+                        ? 1
+                        : -1;
+
+
+                    renderEvent(
+                        direction
+                    );
+
+
+                    isChanging = true;
+
+
+                    setTimeout(() => {
+
+                        isChanging = false;
+
+                    }, 700);
+
+                }
+            );
+
+
+            dotsContainer.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =========================================
+   KEYBOARD CONTROLS
 ========================================= */
 
 document.addEventListener(
     "keydown",
-    function(event) {
+    (event) => {
 
-        if (event.key === "ArrowRight") {
+        if (
+            event.key === "ArrowRight"
+        ) {
 
-            nextEvent();
+            changeEvent(1);
 
         }
 
-        if (event.key === "ArrowLeft") {
 
-            previousEvent();
+        if (
+            event.key === "ArrowLeft"
+        ) {
+
+            changeEvent(-1);
 
         }
 
@@ -560,345 +532,132 @@ document.addEventListener(
 );
 
 
-/* =========================================
-   SWIPE
-========================================= */
-
-document.addEventListener(
-    "touchstart",
-    function(event) {
-
-        touchStartX =
-            event.changedTouches[0].screenX;
-
-    },
-    { passive: true }
-);
-
-
-document.addEventListener(
-    "touchend",
-    function(event) {
-
-        const touchEndX =
-            event.changedTouches[0].screenX;
-
-        const distance =
-            touchEndX - touchStartX;
-
-        if (Math.abs(distance) < 50) return;
-
-
-        if (distance < 0) {
-
-            nextEvent();
-
-        } else {
-
-            previousEvent();
-
-        }
-
-    },
-    { passive: true }
-);
-
 
 /* =========================================
-   BOOKING
+   TOUCH / SWIPE
 ========================================= */
 
-const selectedEvent =
-    document.getElementById("selectedEvent");
+if (hero) {
 
-const ticketCount =
-    document.getElementById("ticketCount");
+    hero.addEventListener(
+        "touchstart",
+        (event) => {
 
-const totalPrice =
-    document.getElementById("totalPrice");
+            touchStartX =
+                event.touches[0].clientX;
 
-const bookingForm =
-    document.getElementById("bookingForm");
-
-
-/* EVENT OPTIONS */
-
-function loadEventOptions() {
-
-    if (!selectedEvent) return;
-
-    selectedEvent.innerHTML =
-        `<option value="">Choose an event</option>`;
-
-    events.forEach((event, index) => {
-
-        const option =
-            document.createElement("option");
-
-        option.value = index;
-
-        option.textContent =
-            `${event.name} ${event.subtitle}`;
-
-        selectedEvent.appendChild(option);
-
-    });
-
-}
-
-
-/* TOTAL */
-
-function calculateTotal() {
-
-    if (!selectedEvent || !ticketCount) {
-        return;
-    }
-
-    const eventIndex =
-        selectedEvent.value;
-
-    const count =
-        Number(ticketCount.value);
-
-
-    if (
-        eventIndex === "" ||
-        !count
-    ) {
-
-        if (totalPrice) {
-            totalPrice.textContent = "₹0";
+        },
+        {
+            passive: true
         }
-
-        return;
-
-    }
+    );
 
 
-    const price =
-        events[eventIndex].price;
+    hero.addEventListener(
+        "touchend",
+        (event) => {
 
-    const total =
-        price * count;
-
-
-    if (totalPrice) {
-
-        totalPrice.textContent =
-            `₹${total}`;
-
-    }
-
-}
+            touchEndX =
+                event.changedTouches[0].clientX;
 
 
-if (selectedEvent) {
+            const distance =
+                touchEndX -
+                touchStartX;
 
-    selectedEvent.addEventListener(
-        "change",
-        calculateTotal
+
+            /* Swipe left */
+
+            if (distance < -50) {
+
+                changeEvent(1);
+
+            }
+
+
+            /* Swipe right */
+
+            else if (distance > 50) {
+
+                changeEvent(-1);
+
+            }
+
+        },
+        {
+            passive: true
+        }
     );
 
 }
 
 
-if (ticketCount) {
 
-    ticketCount.addEventListener(
-        "change",
-        calculateTotal
+/* =========================================
+   MOUSE WHEEL
+========================================= */
+
+let wheelLocked = false;
+
+
+if (hero) {
+
+    hero.addEventListener(
+        "wheel",
+        (event) => {
+
+            if (wheelLocked) return;
+
+
+            if (
+                Math.abs(event.deltaY) < 20
+            ) return;
+
+
+            wheelLocked = true;
+
+
+            if (event.deltaY > 0) {
+
+                changeEvent(1);
+
+            } else {
+
+                changeEvent(-1);
+
+            }
+
+
+            setTimeout(() => {
+
+                wheelLocked = false;
+
+            }, 800);
+
+        },
+        {
+            passive: true
+        }
     );
 
 }
 
 
+
 /* =========================================
-   BOOKING FORM
+   IMAGE ERROR CHECK
 ========================================= */
 
-if (bookingForm) {
-
-    bookingForm.addEventListener(
-        "submit",
-        function(event) {
-
-            event.preventDefault();
-
-
-            const name =
-                document
-                .getElementById("fullName")
-                .value.trim();
-
-            const email =
-                document
-                .getElementById("email")
-                .value.trim();
-
-            const phone =
-                document
-                .getElementById("phone")
-                .value.trim();
-
-            const eventValue =
-                selectedEvent.value;
-
-            const tickets =
-                ticketCount.value;
-
-            const payment =
-                document
-                .getElementById("payment")
-                .value;
-
-
-            let valid = true;
-
-
-            const nameError =
-                document.getElementById("nameError");
-
-            const emailError =
-                document.getElementById("emailError");
-
-            const phoneError =
-                document.getElementById("phoneError");
-
-            const eventError =
-                document.getElementById("eventError");
-
-            const ticketError =
-                document.getElementById("ticketError");
-
-            const paymentError =
-                document.getElementById("paymentError");
-
-            const message =
-                document.getElementById("bookingMessage");
-
-
-            nameError.textContent = "";
-            emailError.textContent = "";
-            phoneError.textContent = "";
-            eventError.textContent = "";
-            ticketError.textContent = "";
-            paymentError.textContent = "";
-
-            message.textContent = "";
-
-
-            /* NAME */
-
-            if (name.length < 3) {
-
-                nameError.textContent =
-                    "Please enter your full name.";
-
-                valid = false;
-
-            }
-
-
-            /* EMAIL */
-
-            const emailPattern =
-                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-            if (!emailPattern.test(email)) {
-
-                emailError.textContent =
-                    "Enter a valid email address.";
-
-                valid = false;
-
-            }
-
-
-            /* PHONE */
-
-            if (!/^[0-9]{10}$/.test(phone)) {
-
-                phoneError.textContent =
-                    "Enter a valid 10-digit number.";
-
-                valid = false;
-
-            }
-
-
-            /* EVENT */
-
-            if (eventValue === "") {
-
-                eventError.textContent =
-                    "Please select an event.";
-
-                valid = false;
-
-            }
-
-
-            /* TICKETS */
-
-            if (tickets === "") {
-
-                ticketError.textContent =
-                    "Please select ticket quantity.";
-
-                valid = false;
-
-            }
-
-
-            /* PAYMENT */
-
-            if (payment === "") {
-
-                paymentError.textContent =
-                    "Please select payment method.";
-
-                valid = false;
-
-            }
-
-
-            /* SUCCESS */
-
-            if (valid) {
-
-                const selected =
-                    events[eventValue];
-
-                const ticketNumber =
-                    Number(tickets);
-
-                const total =
-                    selected.price *
-                    ticketNumber;
-
-
-                message.className =
-                    "success-message";
-
-
-                message.innerHTML = `
-                    🎉 Booking confirmed!<br>
-                    ${selected.name}
-                    ${selected.subtitle}
-                    • ${ticketNumber} ticket(s)
-                    • ₹${total}
-                `;
-
-
-                bookingForm.reset();
-
-
-                totalPrice.textContent =
-                    "₹0";
-
-            }
+function checkImage(imageElement) {
+
+    imageElement.addEventListener(
+        "error",
+        () => {
+
+            console.warn(
+                "Image not found:",
+                imageElement.src
+            );
 
         }
     );
@@ -906,12 +665,18 @@ if (bookingForm) {
 }
 
 
+checkImage(centerImage);
+
+checkImage(leftImage);
+
+checkImage(rightImage);
+
+
+
 /* =========================================
-   INITIAL LOAD
+   INITIALIZE
 ========================================= */
 
-loadEventOptions();
+createDots();
 
-createIndicators();
-
-updateEvent();
+renderEvent(1);
