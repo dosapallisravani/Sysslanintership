@@ -937,7 +937,27 @@ function displayTickets() {
                 </div>
 
             </div>
+<div class="ticket-actions">
 
+    <button
+        class="ticket-action-btn"
+        onclick="showQR('${ticket.id}')">
+        VIEW QR
+    </button>
+
+    <button
+        class="ticket-action-btn"
+        onclick="downloadTicket('${ticket.id}')">
+        DOWNLOAD
+    </button>
+
+    <button
+        class="ticket-action-btn cancel-ticket"
+        onclick="cancelTicket('${ticket.id}')">
+        CANCEL
+    </button>
+
+</div>
             <div class="ticket-status">
                 CONFIRMED
             </div>
