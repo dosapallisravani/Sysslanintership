@@ -1012,10 +1012,8 @@ displayTickets();
 /* =========================================
    LEVEL 4 - QR / DOWNLOAD / CANCEL
 ========================================= */
-
-
 /* =========================================
-   VIEW QR
+   LEVEL 5 - REAL QR CODE
 ========================================= */
 
 function showQR(ticketId) {
@@ -1029,31 +1027,47 @@ function showQR(ticketId) {
     if (!ticket) return;
 
 
-    // Create popup
     const popup = document.createElement("div");
 
     popup.className = "qr-popup active";
+
 
     popup.innerHTML = `
 
         <div class="qr-box">
 
-            <h3>EVENTORA TICKET</h3>
-
-            <p>
-                ${ticket.event}
+            <p class="eyebrow">
+                EVENTORA • E-TICKET
             </p>
 
-            <div id="qrCode">
-                ${ticket.id}
+            <h3>
+                ${ticket.event.toUpperCase()}
+            </h3>
+
+            <div id="realQRCode"></div>
+
+            <div style="margin-top:18px;">
+
+                <p style="font-size:11px;opacity:.5;">
+                    BOOKING ID
+                </p>
+
+                <strong>
+                    ${ticket.id}
+                </strong>
+
             </div>
 
-            <p style="margin-top:15px;font-size:11px;opacity:.5;">
-                Booking ID: ${ticket.id}
-            </p>
+            <div style="margin-top:15px;">
 
-            <button
-                class="ticket-action-btn close-qr">
+                <p style="font-size:11px;opacity:.5;">
+                    ${ticket.tickets} TICKET${ticket.tickets > 1 ? "S" : ""}
+                    • ₹${Number(ticket.total).toLocaleString("en-IN")}
+                </p>
+
+            </div>
+
+            <button class="ticket-action-btn close-qr">
                 CLOSE
             </button>
 
@@ -1065,17 +1079,41 @@ function showQR(ticketId) {
     document.body.appendChild(popup);
 
 
+    /* CREATE REAL QR CODE */
+
+    const qrElement =
+        document.getElementById("realQRCode");
+
+
+    if (qrElement && typeof QRCode !== "undefined") {
+
+        new QRCode(qrElement, {
+
+            text:
+                `EVENTORA|${ticket.id}|${ticket.event}|${ticket.tickets}`,
+
+            width: 180,
+
+            height: 180
+
+        });
+
+    }
+
+
+    /* CLOSE BUTTON */
+
     const closeButton =
         popup.querySelector(".close-qr");
 
 
     closeButton.addEventListener(
         "click",
-        () => {
-            popup.remove();
-        }
+        () => popup.remove()
     );
 
+
+    /* CLOSE OUTSIDE */
 
     popup.addEventListener(
         "click",
@@ -1088,7 +1126,6 @@ function showQR(ticketId) {
         }
     );
 }
-
 
 
 /* =========================================
