@@ -1,9 +1,8 @@
 /* =========================================
-   EVENTORA EVENTS
+   EVENTORA - EVENT DATA
 ========================================= */
 
 const events = [
-
     {
         name: "NEON",
         sub: "NIGHTS",
@@ -12,7 +11,6 @@ const events = [
         time: "7:00 PM",
         venue: "HYDERABAD",
         price: 799,
-
         person: "images/neon-dj.png",
         bg: "images/backgrounds/neon-nights.jpg"
     },
@@ -25,7 +23,6 @@ const events = [
         time: "6:30 PM",
         venue: "VISAKHAPATNAM",
         price: 599,
-
         person: "images/moon-guitarist.png",
         bg: "images/backgrounds/moon-tunes.jpg"
     },
@@ -38,7 +35,6 @@ const events = [
         time: "7:30 PM",
         venue: "VIJAYAWADA",
         price: 699,
-
         person: "images/happy-singer.png",
         bg: "images/backgrounds/happy-beats.jpg"
     },
@@ -51,7 +47,6 @@ const events = [
         time: "8:00 PM",
         venue: "HYDERABAD",
         price: 899,
-
         person: "images/beat-rapper.png",
         bg: "images/backgrounds/beat-world.jpg"
     },
@@ -64,7 +59,6 @@ const events = [
         time: "7:00 PM",
         venue: "BENGALURU",
         price: 749,
-
         person: "images/city-dj.png",
         bg: "images/backgrounds/city-beats.jpg"
     },
@@ -77,944 +71,601 @@ const events = [
         time: "6:00 PM",
         venue: "GOA",
         price: 999,
-
         person: "images/sound-fest.png",
         bg: "images/backgrounds/sound-fest.jpg"
     }
-
 ];
 
 
 /* =========================================
-   VARIABLES
+   CAROUSEL ELEMENTS
+========================================= */
+
+const hero = document.querySelector(".hero");
+const centerImage = document.querySelector(".performer-3d img");
+
+const sideLeftImage = document.querySelector(".side-left img");
+const sideRightImage = document.querySelector(".side-right img");
+
+const eventName = document.querySelector(".event-content h1");
+const eventType = document.querySelector(".event-type");
+
+const detailItems = document.querySelectorAll(".details strong");
+
+const leftArrow = document.querySelector(".arrow-left");
+const rightArrow = document.querySelector(".arrow-right");
+
+const dotsContainer = document.querySelector(".dots");
+
+
+/* =========================================
+   CURRENT SLIDE
 ========================================= */
 
 let currentIndex = 0;
-let changing = false;
-
-let startX = 0;
-let endX = 0;
-
-
-/* =========================================
-   ELEMENTS
-========================================= */
-
-const hero =
-    document.getElementById("hero");
-
-const centerImage =
-    document.getElementById("centerImage");
-
-const leftImage =
-    document.getElementById("leftImage");
-
-const rightImage =
-    document.getElementById("rightImage");
-
-const eventName =
-    document.getElementById("eventName");
-
-const eventType =
-    document.getElementById("eventType");
-
-const eventDate =
-    document.getElementById("eventDate");
-
-const eventTime =
-    document.getElementById("eventTime");
-
-const eventVenue =
-    document.getElementById("eventVenue");
-
-const eventPrice =
-    document.getElementById("eventPrice");
-
-const dots =
-    document.getElementById("dots");
-
-const centerStage =
-    document.querySelector(".center-stage");
-
-
-
-/* =========================================
-   BACKGROUND
-========================================= */
-
-function updateBackground(image) {
-
-    hero.style.setProperty(
-        "--bg",
-        `url("${image}")`
-    );
-
-}
-
-
-
-/* =========================================
-   UPDATE EVENT
-========================================= */
-
-function updateEvent() {
-
-    const current =
-        events[currentIndex];
-
-    const previous =
-        events[
-            (currentIndex - 1 + events.length)
-            % events.length
-        ];
-
-    const next =
-        events[
-            (currentIndex + 1)
-            % events.length
-        ];
-
-
-    /* Background */
-
-    updateBackground(
-        current.bg
-    );
-
-
-    /* Center performer */
-
-    centerImage.src =
-        current.person;
-
-
-    /* Left performer */
-
-    leftImage.src =
-        previous.person;
-
-
-    /* Right performer */
-
-    rightImage.src =
-        next.person;
-
-
-    /* Event information */
-
-    eventName.innerHTML =
-        `${current.name}<br><span>${current.sub}</span>`;
-
-    eventType.textContent =
-        current.type;
-
-    eventDate.textContent =
-        current.date;
-
-    eventTime.textContent =
-        current.time;
-
-    eventVenue.textContent =
-        current.venue;
-
-    eventPrice.textContent =
-        `₹${current.price}`;
-
-
-    /* Dots */
-
-    document
-        .querySelectorAll(".dots button")
-        .forEach((button, index) => {
-
-            button.classList.toggle(
-                "active",
-                index === currentIndex
-            );
-
-        });
-
-}
-
-
-
-/* =========================================
-   3D SLIDE ANIMATION
-========================================= */
-
-function animateSlide(direction) {
-
-    if (!centerStage) return;
-
-
-    centerStage.classList.remove(
-        "slide-next",
-        "slide-prev"
-    );
-
-
-    /* Restart animation */
-
-    void centerStage.offsetWidth;
-
-
-    if (direction > 0) {
-
-        centerStage.classList.add(
-            "slide-next"
-        );
-
-    } else {
-
-        centerStage.classList.add(
-            "slide-prev"
-        );
-
-    }
-
-}
-
-
-
-/* =========================================
-   CHANGE EVENT
-========================================= */
-
-function changeEvent(direction) {
-
-    if (changing) return;
-
-
-    changing = true;
-
-
-    currentIndex =
-        (
-            currentIndex +
-            direction +
-            events.length
-        ) % events.length;
-
-
-    updateEvent();
-
-    animateSlide(direction);
-
-
-    setTimeout(() => {
-
-        changing = false;
-
-    }, 700);
-
-}
-
-
-
-/* =========================================
-   NEXT BUTTON
-========================================= */
-
-const nextBtn =
-    document.getElementById("nextBtn");
-
-
-if (nextBtn) {
-
-    nextBtn.addEventListener(
-        "click",
-        () => {
-
-            changeEvent(1);
-
-        }
-    );
-
-}
-
-
-
-/* =========================================
-   PREVIOUS BUTTON
-========================================= */
-
-const prevBtn =
-    document.getElementById("prevBtn");
-
-
-if (prevBtn) {
-
-    prevBtn.addEventListener(
-        "click",
-        () => {
-
-            changeEvent(-1);
-
-        }
-    );
-
-}
-
+let isMoving = false;
 
 
 /* =========================================
    CREATE DOTS
 ========================================= */
 
-function createDots() {
+if (dotsContainer) {
 
-    if (!dots) return;
+    events.forEach((event, index) => {
 
+        const dot = document.createElement("button");
 
-    dots.innerHTML = "";
+        dot.type = "button";
 
-
-    events.forEach(
-        (event, index) => {
-
-            const button =
-                document.createElement("button");
-
-
-            button.setAttribute(
-                "aria-label",
-                `Open ${event.name} ${event.sub}`
-            );
-
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    if (changing) return;
-
-                    if (index === currentIndex)
-                        return;
-
-
-                    const oldIndex =
-                        currentIndex;
-
-
-                    const direction =
-                        index > oldIndex
-                        ? 1
-                        : -1;
-
-
-                    currentIndex =
-                        index;
-
-
-                    updateEvent();
-
-                    animateSlide(
-                        direction
-                    );
-
-
-                    changing = true;
-
-
-                    setTimeout(() => {
-
-                        changing = false;
-
-                    }, 700);
-
-                }
-            );
-
-
-            dots.appendChild(
-                button
-            );
-
+        if (index === 0) {
+            dot.classList.add("active");
         }
-    );
 
+        dot.addEventListener("click", () => {
+
+            if (isMoving || index === currentIndex) return;
+
+            const oldIndex = currentIndex;
+
+            currentIndex = index;
+
+            updateCarousel(
+                currentIndex > oldIndex ? "next" : "prev"
+            );
+        });
+
+        dotsContainer.appendChild(dot);
+    });
 }
 
 
+/* =========================================
+   UPDATE CAROUSEL
+========================================= */
+
+function updateCarousel(direction = "next") {
+
+    if (!events[currentIndex]) return;
+
+    const event = events[currentIndex];
+
+    isMoving = true;
+
+
+    /* CENTER PERFORMER */
+
+    if (centerImage) {
+
+        centerImage.style.opacity = "0";
+
+        setTimeout(() => {
+
+            centerImage.src = event.person;
+
+            centerImage.style.opacity = "1";
+
+        }, 180);
+    }
+
+
+    /* LEFT PERFORMER */
+
+    const leftIndex =
+        (currentIndex - 1 + events.length) % events.length;
+
+    if (sideLeftImage) {
+        sideLeftImage.src = events[leftIndex].person;
+    }
+
+
+    /* RIGHT PERFORMER */
+
+    const rightIndex =
+        (currentIndex + 1) % events.length;
+
+    if (sideRightImage) {
+        sideRightImage.src = events[rightIndex].person;
+    }
+
+
+    /* EVENT TITLE */
+
+    if (eventName) {
+
+        eventName.style.opacity = "0";
+
+        eventName.style.transform = "translateY(15px)";
+
+        setTimeout(() => {
+
+            eventName.innerHTML =
+                `${event.name}<span>${event.sub}</span>`;
+
+            eventName.style.opacity = "1";
+
+            eventName.style.transform =
+                "translateY(0)";
+
+        }, 200);
+    }
+
+
+    /* EVENT TYPE */
+
+    if (eventType) {
+
+        eventType.style.opacity = "0";
+
+        setTimeout(() => {
+
+            eventType.textContent = event.type;
+
+            eventType.style.opacity = "1";
+
+        }, 220);
+    }
+
+
+    /* EVENT DETAILS */
+
+    if (detailItems.length >= 4) {
+
+        detailItems[0].textContent = event.date;
+        detailItems[1].textContent = event.time;
+        detailItems[2].textContent = event.venue;
+        detailItems[3].textContent = `₹${event.price}`;
+    }
+
+
+    /* BACKGROUND */
+
+    changeBackground(event.bg);
+
+
+    /* DOTS */
+
+    const dots =
+        dotsContainer?.querySelectorAll("button");
+
+    if (dots) {
+
+        dots.forEach(dot =>
+            dot.classList.remove("active")
+        );
+
+        if (dots[currentIndex]) {
+            dots[currentIndex].classList.add("active");
+        }
+    }
+
+
+    /* 3D SLIDE ANIMATION */
+
+    const stage =
+        document.querySelector(".center-stage");
+
+    if (stage) {
+
+        stage.classList.remove(
+            "slide-next",
+            "slide-prev"
+        );
+
+        void stage.offsetWidth;
+
+        stage.classList.add(
+            direction === "next"
+                ? "slide-next"
+                : "slide-prev"
+        );
+    }
+
+
+    setTimeout(() => {
+
+        isMoving = false;
+
+    }, 700);
+}
+
 
 /* =========================================
-   KEYBOARD
+   BACKGROUND CHANGE
+========================================= */
+
+function changeBackground(url) {
+
+    if (!hero) return;
+
+    hero.style.setProperty(
+        "--bg",
+        `url("${url}")`
+    );
+
+    const background =
+        document.querySelector(".hero-bg");
+
+    if (background) {
+
+        background.style.opacity = "0.35";
+
+        background.style.transform =
+            "scale(1.1)";
+
+        setTimeout(() => {
+
+            background.style.opacity = "1";
+
+            background.style.transform =
+                "scale(1.06)";
+
+        }, 150);
+    }
+}
+
+
+/* =========================================
+   NEXT EVENT
+========================================= */
+
+function nextEvent() {
+
+    if (isMoving) return;
+
+    currentIndex =
+        (currentIndex + 1) % events.length;
+
+    updateCarousel("next");
+}
+
+
+/* =========================================
+   PREVIOUS EVENT
+========================================= */
+
+function previousEvent() {
+
+    if (isMoving) return;
+
+    currentIndex =
+        (currentIndex - 1 + events.length)
+        % events.length;
+
+    updateCarousel("prev");
+}
+
+
+/* =========================================
+   ARROW EVENTS
+========================================= */
+
+if (rightArrow) {
+    rightArrow.addEventListener(
+        "click",
+        nextEvent
+    );
+}
+
+if (leftArrow) {
+    leftArrow.addEventListener(
+        "click",
+        previousEvent
+    );
+}
+
+
+/* =========================================
+   KEYBOARD CONTROLS
 ========================================= */
 
 document.addEventListener(
     "keydown",
-    (event) => {
+    (e) => {
 
-        if (
-            event.key === "ArrowRight"
-        ) {
-
-            changeEvent(1);
-
+        if (e.key === "ArrowRight") {
+            nextEvent();
         }
 
-
-        if (
-            event.key === "ArrowLeft"
-        ) {
-
-            changeEvent(-1);
-
+        if (e.key === "ArrowLeft") {
+            previousEvent();
         }
-
-
-        if (
-            event.key === "Escape"
-        ) {
-
-            closeModal();
-
-        }
-
     }
 );
 
 
-
 /* =========================================
-   SWIPE
+   MOBILE SWIPE
 ========================================= */
+
+let touchStartX = 0;
+let touchEndX = 0;
 
 if (hero) {
 
     hero.addEventListener(
         "touchstart",
-        (event) => {
+        (e) => {
 
-            startX =
-                event.touches[0].clientX;
-
+            touchStartX =
+                e.changedTouches[0].screenX;
         },
-        {
-            passive:true
-        }
+        { passive: true }
     );
 
 
     hero.addEventListener(
         "touchend",
-        (event) => {
+        (e) => {
 
-            endX =
-                event.changedTouches[0].clientX;
+            touchEndX =
+                e.changedTouches[0].screenX;
 
-
-            const distance =
-                endX - startX;
-
-
-            if (distance < -50) {
-
-                changeEvent(1);
-
-            }
-
-            else if (distance > 50) {
-
-                changeEvent(-1);
-
-            }
-
+            handleSwipe();
         },
-        {
-            passive:true
-        }
+        { passive: true }
     );
-
 }
 
 
+function handleSwipe() {
 
-/* =========================================
-   MODAL
-========================================= */
+    const difference =
+        touchStartX - touchEndX;
 
-function createModal() {
 
-    if (
-        document.getElementById(
-            "eventoraModal"
-        )
-    ) return;
-
-
-    const modal =
-        document.createElement("div");
-
-
-    modal.id =
-        "eventoraModal";
-
-
-    modal.className =
-        "modal";
-
-
-    modal.innerHTML = `
-
-        <div class="modal-box">
-
-            <button
-                class="close-modal"
-                onclick="closeModal()"
-            >
-                ×
-            </button>
-
-            <h2 id="modalTitle">
-                BOOK <span>TICKETS</span>
-            </h2>
-
-            <form id="eventForm">
-
-                <label>
-                    FULL NAME
-
-                    <input
-                        type="text"
-                        id="userName"
-                        placeholder="Enter your name"
-                        required
-                    >
-                </label>
-
-
-                <label>
-                    EMAIL
-
-                    <input
-                        type="email"
-                        id="userEmail"
-                        placeholder="Enter your email"
-                        required
-                    >
-                </label>
-
-
-                <label>
-                    EVENT
-
-                    <select
-                        id="selectedEvent"
-                    >
-                    </select>
-                </label>
-
-
-                <label>
-                    TICKETS
-
-                    <input
-                        type="number"
-                        id="ticketCount"
-                        min="1"
-                        max="10"
-                        value="1"
-                        required
-                    >
-                </label>
-
-
-                <button
-                    type="submit"
-                    class="primary-btn"
-                >
-                    CONFIRM BOOKING
-                    <span>→</span>
-                </button>
-
-            </form>
-
-        </div>
-
-    `;
-
-
-    document.body.appendChild(
-        modal
-    );
-
-
-    /* Fill events */
-
-    const select =
-        document.getElementById(
-            "selectedEvent"
-        );
-
-
-    events.forEach(
-        (event, index) => {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                index;
-
-
-            option.textContent =
-                `${event.name} ${event.sub} — ₹${event.price}`;
-
-
-            select.appendChild(
-                option
-            );
-
-        }
-    );
-
-
-    select.value =
-        currentIndex;
-
-
-    /* Booking submit */
-
-    document
-        .getElementById("eventForm")
-        .addEventListener(
-            "submit",
-            function(event) {
-
-                event.preventDefault();
-
-
-                const name =
-                    document.getElementById(
-                        "userName"
-                    ).value;
-
-
-                const selected =
-                    events[
-                        Number(
-                            document.getElementById(
-                                "selectedEvent"
-                            ).value
-                        )
-                    ];
-
-
-                const count =
-                    Number(
-                        document.getElementById(
-                            "ticketCount"
-                        ).value
-                    );
-
-
-                const total =
-                    selected.price * count;
-
-
-                alert(
-                    `Booking successful! 🎉\n\n` +
-                    `Name: ${name}\n` +
-                    `Event: ${selected.name} ${selected.sub}\n` +
-                    `Tickets: ${count}\n` +
-                    `Total: ₹${total}`
-                );
-
-
-                closeModal();
-
-            }
-        );
-
-
-    /* Close by outside click */
-
-    modal.addEventListener(
-        "click",
-        function(event) {
-
-            if (
-                event.target === modal
-            ) {
-
-                closeModal();
-
-            }
-
-        }
-    );
-
-}
-
-
-
-/* =========================================
-   OPEN BOOKING
-========================================= */
-
-function openBooking() {
-
-    createModal();
-
-
-    const modal =
-        document.getElementById(
-            "eventoraModal"
-        );
-
-
-    const title =
-        document.getElementById(
-            "modalTitle"
-        );
-
-
-    title.innerHTML =
-        `BOOK <span>TICKETS</span>`;
-
-
-    document.getElementById(
-        "selectedEvent"
-    ).value =
-        currentIndex;
-
-
-    modal.classList.add(
-        "show"
-    );
-
-}
-
-
-
-/* =========================================
-   OPEN SIGN IN
-========================================= */
-
-function openSignIn() {
-
-    createModal();
-
-
-    const modal =
-        document.getElementById(
-            "eventoraModal"
-        );
-
-
-    const box =
-        modal.querySelector(
-            ".modal-box"
-        );
-
-
-    box.innerHTML = `
-
-        <button
-            class="close-modal"
-            onclick="closeModal()"
-        >
-            ×
-        </button>
-
-
-        <h2>
-            SIGN <span>IN</span>
-        </h2>
-
-
-        <form id="loginForm">
-
-            <label>
-                EMAIL
-
-                <input
-                    type="email"
-                    placeholder="Enter your email"
-                    required
-                >
-            </label>
-
-
-            <label>
-                PASSWORD
-
-                <input
-                    type="password"
-                    placeholder="Enter your password"
-                    required
-                >
-            </label>
-
-
-            <button
-                type="submit"
-                class="primary-btn"
-            >
-                SIGN IN
-                <span>→</span>
-            </button>
-
-        </form>
-
-    `;
-
-
-    modal.classList.add(
-        "show"
-    );
-
-
-    document
-        .getElementById("loginForm")
-        .addEventListener(
-            "submit",
-            function(event) {
-
-                event.preventDefault();
-
-
-                alert(
-                    "Sign in demo successful! 🎉"
-                );
-
-
-                closeModal();
-
-            }
-        );
-
-}
-
-
-
-/* =========================================
-   CLOSE MODAL
-========================================= */
-
-function closeModal() {
-
-    const modal =
-        document.getElementById(
-            "eventoraModal"
-        );
-
-
-    if (modal) {
-
-        modal.classList.remove(
-            "show"
-        );
-
+    if (Math.abs(difference) < 50) {
+        return;
     }
 
-}
 
+    if (difference > 0) {
+        nextEvent();
+    } else {
+        previousEvent();
+    }
+}
 
 
 /* =========================================
-   FIX SIGN IN 404
+   BOOKING FORM
 ========================================= */
 
-const signInButton =
-    document.querySelector(
-        ".signin-btn"
-    );
+const bookingForm =
+    document.getElementById("bookingForm");
 
 
-if (signInButton) {
+if (bookingForm) {
 
-    signInButton.addEventListener(
-        "click",
-        function(event) {
+    bookingForm.addEventListener(
+        "submit",
+        function (e) {
 
-            event.preventDefault();
+            e.preventDefault();
 
-            openSignIn();
+            const name =
+                document.getElementById("bookingName")?.value.trim();
 
+            const email =
+                document.getElementById("bookingEmail")?.value.trim();
+
+            const event =
+                document.getElementById("bookingEvent")?.value;
+
+            const tickets =
+                document.getElementById("bookingTickets")?.value;
+
+
+            if (!name || !email || !event || !tickets) {
+
+                alert(
+                    "Please fill all booking details."
+                );
+
+                return;
+            }
+
+
+            alert(
+                `Booking confirmed! 🎟️\n\n` +
+                `Name: ${name}\n` +
+                `Event: ${event}\n` +
+                `Tickets: ${tickets}`
+            );
+
+
+            bookingForm.reset();
         }
     );
-
 }
-
 
 
 /* =========================================
-   FIX BOOK TICKETS 404
+   CONTACT FORM
 ========================================= */
 
-const bookButton =
-    document.querySelector(
-        ".primary-btn"
-    );
+const contactForm =
+    document.getElementById("contactForm");
 
 
-if (bookButton) {
+if (contactForm) {
 
-    bookButton.addEventListener(
-        "click",
-        function(event) {
+    contactForm.addEventListener(
+        "submit",
+        function (e) {
 
-            event.preventDefault();
+            e.preventDefault();
 
-            openBooking();
+            alert(
+                "Thank you for contacting EVENTORA! ✨\n" +
+                "We will get back to you soon."
+            );
 
+            contactForm.reset();
         }
     );
-
 }
 
+
+/* =========================================
+   SIGN IN FORM
+========================================= */
+
+const loginForm =
+    document.getElementById("loginForm");
+
+
+if (loginForm) {
+
+    loginForm.addEventListener(
+        "submit",
+        function (e) {
+
+            e.preventDefault();
+
+            const email =
+                document.getElementById("loginEmail")?.value.trim();
+
+            const password =
+                document.getElementById("loginPassword")?.value;
+
+
+            if (!email || !password) {
+
+                alert(
+                    "Please enter email and password."
+                );
+
+                return;
+            }
+
+
+            alert(
+                "Sign in successful! 🎉"
+            );
+
+
+            loginForm.reset();
+        }
+    );
+}
+
+
+/* =========================================
+   SMOOTH NAVIGATION
+========================================= */
+
+document.querySelectorAll(
+    'a[href^="#"]'
+).forEach(link => {
+
+    link.addEventListener(
+        "click",
+        function (e) {
+
+            const targetId =
+                this.getAttribute("href");
+
+            if (
+                !targetId ||
+                targetId === "#"
+            ) {
+                return;
+            }
+
+
+            const target =
+                document.querySelector(targetId);
+
+            if (!target) return;
+
+
+            e.preventDefault();
+
+
+            target.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    );
+});
+
+
+/* =========================================
+   ACTIVE NAV LINK
+========================================= */
+
+const sections =
+    document.querySelectorAll(
+        "section[id]"
+    );
+
+const navLinks =
+    document.querySelectorAll(
+        ".nav-links a"
+    );
+
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        let currentSection = "";
+
+        sections.forEach(section => {
+
+            const sectionTop =
+                section.offsetTop - 150;
+
+            if (
+                window.scrollY >= sectionTop
+            ) {
+                currentSection =
+                    section.getAttribute("id");
+            }
+        });
+
+
+        navLinks.forEach(link => {
+
+            link.classList.remove("active");
+
+            const href =
+                link.getAttribute("href");
+
+            if (
+                href === `#${currentSection}`
+            ) {
+                link.classList.add("active");
+            }
+        });
+    }
+);
 
 
 /* =========================================
    INITIAL LOAD
 ========================================= */
 
-createDots();
-
-updateEvent();
-/* =========================================
-   NAVIGATION BUTTONS
-========================================= */
-
-const bookingNav =
-    document.getElementById("bookingNav");
-
-const signinNav =
-    document.getElementById("signinNav");
-
-
-if (bookingNav) {
-
-    bookingNav.addEventListener(
-        "click",
-        function(event) {
-
-            event.preventDefault();
-
-            openBooking();
-
-        }
-    );
-
-}
-
-
-if (signinNav) {
-
-    signinNav.addEventListener(
-        "click",
-        function(event) {
-
-            event.preventDefault();
-
-            openSignIn();
-
-        }
-    );
-
-}
+updateCarousel("next");
