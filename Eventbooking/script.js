@@ -634,7 +634,7 @@ if (bookingForm) {
 
 
             /* SUCCESS */
-
+addTicket(name, email, event, tickets, total);
             alert(
                 "🎉 Booking Confirmed!\n\n" +
                 `Name: ${name}\n` +
