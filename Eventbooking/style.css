@@ -2293,7 +2293,24 @@ footer p{
 .qr-popup.active {
     display: flex;
 }
+#realQRCode {
+    width: 180px;
+    height: 180px;
 
+    margin: 20px auto;
+
+    padding: 10px;
+
+    background: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#realQRCode img {
+    display: block;
+}
 .qr-box {
     width: min(350px, 90%);
     padding: 30px;
