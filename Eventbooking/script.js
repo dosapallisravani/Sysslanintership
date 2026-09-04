@@ -446,14 +446,125 @@ function handleSwipe() {
     }
 }
 
-
 /* =========================================
-   BOOKING FORM
+   LEVEL 2 - REAL TICKET BOOKING
 ========================================= */
 
-const bookingForm =
-    document.getElementById("bookingForm");
+const bookingForm = document.getElementById("bookingForm");
+const bookingEvent = document.getElementById("bookingEvent");
+const bookingTickets = document.getElementById("bookingTickets");
 
+const totalAmount = document.getElementById("totalAmount");
+const previewEvent = document.getElementById("previewEvent");
+const previewPrice = document.getElementById("previewPrice");
+const previewMessage = document.getElementById("previewMessage");
+
+
+/* =========================================
+   CALCULATE TOTAL
+========================================= */
+
+function updateBookingTotal() {
+
+    if (!bookingEvent || !bookingTickets) return;
+
+    const selectedOption =
+        bookingEvent.options[bookingEvent.selectedIndex];
+
+    const price =
+        Number(selectedOption.dataset.price) || 0;
+
+    let tickets =
+        Number(bookingTickets.value) || 1;
+
+    if (tickets < 1) {
+        tickets = 1;
+        bookingTickets.value = 1;
+    }
+
+    if (tickets > 10) {
+        tickets = 10;
+        bookingTickets.value = 10;
+    }
+
+    const total = price * tickets;
+
+
+    /* TOTAL */
+
+    if (totalAmount) {
+        totalAmount.textContent =
+            `₹${total.toLocaleString("en-IN")}`;
+    }
+
+
+    /* PREVIEW */
+
+    if (bookingEvent.value) {
+
+        if (previewEvent) {
+            previewEvent.textContent =
+                bookingEvent.value.toUpperCase();
+        }
+
+        if (previewPrice) {
+            previewPrice.textContent =
+                `₹${price.toLocaleString("en-IN")}`;
+        }
+
+        if (previewMessage) {
+            previewMessage.textContent =
+                `${tickets} ticket${tickets > 1 ? "s" : ""} selected • Total ₹${total.toLocaleString("en-IN")}`;
+        }
+
+    } else {
+
+        if (previewEvent) {
+            previewEvent.textContent =
+                "SELECT AN EVENT";
+        }
+
+        if (previewPrice) {
+            previewPrice.textContent = "₹0";
+        }
+
+        if (previewMessage) {
+            previewMessage.textContent =
+                "Your selected event details will appear here.";
+        }
+    }
+}
+
+
+/* =========================================
+   EVENT CHANGE
+========================================= */
+
+if (bookingEvent) {
+
+    bookingEvent.addEventListener(
+        "change",
+        updateBookingTotal
+    );
+}
+
+
+/* =========================================
+   TICKET COUNT CHANGE
+========================================= */
+
+if (bookingTickets) {
+
+    bookingTickets.addEventListener(
+        "input",
+        updateBookingTotal
+    );
+}
+
+
+/* =========================================
+   BOOKING SUBMIT
+========================================= */
 
 if (bookingForm) {
 
@@ -463,18 +574,25 @@ if (bookingForm) {
 
             e.preventDefault();
 
+
             const name =
-                document.getElementById("bookingName")?.value.trim();
+                document
+                    .getElementById("bookingName")
+                    ?.value.trim();
 
             const email =
-                document.getElementById("bookingEmail")?.value.trim();
+                document
+                    .getElementById("bookingEmail")
+                    ?.value.trim();
 
             const event =
-                document.getElementById("bookingEvent")?.value;
+                bookingEvent?.value;
 
             const tickets =
-                document.getElementById("bookingTickets")?.value;
+                Number(bookingTickets?.value);
 
+
+            /* VALIDATION */
 
             if (!name || !email || !event || !tickets) {
 
@@ -486,18 +604,62 @@ if (bookingForm) {
             }
 
 
+            /* EMAIL VALIDATION */
+
+            const emailPattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailPattern.test(email)) {
+
+                alert(
+                    "Please enter a valid email address."
+                );
+
+                return;
+            }
+
+
+            /* PRICE */
+
+            const selectedOption =
+                bookingEvent.options[
+                    bookingEvent.selectedIndex
+                ];
+
+            const price =
+                Number(selectedOption.dataset.price);
+
+            const total =
+                price * tickets;
+
+
+            /* SUCCESS */
+
             alert(
-                `Booking confirmed! 🎟️\n\n` +
+                "🎉 Booking Confirmed!\n\n" +
                 `Name: ${name}\n` +
                 `Event: ${event}\n` +
-                `Tickets: ${tickets}`
+                `Tickets: ${tickets}\n` +
+                `Total Amount: ₹${total.toLocaleString("en-IN")}\n\n` +
+                "Thank you for booking with EVENTORA!"
             );
 
 
+            /* RESET */
+
             bookingForm.reset();
+
+            updateBookingTotal();
         }
     );
 }
+
+
+/* =========================================
+   INITIAL BOOKING STATE
+========================================= */
+
+updateBookingTotal();
 
 
 /* =========================================
