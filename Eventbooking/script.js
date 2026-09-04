@@ -1009,3 +1009,192 @@ function addTicket(name, email, event, tickets, total) {
 
 /* Load saved tickets */
 displayTickets();
+/* =========================================
+   LEVEL 4 - QR / DOWNLOAD / CANCEL
+========================================= */
+
+
+/* =========================================
+   VIEW QR
+========================================= */
+
+function showQR(ticketId) {
+
+    const tickets = getSavedTickets();
+
+    const ticket = tickets.find(
+        item => item.id === ticketId
+    );
+
+    if (!ticket) return;
+
+
+    // Create popup
+    const popup = document.createElement("div");
+
+    popup.className = "qr-popup active";
+
+    popup.innerHTML = `
+
+        <div class="qr-box">
+
+            <h3>EVENTORA TICKET</h3>
+
+            <p>
+                ${ticket.event}
+            </p>
+
+            <div id="qrCode">
+                ${ticket.id}
+            </div>
+
+            <p style="margin-top:15px;font-size:11px;opacity:.5;">
+                Booking ID: ${ticket.id}
+            </p>
+
+            <button
+                class="ticket-action-btn close-qr">
+                CLOSE
+            </button>
+
+        </div>
+
+    `;
+
+
+    document.body.appendChild(popup);
+
+
+    const closeButton =
+        popup.querySelector(".close-qr");
+
+
+    closeButton.addEventListener(
+        "click",
+        () => {
+            popup.remove();
+        }
+    );
+
+
+    popup.addEventListener(
+        "click",
+        (e) => {
+
+            if (e.target === popup) {
+                popup.remove();
+            }
+
+        }
+    );
+}
+
+
+
+/* =========================================
+   DOWNLOAD TICKET
+========================================= */
+
+function downloadTicket(ticketId) {
+
+    const tickets = getSavedTickets();
+
+    const ticket = tickets.find(
+        item => item.id === ticketId
+    );
+
+    if (!ticket) return;
+
+
+    const ticketText = `
+
+================================
+        EVENTORA E-TICKET
+================================
+
+Event       : ${ticket.event}
+
+Booking ID  : ${ticket.id}
+
+Name        : ${ticket.name}
+
+Email       : ${ticket.email}
+
+Tickets     : ${ticket.tickets}
+
+Total Amount: ₹${ticket.total}
+
+Status      : CONFIRMED
+
+================================
+        THANK YOU!
+================================
+
+`;
+
+
+    const blob = new Blob(
+        [ticketText],
+        { type: "text/plain" }
+    );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        `${ticket.event}-Ticket.txt`;
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+
+    URL.revokeObjectURL(url);
+}
+
+
+
+/* =========================================
+   CANCEL TICKET
+========================================= */
+
+function cancelTicket(ticketId) {
+
+    const confirmCancel =
+        confirm(
+            "Are you sure you want to cancel this ticket?"
+        );
+
+
+    if (!confirmCancel) return;
+
+
+    let tickets =
+        getSavedTickets();
+
+
+    tickets =
+        tickets.filter(
+            ticket => ticket.id !== ticketId
+        );
+
+
+    saveTickets(tickets);
+
+    displayTickets();
+
+
+    alert(
+        "Ticket cancelled successfully. ❌"
+    );
+}
