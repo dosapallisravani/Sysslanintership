@@ -570,46 +570,36 @@ if (loginForm) {
     );
 }
 
-
 /* =========================================
-   SMOOTH NAVIGATION
+   EVENTS - SHOW ONLY WHEN CLICKED
 ========================================= */
 
-document.querySelectorAll(
-    'a[href^="#"]'
-).forEach(link => {
+const eventsNav =
+    document.querySelector('.nav-links a[href="#events"]');
 
-    link.addEventListener(
-        "click",
-        function (e) {
+const eventsSection =
+    document.getElementById("events");
 
-            const targetId =
-                this.getAttribute("href");
+if (eventsNav && eventsSection) {
 
-            if (
-                !targetId ||
-                targetId === "#"
-            ) {
-                return;
-            }
+    eventsNav.addEventListener("click", function(e) {
 
+        e.preventDefault();
 
-            const target =
-                document.querySelector(targetId);
+        // Show Events section
+        eventsSection.classList.add("show-events");
 
-            if (!target) return;
+        // Scroll to Events
+        setTimeout(() => {
 
-
-            e.preventDefault();
-
-
-            target.scrollIntoView({
+            eventsSection.scrollIntoView({
                 behavior: "smooth",
                 block: "start"
             });
-        }
-    );
-});
+
+        }, 50);
+    });
+}
 
 
 /* =========================================
