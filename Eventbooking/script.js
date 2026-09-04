@@ -635,7 +635,7 @@ if (bookingForm) {
 
             /* SUCCESS */
 addTicket(name, email, event, tickets, total);
-            alert(
+           alert(
                 "🎉 Booking Confirmed!\n\n" +
                 `Name: ${name}\n` +
                 `Event: ${event}\n` +
@@ -649,7 +649,7 @@ addTicket(name, email, event, tickets, total);
 
             bookingForm.reset();
 
-            updateBookingTotal();
+            updateBookingTotal(); 
         }
     );
 }
@@ -825,20 +825,23 @@ updateCarousel("next");
    LEVEL 3 - MY TICKETS
 ========================================= */
 
-const ticketsContainer =
-    document.getElementById("ticketsContainer");
+const ticketsContainer = document.getElementById("ticketsContainer");
 
 
-// Get saved tickets
 function getSavedTickets() {
-    return JSON.parse(
-        localStorage.getItem("eventoraTickets") || "[]"
-    );
+
+    try {
+        return JSON.parse(
+            localStorage.getItem("eventoraTickets") || "[]"
+        );
+    } catch (error) {
+        return [];
+    }
 }
 
 
-// Save tickets
 function saveTickets(tickets) {
+
     localStorage.setItem(
         "eventoraTickets",
         JSON.stringify(tickets)
@@ -846,12 +849,15 @@ function saveTickets(tickets) {
 }
 
 
-// Display tickets
 function displayTickets() {
 
-    if (!ticketsContainer) return;
+    if (!ticketsContainer) {
+        console.log("My Tickets container not found");
+        return;
+    }
 
     const tickets = getSavedTickets();
+
 
     if (tickets.length === 0) {
 
@@ -878,9 +884,17 @@ function displayTickets() {
     }
 
 
-    ticketsContainer.innerHTML = tickets.map((ticket, index) => `
+    ticketsContainer.innerHTML = "";
 
-        <div class="ticket-card">
+
+    tickets.forEach(ticket => {
+
+        const ticketCard = document.createElement("div");
+
+        ticketCard.className = "ticket-card";
+
+
+        ticketCard.innerHTML = `
 
             <div>
 
@@ -915,7 +929,9 @@ function displayTickets() {
 
                     <div>
                         <small>TOTAL</small>
-                        <strong>₹${ticket.total.toLocaleString("en-IN")}</strong>
+                        <strong>
+                            ₹${Number(ticket.total).toLocaleString("en-IN")}
+                        </strong>
                     </div>
 
                 </div>
@@ -926,20 +942,23 @@ function displayTickets() {
                 CONFIRMED
             </div>
 
-        </div>
+        `;
 
-    `).join("");
+        ticketsContainer.appendChild(ticketCard);
+
+    });
+
 }
 
 
-// Save a new booking
 function addTicket(name, email, event, tickets, total) {
 
     const savedTickets = getSavedTickets();
 
+
     const newTicket = {
 
-        id: "EVT" + Date.now(),
+        id: "EVT-" + Date.now(),
 
         name: name,
 
@@ -953,13 +972,20 @@ function addTicket(name, email, event, tickets, total) {
 
     };
 
+
     savedTickets.unshift(newTicket);
+
 
     saveTickets(savedTickets);
 
+
+    // Immediately show the new ticket
     displayTickets();
+
+
+    console.log("Ticket saved successfully:", newTicket);
 }
 
 
-// Display tickets when page loads
+/* Load saved tickets */
 displayTickets();
