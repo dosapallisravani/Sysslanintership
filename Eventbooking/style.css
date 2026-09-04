@@ -1933,3 +1933,146 @@ footer p{
 #events.show-events {
     display: block;
 }
+/* =========================
+   BOOKING LEVEL 2
+========================= */
+
+.booking-wrapper{
+    display:grid;
+
+    grid-template-columns:
+        minmax(300px,520px)
+        minmax(250px,1fr);
+
+    gap:60px;
+
+    align-items:stretch;
+}
+
+
+.booking-total{
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    margin:10px 0 5px;
+
+    padding:18px 0;
+
+    border-top:
+        1px solid rgba(255,255,255,.12);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.12);
+}
+
+
+.booking-total span{
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    opacity:.55;
+}
+
+
+.booking-total strong{
+    font-size:24px;
+}
+
+
+.booking-preview{
+    min-height:420px;
+
+    padding:45px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.08),
+            rgba(255,255,255,.02)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.1);
+}
+
+
+.booking-preview h3{
+    margin-top:15px;
+
+    font-size:
+        clamp(35px,5vw,65px);
+
+    line-height:.9;
+
+    letter-spacing:-3px;
+}
+
+
+.booking-preview p:not(.eyebrow){
+    margin-top:20px;
+
+    max-width:400px;
+
+    font-size:13px;
+
+    line-height:1.7;
+
+    opacity:.5;
+}
+
+
+.preview-price{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:7px;
+
+    margin-top:35px;
+}
+
+
+.preview-price small{
+    font-size:8px;
+
+    letter-spacing:2px;
+
+    opacity:.5;
+}
+
+
+.preview-price strong{
+    font-size:28px;
+}
+
+
+@media screen and (max-width:900px){
+
+    .booking-wrapper{
+        grid-template-columns:1fr;
+
+        gap:20px;
+    }
+
+
+    .booking-preview{
+        min-height:280px;
+
+        padding:28px 22px;
+    }
+
+
+    .booking-preview h3{
+        font-size:42px;
+    }
+
+}
