@@ -977,3 +977,44 @@ if (bookButton) {
 createDots();
 
 updateEvent();
+/* =========================================
+   NAVIGATION BUTTONS
+========================================= */
+
+const bookingNav =
+    document.getElementById("bookingNav");
+
+const signinNav =
+    document.getElementById("signinNav");
+
+
+if (bookingNav) {
+
+    bookingNav.addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+            openBooking();
+
+        }
+    );
+
+}
+
+
+if (signinNav) {
+
+    signinNav.addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+            openSignIn();
+
+        }
+    );
+
+}
