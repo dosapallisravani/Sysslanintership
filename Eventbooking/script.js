@@ -1,10 +1,4 @@
-/* =========================
-   EVENTORA
-   EVENT DATA
-========================= */
-
 const events = [
-
     {
         name: "NEON",
         subtitle: "NIGHTS",
@@ -13,7 +7,9 @@ const events = [
         time: "7:00 PM",
         venue: "HYDERABAD",
         price: 799,
-        image: "images/neon-dj.png"
+        image: "images/neon-dj.png",
+        bg: "#12002b",
+        glow: "#8a2be2"
     },
 
     {
@@ -24,7 +20,9 @@ const events = [
         time: "6:30 PM",
         venue: "VISAKHAPATNAM",
         price: 599,
-        image: "images/moon-guitarist.png"
+        image: "images/moon-guitarist.png",
+        bg: "#06152e",
+        glow: "#287cff"
     },
 
     {
@@ -35,7 +33,9 @@ const events = [
         time: "7:30 PM",
         venue: "VIJAYAWADA",
         price: 699,
-        image: "images/happy-singer.png"
+        image: "images/happy-singer.png",
+        bg: "#350b25",
+        glow: "#ff3f9f"
     },
 
     {
@@ -46,7 +46,9 @@ const events = [
         time: "8:00 PM",
         venue: "HYDERABAD",
         price: 899,
-        image: "images/beat-rapper.png"
+        image: "images/beat-rapper.png",
+        bg: "#210606",
+        glow: "#ff3030"
     },
 
     {
@@ -57,7 +59,9 @@ const events = [
         time: "7:00 PM",
         venue: "BENGALURU",
         price: 749,
-        image: "images/city-dj.png"
+        image: "images/city-dj.png",
+        bg: "#261305",
+        glow: "#ff8a2b"
     },
 
     {
@@ -68,65 +72,31 @@ const events = [
         time: "6:00 PM",
         venue: "HYDERABAD",
         price: 999,
-        image: "images/sound-fest.png"
+        image: "images/sound-fest.png",
+        bg: "#032126",
+        glow: "#00d9ff"
     }
-
 ];
-
-
-/* =========================
-   ELEMENTS
-========================= */
 
 let currentIndex = 0;
 let isAnimating = false;
 
-const centerImage =
-    document.getElementById("centerImage");
+const hero = document.getElementById("hero");
 
-const leftImage =
-    document.getElementById("leftImage");
+const centerImage = document.getElementById("centerImage");
+const leftImage = document.getElementById("leftImage");
+const rightImage = document.getElementById("rightImage");
 
-const rightImage =
-    document.getElementById("rightImage");
+const eventName = document.getElementById("eventName");
+const eventType = document.getElementById("eventType");
+const eventDate = document.getElementById("eventDate");
+const eventTime = document.getElementById("eventTime");
+const eventVenue = document.getElementById("eventVenue");
+const eventPrice = document.getElementById("eventPrice");
 
-const eventName =
-    document.getElementById("eventName");
+const indicators = document.getElementById("indicators");
+const glow = document.querySelector(".background-glow");
 
-const eventType =
-    document.getElementById("eventType");
-
-const eventDate =
-    document.getElementById("eventDate");
-
-const eventTime =
-    document.getElementById("eventTime");
-
-const eventVenue =
-    document.getElementById("eventVenue");
-
-const eventPrice =
-    document.getElementById("eventPrice");
-
-const indicators =
-    document.getElementById("indicators");
-
-const selectedEvent =
-    document.getElementById("selectedEvent");
-
-const ticketCount =
-    document.getElementById("ticketCount");
-
-const totalPrice =
-    document.getElementById("totalPrice");
-
-const bookingForm =
-    document.getElementById("bookingForm");
-
-
-/* =========================
-   CREATE INDICATORS
-========================= */
 
 function createIndicators() {
 
@@ -141,114 +111,65 @@ function createIndicators() {
         }
 
         indicators.appendChild(dot);
-
     });
-
 }
 
 
-/* =========================
-   LOAD EVENT OPTIONS
-========================= */
+function updateBackground(event) {
 
-function loadEventOptions() {
+    hero.style.background = `
+        radial-gradient(
+            circle at 50% 45%,
+            ${event.bg} 0%,
+            #050505 72%
+        )
+    `;
 
-    events.forEach((event, index) => {
+    glow.style.background = event.glow;
 
-        const option =
-            document.createElement("option");
-
-        option.value = index;
-
-        option.textContent =
-            `${event.name} ${event.subtitle}`;
-
-        selectedEvent.appendChild(option);
-
-    });
-
+    glow.style.transform =
+        "translate(-50%, -50%) scale(1.15)";
 }
 
-
-/* =========================
-   UPDATE EVENT
-========================= */
 
 function updateEvent() {
 
-    const current =
-        events[currentIndex];
+    const current = events[currentIndex];
 
     const previousIndex =
-        (currentIndex - 1 + events.length)
-        % events.length;
+        (currentIndex - 1 + events.length) % events.length;
 
     const nextIndex =
-        (currentIndex + 1)
-        % events.length;
+        (currentIndex + 1) % events.length;
 
 
-    /* CENTER */
+    /* IMAGES */
 
     centerImage.src = current.image;
-
-    centerImage.onerror = function () {
-
-        centerImage.style.display = "none";
-
-    };
+    leftImage.src = events[previousIndex].image;
+    rightImage.src = events[nextIndex].image;
 
 
-    /* LEFT */
-
-    leftImage.src =
-        events[previousIndex].image;
-
-    leftImage.onerror = function () {
-
-        leftImage.style.display = "none";
-
-    };
-
-
-    /* RIGHT */
-
-    rightImage.src =
-        events[nextIndex].image;
-
-    rightImage.onerror = function () {
-
-        rightImage.style.display = "none";
-
-    };
-
-
-    /* TEXT */
+    /* EVENT DETAILS */
 
     eventName.innerHTML =
-        `${current.name}<br>
-        <span>${current.subtitle}</span>`;
+        `${current.name}<br><span>${current.subtitle}</span>`;
 
-    eventType.textContent =
-        current.type;
+    eventType.textContent = current.type;
+    eventDate.textContent = current.date;
+    eventTime.textContent = current.time;
+    eventVenue.textContent = current.venue;
+    eventPrice.textContent = `₹${current.price}`;
 
-    eventDate.textContent =
-        current.date;
 
-    eventTime.textContent =
-        current.time;
+    /* BACKGROUND */
 
-    eventVenue.textContent =
-        current.venue;
-
-    eventPrice.textContent =
-        `₹${current.price}`;
+    updateBackground(current);
 
 
     /* INDICATORS */
 
-    const dots =
-        indicators.querySelectorAll("span");
+    const dots = indicators.querySelectorAll("span");
 
     dots.forEach((dot, index) => {
 
@@ -258,19 +179,8 @@ function updateEvent() {
         );
 
     });
-
-
-    /* BOOKING EVENT */
-
-    selectedEvent.value =
-        currentIndex;
-
 }
 
-
-/* =========================
-   NEXT EVENT
-========================= */
 
 function nextEvent() {
 
@@ -278,24 +188,37 @@ function nextEvent() {
 
     isAnimating = true;
 
-    currentIndex =
-        (currentIndex + 1)
-        % events.length;
+    const performer = document.querySelector(".performer");
 
-    updateEvent();
+    performer.style.transform =
+        "translate(-50%, -50%) translateZ(450px) rotateY(-20deg) scale(1.15)";
+
+    performer.style.opacity = "0";
 
     setTimeout(() => {
 
-        isAnimating = false;
+        currentIndex =
+            (currentIndex + 1) % events.length;
 
-    }, 700);
+        updateEvent();
 
+        performer.style.transform =
+            "translate(-50%, -50%) translateZ(-200px) rotateY(35deg) scale(.5)";
+
+        setTimeout(() => {
+
+            performer.style.transform =
+                "translate(-50%, -50%) translateZ(180px) rotateY(0deg) scale(1)";
+
+            performer.style.opacity = "1";
+
+            isAnimating = false;
+
+        }, 80);
+
+    }, 400);
 }
 
-
-/* =========================
-   PREVIOUS EVENT
-========================= */
 
 function previousEvent() {
 
@@ -303,353 +226,95 @@ function previousEvent() {
 
     isAnimating = true;
 
-    currentIndex =
-        (currentIndex - 1 + events.length)
-        % events.length;
+    const performer = document.querySelector(".performer");
 
-    updateEvent();
+    performer.style.transform =
+        "translate(-50%, -50%) translateZ(450px) rotateY(20deg) scale(1.15)";
+
+    performer.style.opacity = "0";
 
     setTimeout(() => {
 
-        isAnimating = false;
+        currentIndex =
+            (currentIndex - 1 + events.length) % events.length;
 
-    }, 700);
+        updateEvent();
 
+        performer.style.transform =
+            "translate(-50%, -50%) translateZ(-200px) rotateY(-35deg) scale(.5)";
+
+        setTimeout(() => {
+
+            performer.style.transform =
+                "translate(-50%, -50%) translateZ(180px) rotateY(0deg) scale(1)";
+
+            performer.style.opacity = "1";
+
+            isAnimating = false;
+
+        }, 80);
+
+    }, 400);
 }
 
 
-/* =========================
-   ARROW BUTTONS
-========================= */
+/* ARROWS */
 
 document
     .getElementById("nextBtn")
-    .addEventListener(
-        "click",
-        nextEvent
-    );
+    ?.addEventListener("click", nextEvent);
 
 document
     .getElementById("previousBtn")
-    .addEventListener(
-        "click",
-        previousEvent
-    );
+    ?.addEventListener("click", previousEvent);
 
 
-/* =========================
-   KEYBOARD
-========================= */
+/* KEYBOARD */
 
-document.addEventListener(
-    "keydown",
-    function(event) {
+document.addEventListener("keydown", (event) => {
 
-        if (event.key === "ArrowRight") {
-            nextEvent();
-        }
-
-        if (event.key === "ArrowLeft") {
-            previousEvent();
-        }
-
+    if (event.key === "ArrowRight") {
+        nextEvent();
     }
-);
+
+    if (event.key === "ArrowLeft") {
+        previousEvent();
+    }
+
+});
 
 
-/* =========================
-   SWIPE
-========================= */
+/* SWIPE */
 
 let touchStartX = 0;
-let touchEndX = 0;
 
-document.addEventListener(
-    "touchstart",
-    function(event) {
+document.addEventListener("touchstart", (event) => {
 
-        touchStartX =
-            event.changedTouches[0].screenX;
+    touchStartX =
+        event.changedTouches[0].screenX;
 
-    }
-);
+});
 
-document.addEventListener(
-    "touchend",
-    function(event) {
+document.addEventListener("touchend", (event) => {
 
-        touchEndX =
-            event.changedTouches[0].screenX;
+    const touchEndX =
+        event.changedTouches[0].screenX;
 
-        const distance =
-            touchEndX - touchStartX;
+    const distance =
+        touchEndX - touchStartX;
 
-        if (Math.abs(distance) < 50) {
-            return;
-        }
+    if (Math.abs(distance) < 50) return;
 
-        if (distance < 0) {
-            nextEvent();
-        } else {
-            previousEvent();
-        }
-
-    }
-);
-
-
-/* =========================
-   TICKET PRICE
-========================= */
-
-function calculateTotal() {
-
-    const eventIndex =
-        selectedEvent.value;
-
-    const count =
-        Number(ticketCount.value);
-
-    if (
-        eventIndex === "" ||
-        !count
-    ) {
-
-        totalPrice.textContent =
-            "₹0";
-
-        return;
-
+    if (distance < 0) {
+        nextEvent();
+    } else {
+        previousEvent();
     }
 
-    const price =
-        events[eventIndex].price;
+});
 
-    const total =
-        price * count;
 
-    totalPrice.textContent =
-        `₹${total}`;
-
-}
-
-
-/* =========================
-   EVENT / TICKET CHANGE
-========================= */
-
-selectedEvent.addEventListener(
-    "change",
-    calculateTotal
-);
-
-ticketCount.addEventListener(
-    "change",
-    calculateTotal
-);
-
-
-/* =========================
-   FORM VALIDATION
-========================= */
-
-bookingForm.addEventListener(
-    "submit",
-    function(event) {
-
-        event.preventDefault();
-
-
-        const name =
-            document
-                .getElementById("fullName")
-                .value
-                .trim();
-
-        const email =
-            document
-                .getElementById("email")
-                .value
-                .trim();
-
-        const phone =
-            document
-                .getElementById("phone")
-                .value
-                .trim();
-
-        const eventValue =
-            selectedEvent.value;
-
-        const tickets =
-            ticketCount.value;
-
-        const payment =
-            document
-                .getElementById("payment")
-                .value;
-
-
-        /* ERROR ELEMENTS */
-
-        const nameError =
-            document.getElementById("nameError");
-
-        const emailError =
-            document.getElementById("emailError");
-
-        const phoneError =
-            document.getElementById("phoneError");
-
-        const eventError =
-            document.getElementById("eventError");
-
-        const ticketError =
-            document.getElementById("ticketError");
-
-        const paymentError =
-            document.getElementById("paymentError");
-
-        const message =
-            document.getElementById(
-                "bookingMessage"
-            );
-
-
-        /* CLEAR */
-
-        nameError.textContent = "";
-        emailError.textContent = "";
-        phoneError.textContent = "";
-        eventError.textContent = "";
-        ticketError.textContent = "";
-        paymentError.textContent = "";
-
-        message.textContent = "";
-
-        let valid = true;
-
-
-        /* NAME */
-
-        if (name.length < 3) {
-
-            nameError.textContent =
-                "Please enter your full name.";
-
-            valid = false;
-
-        }
-
-
-        /* EMAIL */
-
-        const emailPattern =
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailPattern.test(email)) {
-
-            emailError.textContent =
-                "Enter a valid email address.";
-
-            valid = false;
-
-        }
-
-
-        /* PHONE */
-
-        if (!/^[0-9]{10}$/.test(phone)) {
-
-            phoneError.textContent =
-                "Enter a valid 10-digit number.";
-
-            valid = false;
-
-        }
-
-
-        /* EVENT */
-
-        if (eventValue === "") {
-
-            eventError.textContent =
-                "Please select an event.";
-
-            valid = false;
-
-        }
-
-
-        /* TICKETS */
-
-        if (tickets === "") {
-
-            ticketError.textContent =
-                "Please select ticket quantity.";
-
-            valid = false;
-
-        }
-
-
-        /* PAYMENT */
-
-        if (payment === "") {
-
-            paymentError.textContent =
-                "Please select payment method.";
-
-            valid = false;
-
-        }
-
-
-        /* SUCCESS */
-
-        if (valid) {
-
-            const selected =
-                events[eventValue];
-
-            const ticketNumber =
-                Number(tickets);
-
-            const total =
-                selected.price *
-                ticketNumber;
-
-
-            message.className =
-                "success-message";
-
-            message.innerHTML =
-                `🎉 Booking confirmed!<br>
-                ${selected.name} ${selected.subtitle}
-                • ${ticketNumber} ticket(s)
-                • ₹${total}`;
-
-
-            bookingForm.reset();
-
-            totalPrice.textContent =
-                "₹0";
-
-            selectedEvent.value =
-                currentIndex;
-
-        }
-
-    }
-);
-
-
-/* =========================
-   INITIAL LOAD
-========================= */
-
-loadEventOptions();
+/* INITIAL */
 
 createIndicators();
-
 updateEvent();
