@@ -1,36 +1,40 @@
 # 🎟️ EVENTORA – Event Ticket Booking System
 
-EVENTORA is a modern and responsive **Event Ticket Booking System** designed to provide users with an engaging way to discover live events and reserve tickets.
-
-The website features a unique **3D Performer Carousel** where each event has its own performer, background, event details, and visual theme.
-
----
+A modern and interactive **Event Ticket Booking System** designed with a unique 3D performer carousel experience.
 
 ## 🚀 Live Demo
 
 https://dosapallisravani.github.io/Sysslanintership/Eventbooking/
 
+---
 
 ## ✨ Features
 
-- 🎭 Interactive 3D Performer Carousel
-- 🎵 Event-specific performers and backgrounds
-- 🎫 Event ticket booking form
-- 📱 Fully responsive mobile design
-- 👉 Next / Previous event navigation
+- 🎠 Interactive 3D Performer Carousel
+- 🎵 Event-specific performer images and backgrounds
+- ⬅️➡️ Previous / Next event navigation
 - 👆 Mobile swipe support
 - 🖼️ Dynamic event backgrounds
-- 🔐 Sign In section
+- 🎫 Online event ticket booking
+- 💰 Automatic ticket price calculation
+- 🧾 Booking confirmation
+- 🎟️ My Tickets section
+- 🔢 Unique Booking ID generation
+- 💾 Tickets stored using LocalStorage
+- 🔳 QR Code for confirmed tickets
+- 📥 Ticket download option
+- ❌ Cancel ticket option
+- 📱 Fully responsive mobile design
+- 🔐 Sign-in interface
 - 📩 Contact form
-- ⚡ Smooth navigation between sections
-- 🎨 Modern dark-themed UI
-- 💻 Built using HTML, CSS and JavaScript
+- ✨ Smooth animations and transitions
+- 🌙 Modern dark-themed UI
 
 ---
 
-## 🎪 Featured Events
+## 🎵 Featured Events
 
-| Event | Type | Venue | Price |
+| Event | Type | Location | Price |
 |---|---|---|---:|
 | Neon Nights | EDM Live Experience | Hyderabad | ₹799 |
 | Moon Tunes | Acoustic Music Night | Visakhapatnam | ₹599 |
@@ -41,12 +45,39 @@ https://dosapallisravani.github.io/Sysslanintership/Eventbooking/
 
 ---
 
+## 🎫 Booking System
+
+Users can:
+
+1. Enter their name and email
+2. Select an event
+3. Choose the number of tickets
+4. View the total ticket price instantly
+5. Confirm the booking
+6. Receive a unique Booking ID
+7. View confirmed tickets in **My Tickets**
+8. View the ticket QR Code
+9. Download the ticket
+10. Cancel the ticket when required
+
+---
+
+## 💾 Local Storage
+
+Confirmed tickets are stored using the browser's **LocalStorage**.
+
+This allows booking information to remain available even after refreshing the page.
+
+---
+
 ## 🛠️ Technologies Used
 
-- **HTML5** – Website structure
-- **CSS3** – Styling, animations and responsive design
-- **JavaScript** – Carousel, interactions and form validation
-- **GitHub Pages** – Project deployment
+- HTML5
+- CSS3
+- JavaScript
+- LocalStorage
+- QR Code Generator
+- GitHub Pages
 
 ---
 
@@ -74,4 +105,4 @@ Eventbooking/
         ├── happy-beats.jpg
         ├── beat-world.jpg
         ├── city-beats.jpg
-        └── sound-fest.jpg/
+        └── sound-fest.jpg
