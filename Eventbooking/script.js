@@ -693,45 +693,64 @@ if (contactForm) {
    SIGN IN FORM
 ========================================= */
 
-const loginForm =
-    document.getElementById("loginForm");
-
+const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
 
-    loginForm.addEventListener(
-        "submit",
-        function (e) {
+    loginForm.addEventListener("submit", function(e) {
 
-            e.preventDefault();
+        e.preventDefault();
 
-            const email =
-                document.getElementById("loginEmail")?.value.trim();
+        const emailInput = loginForm.querySelector(
+            'input[type="email"]'
+        );
 
-            const password =
-                document.getElementById("loginPassword")?.value;
+        const passwordInput = loginForm.querySelector(
+            'input[type="password"]'
+        );
 
+        const email = emailInput
+            ? emailInput.value.trim()
+            : "";
 
-            if (!email || !password) {
-
-                alert(
-                    "Please enter email and password."
-                );
-
-                return;
-            }
+        const password = passwordInput
+            ? passwordInput.value.trim()
+            : "";
 
 
-            alert(
-                "Sign in successful! 🎉"
-            );
+        /* VALIDATION */
 
+        if (!email || !password) {
 
-            loginForm.reset();
+            alert("Please enter email and password.");
+
+            return;
         }
-    );
-}
 
+
+        /* EMAIL VALIDATION */
+
+        const emailPattern =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+
+            alert("Please enter a valid email address.");
+
+            return;
+        }
+
+
+        /* SUCCESS */
+
+        alert(
+            "Sign in successful! 🎉"
+        );
+
+        loginForm.reset();
+
+    });
+}
 /* =========================================
    EVENTS - SHOW ONLY WHEN CLICKED
 ========================================= */
